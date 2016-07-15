@@ -11,13 +11,14 @@ export default class Sidebar extends React.Component{
       container: {
         position: 'fixed',
         top: '72px',
-        left: '0px',
+        left: this.props.sidebarOpen ? '0px' : '-300px',
         width: '292px',
         height: 'calc(100% - 72px)',
         backgroundColor: 'dimGrey',
         overflowY: 'scroll',
         borderRight: '3px solid deepPink',
-        zIndex: '2'
+        zIndex: '2',
+        transition: 'all .4s ease'
       },
       unit: {
         marginTop: '40px',

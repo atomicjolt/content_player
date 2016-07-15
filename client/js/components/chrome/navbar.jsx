@@ -39,12 +39,20 @@ export default (props)=>{
       bottom: '10px',
       right: '20px',
       cursor: 'pointer',
+    },
+    tocIcon: {
+      cursor: 'pointer',
+      position: 'relative',
+      top: '-10px',
+      margin: '0px 10px'
     }
   };
 
   const img = assets("./images/newLogo.png");
+  const tocIcon = assets("./images/ic_toc_black_48px.svg");
 
   return <div style={styles.container}>
+    <img src={tocIcon} style={styles.tocIcon} onClick={()=>props.toggleSidebar()}/>
     <img src={img} style={styles.logo}/>
     <span style={{...styles.navItems, ...styles.version}}>UNPLATFORM VERSION 0.0</span>
     <span style={{...styles.navItems, ...styles.newSubject}}>CHOOSE NEW SUBJECT</span>
