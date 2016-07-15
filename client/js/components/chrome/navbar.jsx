@@ -32,7 +32,7 @@ export default (props)=>{
     },
     newSubject: {
       bottom: '10px',
-      right: '175px',
+      right: '150px',
       cursor: 'pointer',
     },
     finish: {

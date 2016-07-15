@@ -16,6 +16,16 @@ export default class Sidebar extends React.Component{
         overflowY: 'scroll',
         borderRight: '3px solid deepPink',
         zIndex: '2'
+      },
+      unit: {
+        marginTop: '40px',
+        paddingLeft: '20px',
+        color: 'white',
+        fontSize: '.7em'
+      },
+      subject:{
+        color: 'white',
+        paddingLeft: '20px',
       }
     };
   }
@@ -24,7 +34,8 @@ export default class Sidebar extends React.Component{
     const styles = this.getStyles();
 
     return <div style={styles.container}>
-
+      <div style={styles.unit}>GRADE - UNIT</div>
+      <div style={styles.subject}>LESSON SUBJECT</div>
     </div>
   }
 }
