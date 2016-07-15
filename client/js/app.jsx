@@ -9,6 +9,7 @@ import routes                   from './routes';
 import DevTools                 from './dev/dev_tools';
 import configureStore           from './store/configure_store';
 import jwt                      from './loaders/jwt';
+import QueryString              from './utils/query_string';
 import { getInitialSettings }   from './reducers/settings';
 
 // Polyfill es6 promises for IE
@@ -37,7 +38,7 @@ class Root extends React.Component {
   }
 }
 
-const settings = getInitialSettings(window.DEFAULT_SETTINGS);
+const settings = getInitialSettings(window.DEFAULT_SETTINGS, QueryString.params());
 const store = configureStore({settings, jwt: window.DEFAULT_JWT});
 if (window.DEFAULT_JWT){ // Setup JWT refresh
   jwt(store.dispatch, settings.user_id);
