@@ -1,6 +1,8 @@
 'use strict';
 
 import React          from 'react';
+import BookItem       from './bookItem.jsx';
+import _              from 'lodash';
 
 export default class Sidebar extends React.Component{
 
@@ -26,8 +28,16 @@ export default class Sidebar extends React.Component{
       subject:{
         color: 'white',
         paddingLeft: '20px',
+        marginBottom: '10px'
       }
     };
+  }
+
+  tableOfContents(){
+    return _.map(_.range(12), (id)=>{
+      //the selected prop needs to be fixed when we have data
+      return <BookItem selected={7 == id} />
+    })
   }
 
   render(){
@@ -36,6 +46,7 @@ export default class Sidebar extends React.Component{
     return <div style={styles.container}>
       <div style={styles.unit}>GRADE - UNIT</div>
       <div style={styles.subject}>LESSON SUBJECT</div>
+      {this.tableOfContents()}
     </div>
   }
 }
