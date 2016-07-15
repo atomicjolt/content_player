@@ -14,7 +14,8 @@ export default class Sidebar extends React.Component{
         height: 'calc(100% - 72px)',
         backgroundColor: 'dimGrey',
         overflowY: 'scroll',
-        borderRight: '3px solid deepPink'
+        borderRight: '3px solid deepPink',
+        zIndex: '2'
       }
     };
   }
