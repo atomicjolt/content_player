@@ -3,6 +3,7 @@
 import React                    from 'react';
 import assets                   from '../libs/assets';
 import Navbar                   from './chrome/navbar.jsx';
+import TableOfContents          from './chrome/table_of_contents.jsx';
 import BookOverview             from './book/book_overview';
 
 class Home extends React.Component {
@@ -15,6 +16,18 @@ class Home extends React.Component {
         left: '0px',
         width: '100%',
         height: '100%',
+      },
+      logo: {
+        position: 'absolute',
+        bottom: '20px',
+        right: '20px'
+      },
+      content: {
+        position: 'absolute',
+        top: '72px',
+        left: '250px',
+        width: 'calc(100% - 250px)',
+        height: 'calc(100% - 72px)',
       }
     }
   }
@@ -25,8 +38,11 @@ class Home extends React.Component {
 
     return<div style={styles.body}>
       <Navbar/>
-      <BookOverview />
-      <img src={img} />
+      <TableOfContents />
+      <div style={styles.content}>
+        <BookOverview />
+      </div>
+      <img src={img} style={styles.logo}/>
     </div>;
   }
 

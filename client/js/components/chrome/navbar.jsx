@@ -12,7 +12,8 @@ export default (props)=>{
       width: '100%',
       height: '72px',
       backgroundColor: '#999999',
-      boxShadow: '1px 1px 1px gray'
+      boxShadow: '1px 1px 1px gray',
+      zIndex: '2'
     },
     logo: {
       width: '100px',
