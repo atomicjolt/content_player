@@ -1,6 +1,7 @@
 "use strict";
 
 import React            from 'react';
+import assets           from '../../libs/assets';
 
 export default (props)=>{
 
@@ -16,7 +17,7 @@ export default (props)=>{
       zIndex: '3'
     },
     logo: {
-      width: '100px',
+      width: '160px',
       padding: '10px'
     },
     navItems: {
@@ -41,8 +42,10 @@ export default (props)=>{
     }
   };
 
+  const img = assets("./images/newLogo.png");
+
   return <div style={styles.container}>
-    <img src="http://supplychainmit.com/wp-content/uploads/2015/04/MIT-logo.png" style={styles.logo}/>
+    <img src={img} style={styles.logo}/>
     <span style={{...styles.navItems, ...styles.version}}>UNPLATFORM VERSION 0.0</span>
     <span style={{...styles.navItems, ...styles.newSubject}}>CHOOSE NEW SUBJECT</span>
     <span style={{...styles.navItems, ...styles.finish}}>FINISH LESSON</span>

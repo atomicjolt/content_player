@@ -18,7 +18,7 @@ class Index extends React.Component {
       content: {
         position: 'absolute',
         top: '72px',
-        left: '250px',
+        left: '292px',
         width: 'calc(100% - 292px)',
         height: 'calc(100% - 72px)',
         backgroundColor: 'lightGrey'
