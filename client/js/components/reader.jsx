@@ -38,7 +38,7 @@ class Home extends React.Component {
     return<div style={styles.body}>
       <Chrome />
       <div style={styles.content}>
-        <BookOverview />
+        {this.props.children}
       </div>
       <img src={img} style={styles.logo}/>
     </div>;
