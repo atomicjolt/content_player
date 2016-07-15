@@ -2,7 +2,7 @@
 
 import React              from 'react';
 import Navbar             from './navbar.jsx';
-import TableOfContents    from './table_of_contents.jsx';
+import Sidebar    from './sidebar.jsx';
 
 export default class Chrome extends React.Component{
 
@@ -11,7 +11,7 @@ export default class Chrome extends React.Component{
 
     return <div>
       <Navbar/>
-      <TableOfContents />
+      <Sidebar />
     </div>
   }
 }

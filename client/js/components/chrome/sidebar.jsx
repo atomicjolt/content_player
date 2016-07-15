@@ -2,7 +2,7 @@
 
 import React          from 'react';
 
-export default class TableOfContents extends React.Component{
+export default class Sidebar extends React.Component{
 
   getStyles(){
     return {
@@ -10,10 +10,11 @@ export default class TableOfContents extends React.Component{
         position: 'fixed',
         top: '72px',
         left: '0px',
-        width: '250px',
+        width: '292px',
         height: 'calc(100% - 72px)',
-        backgroundColor: '#C0C0C0',
-        overflowY: 'scroll'
+        backgroundColor: 'dimGrey',
+        overflowY: 'scroll',
+        borderRight: '3px solid deepPink'
       }
     };
   }

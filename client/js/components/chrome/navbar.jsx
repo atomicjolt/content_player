@@ -1,4 +1,4 @@
-"use stict";
+"use strict";
 
 import React            from 'react';
 
@@ -11,7 +11,7 @@ export default (props)=>{
       left: '0px',
       width: '100%',
       height: '72px',
-      backgroundColor: '#999999',
+      backgroundColor: 'white',
       boxShadow: '1px 1px 1px gray',
       zIndex: '2'
     },

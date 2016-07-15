@@ -3,7 +3,6 @@
 import React                    from 'react';
 import assets                   from '../libs/assets';
 import Chrome                   from './chrome/chrome.jsx';
-import BookOverview             from './book/book_overview';
 
 class Home extends React.Component {
 
@@ -25,8 +24,9 @@ class Home extends React.Component {
         position: 'absolute',
         top: '72px',
         left: '250px',
-        width: 'calc(100% - 250px)',
+        width: 'calc(100% - 292px)',
         height: 'calc(100% - 72px)',
+        backgroundColor: 'lightGrey'
       }
     }
   }
