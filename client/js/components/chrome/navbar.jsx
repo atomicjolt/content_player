@@ -49,5 +49,5 @@ export default (props)=>{
     <span style={{...styles.navItems, ...styles.version}}>UNPLATFORM VERSION 0.0</span>
     <span style={{...styles.navItems, ...styles.newSubject}}>CHOOSE NEW SUBJECT</span>
     <span style={{...styles.navItems, ...styles.finish}}>FINISH LESSON</span>
-  </div>
-}
+  </div>;
+};

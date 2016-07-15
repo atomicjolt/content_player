@@ -36,8 +36,8 @@ export default class Sidebar extends React.Component{
   tableOfContents(){
     return _.map(_.range(12), (id)=>{
       //the selected prop needs to be fixed when we have data
-      return <BookItem selected={7 == id} />
-    })
+      return <BookItem key={`bookItem_${id}`} contentId={id} selected={7 == id} />;
+    });
   }
 
   render(){
@@ -47,6 +47,6 @@ export default class Sidebar extends React.Component{
       <div style={styles.unit}>GRADE - UNIT</div>
       <div style={styles.subject}>LESSON SUBJECT</div>
       {this.tableOfContents()}
-    </div>
+    </div>;
   }
 }

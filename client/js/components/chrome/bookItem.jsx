@@ -1,11 +1,13 @@
 'use strict';
 
 import React          from 'react';
+import {hashHistory}  from "react-router";
 
 export default (props)=>{
 
   const openPage = ()=>{
     console.log('BUILD ME!');
+    hashHistory.push(`/${props.contentId}`);
   };
 
   const styles = {
@@ -21,5 +23,5 @@ export default (props)=>{
 
   return <div onClick={()=>openPage()} style={styles.container}>
     Activity Name
-  </div>
-}
+  </div>;
+};

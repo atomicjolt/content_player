@@ -12,6 +12,6 @@ export default class Chrome extends React.Component{
     return <div>
       <Navbar/>
       <Sidebar />
-    </div>
+    </div>;
   }
 }
