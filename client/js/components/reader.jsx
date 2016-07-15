@@ -2,8 +2,7 @@
 
 import React                    from 'react';
 import assets                   from '../libs/assets';
-import Navbar                   from './chrome/navbar.jsx';
-import TableOfContents          from './chrome/table_of_contents.jsx';
+import Chrome                   from './chrome/chrome.jsx';
 import BookOverview             from './book/book_overview';
 
 class Home extends React.Component {
@@ -37,8 +36,7 @@ class Home extends React.Component {
     const styles = this.getStyles();
 
     return<div style={styles.body}>
-      <Navbar/>
-      <TableOfContents />
+      <Chrome />
       <div style={styles.content}>
         <BookOverview />
       </div>
