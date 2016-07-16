@@ -11,7 +11,6 @@ export default (state = {}, action) => {
   switch (action.type) {
 
     case ContentConstants.LOAD_CONTENT_DONE:
-      debugger
       state.tableOfContents = action.tableOfContents;
       return _.merge({}, {...state});
 

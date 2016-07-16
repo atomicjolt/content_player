@@ -38,7 +38,7 @@ class Index extends React.Component {
     const styles = this.getStyles();
     return (
       <div style={styles.body}>
-        <Chrome />
+        <Chrome pageId={this.props.params.pageId}/>
         <div style={styles.content}>
           {this.props.children}
         </div>
@@ -49,7 +49,7 @@ class Index extends React.Component {
 }
 
 const select = (state) => {
-  console.log(state.settings)
+  console.log(state.settings);
   return {
     contentName: state.settings.contentName
   };

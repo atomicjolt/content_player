@@ -3,7 +3,9 @@
 import React          from 'react';
 import BookItem       from './bookItem.jsx';
 import _              from 'lodash';
+import {connect}      from 'react-redux';
 
+@connect((state)=>({tableOfContents: state.content.tableOfContents}))
 export default class Sidebar extends React.Component{
 
   getStyles(){
@@ -35,9 +37,9 @@ export default class Sidebar extends React.Component{
   }
 
   tableOfContents(){
-    return _.map(_.range(12), (id)=>{
+    return _.map(this.props.tableOfContents, (item)=>{
       //the selected prop needs to be fixed when we have data
-      return <BookItem key={`bookItem_${id}`} contentId={id} selected={7 == id} />;
+      return <BookItem key={`bookItem_${item.id}`} content={item} selected={this.props.pageId == item.id} />;
     });
   }
 

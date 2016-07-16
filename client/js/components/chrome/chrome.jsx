@@ -18,7 +18,10 @@ export default class Chrome extends React.Component{
 
     return <div>
       <Navbar toggleSidebar={()=>this.toggleSidebar()}/>
-      <Sidebar sidebarOpen={this.state.sidebarOpen}/>
+      <Sidebar
+        sidebarOpen={this.state.sidebarOpen}
+        pageId={this.props.pageId}
+      />
     </div>;
   }
 }
