@@ -5,7 +5,14 @@ import BookItem       from './bookItem.jsx';
 import _              from 'lodash';
 import {connect}      from 'react-redux';
 
-@connect((state)=>({tableOfContents: state.content.tableOfContents}))
+const select = (state) => {
+  return {
+    tableOfContents: state.content.tableOfContents,
+    title: state.content.title,
+  }
+};
+
+@connect(select)
 export default class Sidebar extends React.Component{
 
   getStyles(){
@@ -47,7 +54,7 @@ export default class Sidebar extends React.Component{
 
     return <div style={styles.container}>
       <div style={styles.unit}>GRADE - UNIT</div>
-      <div style={styles.subject}>LESSON SUBJECT</div>
+      <div style={styles.subject}>{this.props.title || 'LESSON SUBJECT'}</div>
       {this.tableOfContents()}
     </div>;
   }

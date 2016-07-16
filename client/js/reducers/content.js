@@ -12,6 +12,7 @@ export default (state = {}, action) => {
 
     case ContentConstants.LOAD_CONTENT_DONE:
       state.tableOfContents = action.tableOfContents;
+      state.title = action.tocDoc.docTitle;
       return _.merge({}, {...state});
 
     default:

@@ -18,7 +18,6 @@ const EPUB = store => next => action => {
           let contentXml  = contentParser.parseFromString(response.text,"text/xml");
           let contentDoc = parse(contentXml);
           // fix if we really do this.
-          console.log(contentDoc.manifest[0].href)
           let tocPromise = api.execRequest(method, `pubs/${name}/OEBPS/${contentDoc.manifest[0].href}`, state.settings.apiUrl, state.jwt, state.settings.csrfToken, params, body);
           tocPromise.then((response, error)=>{
             let tocParser  = new DOMParser();
