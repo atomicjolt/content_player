@@ -38,7 +38,6 @@ export default class Sidebar extends React.Component{
 
   tableOfContents(){
     return _.map(this.props.tableOfContents, (item)=>{
-      //the selected prop needs to be fixed when we have data
       return <BookItem key={`bookItem_${item.id}`} content={item} selected={this.props.pageId == item.id} />;
     });
   }
