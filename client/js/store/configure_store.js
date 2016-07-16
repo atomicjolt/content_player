@@ -3,8 +3,9 @@ import { persistState }                          from 'redux-devtools';
 import rootReducer                               from '../reducers';
 import DevTools                                  from '../dev/dev_tools.jsx';
 import API                                       from '../middleware/api';
+import EPUB                                      from '../middleware/epub';
 
-let middleware = [ API ];
+let middleware = [ API, EPUB ];
 
 let enhancers = [
   applyMiddleware(...middleware)

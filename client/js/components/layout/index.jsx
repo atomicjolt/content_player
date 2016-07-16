@@ -2,9 +2,14 @@
 
 import React                    from "react";
 import Chrome                   from '../chrome/chrome.jsx';
+import * as ContentActions      from '../../actions/content';
 import { connect }              from "react-redux";
 
 class Index extends React.Component {
+
+  componentWillMount(){
+    this.props.loadContent(`${this.props.contentName}`)
+  }
 
   getStyles(){
     return{
@@ -43,8 +48,10 @@ class Index extends React.Component {
 }
 
 const select = (state) => {
+  console.log(state.settings)
   return {
+    contentName: state.settings.contentName
   };
 };
 
-export default connect(select)(Index);
+export default connect(select, ContentActions)(Index);

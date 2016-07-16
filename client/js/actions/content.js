@@ -8,7 +8,7 @@ const actions = [
 
 // Actions that make an api request
 const requests = [
-  LOAD_CONTENT
+  'LOAD_CONTENT'
 ];
 
 export const Constants = wrapper(actions, requests);
@@ -18,8 +18,8 @@ export const resetValue = (key) => ({
   key
 });
 
-export const loadContent = (url) => ({
+export const loadContent = (name) => ({
   type: Constants.LOAD_CONTENT,
-  method: Network.GET,
-  url
+  epubMethod: Network.GET,
+  name
 });
