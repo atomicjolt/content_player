@@ -5,6 +5,7 @@ import { parse }   from "../libs/parser";
 const EPUB = store => next => action => {
 
   function request(method, name, params, body){
+    console.log(method, name, params, body);
     const state = store.getState();
     const promise = api.execRequest(method, `pubs/${name}/META-INF/container.xml`, state.settings.apiUrl, state.jwt, state.settings.csrfToken, params, body);
     if(promise){
@@ -43,10 +44,28 @@ const EPUB = store => next => action => {
         // }); // Dispatch the new data
       });
     }
-  };
+  }
+
+  function getPage(method, id, page, params, body){
+    const state = store.getState();
+    // I need to fix this hardcoded Value, need to get name in there
+    let promise = api.execRequest(method, `pubs/${state.settings.contentName}/OEBPS/${page}`, state.settings.apiUrl, state.jwt, state.settings.csrfToken, params, body);
+    promise.then((result, error)=>{
+      store.dispatch({
+        type:     action.type + DONE,
+        pageContent:  result.text,
+        pageId: action,
+        id,
+        error
+      });
+    });
+  }
 
   if(action.epubMethod){
     request(action.epubMethod, action.name, action.params, action.body);
+  }
+  if(action.epubPageMethod){
+    getPage(action.epubPageMethod, action.id, action.page, action.params, action.body);
   }
 
   // call the next middleWare

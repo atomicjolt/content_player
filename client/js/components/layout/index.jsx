@@ -8,7 +8,7 @@ import { connect }              from "react-redux";
 class Index extends React.Component {
 
   componentWillMount(){
-    this.props.loadContent(`${this.props.contentName}`)
+    this.props.loadContent(this.props.contentName);
   }
 
   getStyles(){
@@ -49,7 +49,6 @@ class Index extends React.Component {
 }
 
 const select = (state) => {
-  console.log(state.settings);
   return {
     contentName: state.settings.contentName
   };
