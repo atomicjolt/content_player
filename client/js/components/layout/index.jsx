@@ -24,11 +24,12 @@ class Index extends React.Component {
       },
       content: {
         position: 'absolute',
-        top: '72px',
-        left: '292px',
-        width: 'calc(100% - 292px)',
-        height: 'calc(100% - 72px)',
-        backgroundColor: 'lightGrey'
+        top: '0px',
+        left: '0px',
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'lightGrey',
+        zIndex: '1'
       }
     };
   }
