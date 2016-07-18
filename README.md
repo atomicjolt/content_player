@@ -18,11 +18,6 @@ Make sure to install git and npm before you start then:
 then visit http://localhost:8080
 
 
-# Using the React Client Starter App
------------------------
-Source code lives in the client directory. Modify html and js files in that directory to build your application.
-
-
 ## React.js
 -----------
 React code can be found in client/js. We use Redux and the React-Router.
