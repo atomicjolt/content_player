@@ -15,8 +15,10 @@ Make sure to install git and npm before you start then:
 
   `npm run hot`
 
-then visit http://localhost:8080
+then visit http://localhost:8081?contentName=lesson1
 
+Live version deployed to:
+http://www.epubmix.com.s3-website-us-east-1.amazonaws.com/?contentName=lesson1
 
 ## React.js
 -----------
@@ -103,14 +105,14 @@ Inside the client directory run:
                     "s3:ListBucket"
                 ],
                 "Effect": "Allow",
-                "Resource": "arn:aws:s3:::www.reactclientstarterapp.com"
+                "Resource": "arn:aws:s3:::www.epubmix.com"
             },
             {
                 "Action": "s3:*",
                 "Effect": "Allow",
                 "Resource": [
-                    "arn:aws:s3:::www.reactclientstarterapp.com",
-                    "arn:aws:s3:::www.reactclientstarterapp.com/*"
+                    "arn:aws:s3:::www.epubmix.com",
+                    "arn:aws:s3:::www.epubmix.com/*"
                 ]
             }
         ]
