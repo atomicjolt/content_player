@@ -49,9 +49,7 @@ const EPUB = store => next => action => {
   if(action.epubMethod){
     request(action.epubMethod, action.name, action.params, action.body);
   }
-  if(action.epubPageMethod){
-    getPage(action.epubPageMethod, action.id, action.page, action.params, action.body);
-  }
+
 
   // call the next middleWare
   next(action);
