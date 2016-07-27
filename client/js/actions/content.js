@@ -24,10 +24,3 @@ export const loadContent = (name) => ({
   epubMethod: Network.GET,
   name
 });
-
-export const loadPage = (id, page) => ({
-  type: Constants.LOAD_PAGE,
-  epubPageMethod: Network.GET,
-  id,
-  page
-});

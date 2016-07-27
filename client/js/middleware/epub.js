@@ -46,21 +46,6 @@ const EPUB = store => next => action => {
     }
   }
 
-  function getPage(method, id, page, params, body){
-    const state = store.getState();
-    // I need to fix this hardcoded Value, need to get name in there
-    let promise = api.execRequest(method, `pubs/${state.settings.contentName}/OEBPS/${page}`, state.settings.apiUrl, state.jwt, state.settings.csrfToken, params, body);
-    promise.then((result, error)=>{
-      store.dispatch({
-        type:     action.type + DONE,
-        pageContent:  result.text,
-        pageId: action,
-        id,
-        error
-      });
-    });
-  }
-
   if(action.epubMethod){
     request(action.epubMethod, action.name, action.params, action.body);
   }
