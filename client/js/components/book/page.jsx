@@ -8,8 +8,8 @@ import { connect }              from "react-redux";
 
 const select = (state) => {
   return {
-    pages :            state.content.pages,
-    tableOfContents : state.content.tableOfContents
+    tableOfContents : state.content.tableOfContents,
+    contentName : state.settings.contentName
   }
 };
 
@@ -17,22 +17,6 @@ const select = (state) => {
 export default class Page extends React.Component {
   constructor(props){
     super();
-    var page = _.find(props.pages, page => page.id ==  props.params.pageId );
-    this.state = { content: page ? page.body : null }
-  }
-
-  componentWillUpdate(nextProps){
-    // debugger;
-    // if(this.props.params.pageId != nextProps.params.pageId){
-      // var page = _.find(this.props.pages, page => page.id ==  nextProps.params.pageId );
-      // if(page){
-      //   // this.setState({ content: page.body});
-      // } else {
-      //   var entry = _.find(nextProps.tableOfContents, (item) => item.id == nextProps.params.pageId);
-      //   debugger;
-      //   if(entry){ this.props.loadPage(nextProps.params.pageId, unescape(entry.content)); }
-      // }
-    // }
   }
 
   getStyles(){
@@ -50,18 +34,28 @@ export default class Page extends React.Component {
     };
   }
 
-  render(){
-    // debugger;
-    const styles = this.getStyles();
-    const img = assets("./images/atomicjolt.jpg");
+  iframe(){
+    var current = _.find(
+      this.props.tableOfContents,
+      (item) => item.id == this.props.params.pageId
+    );
+    
+    if(!current){return;}
+    return (
+      <iframe
+        style={{float:'right', width:'80%', height:'100%'}}
+        src={`pubs/${this.props.contentName}/OEBPS/${current.content}`} />
+    );
+  }
 
-    //There are assets issues, iframing may be a better idea
-    // <div style={styles.content} dangerouslySetInnerHTML={/*{__html: this.state.content}} />
+  render(){
+    const styles = this.getStyles();
+
+
 
     return (
       <div>
-        <img src={img} style={styles.logo}/>
-        <iframe src={} />
+        {this.iframe()}
       </div>
     );
   }
