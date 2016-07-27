@@ -30,21 +30,35 @@ export default class Page extends React.Component {
         position: 'relative',
         left: '300px',
         top: '80px'
+      },
+      iframe: {
+        margin: 0,
+        padding: 0,
+        border: 'none',
+        height: 'calc(100% - 72px)',
+        width: 'calc(100% - 295px)',
+        position: 'relative',
+        top: '72px',
+        left: '295px'
+      },
+      container: {
+        height: '100%',
+        width: '100%'
       }
     };
   }
 
-  iframe(){
+  iframe(props){
     var current = _.find(
-      this.props.tableOfContents,
+      props.tableOfContents,
       (item) => item.id == this.props.params.pageId
     );
-    
+    var styles = this.getStyles();
     if(!current){return;}
     return (
       <iframe
-        style={{float:'right', width:'80%', height:'100%'}}
-        src={`pubs/${this.props.contentName}/OEBPS/${current.content}`} />
+        style={styles.iframe}
+        src={`pubs/${props.contentName}/OEBPS/${current.content}`} />
     );
   }
 
@@ -54,8 +68,8 @@ export default class Page extends React.Component {
 
 
     return (
-      <div>
-        {this.iframe()}
+      <div style={styles.container}>
+        {this.iframe(this.props)}
       </div>
     );
   }
