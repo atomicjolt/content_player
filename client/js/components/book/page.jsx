@@ -22,15 +22,17 @@ export default class Page extends React.Component {
   }
 
   componentWillUpdate(nextProps){
-    if(this.props.params.pageId != nextProps.params.pageId){
-      var page = _.find(this.props.pages, page => page.id ==  nextProps.params.pageId );
-      if(page){
-        this.setState({ content: page.body});
-      } else {
-        var entry = _.find(this.props.tableOfContents, (item) => item.id == nextProps.params.pageId);
-        if(entry){ this.props.loadPage(nextProps.params.pageId, unescape(entry.content)); }
-      }
-    }
+    // debugger;
+    // if(this.props.params.pageId != nextProps.params.pageId){
+      // var page = _.find(this.props.pages, page => page.id ==  nextProps.params.pageId );
+      // if(page){
+      //   // this.setState({ content: page.body});
+      // } else {
+      //   var entry = _.find(nextProps.tableOfContents, (item) => item.id == nextProps.params.pageId);
+      //   debugger;
+      //   if(entry){ this.props.loadPage(nextProps.params.pageId, unescape(entry.content)); }
+      // }
+    // }
   }
 
   getStyles(){
@@ -49,14 +51,17 @@ export default class Page extends React.Component {
   }
 
   render(){
+    // debugger;
     const styles = this.getStyles();
     const img = assets("./images/atomicjolt.jpg");
 
     //There are assets issues, iframing may be a better idea
+    // <div style={styles.content} dangerouslySetInnerHTML={/*{__html: this.state.content}} />
+
     return (
       <div>
-        <div style={styles.content} dangerouslySetInnerHTML={{__html: this.state.content}} />
         <img src={img} style={styles.logo}/>
+        <iframe src={} />
       </div>
     );
   }
