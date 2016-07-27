@@ -23,22 +23,40 @@ export default class Sidebar extends React.Component{
         left: this.props.sidebarOpen ? '0px' : '-300px',
         width: '292px',
         height: 'calc(100% - 72px)',
-        backgroundColor: 'dimGrey',
+        // backgroundColor: 'dimGrey',
         overflowY: 'scroll',
         borderRight: '3px solid deepPink',
         zIndex: '2',
-        transition: 'all .4s ease'
+        transition: 'all .4s ease',
+        alignItems: 'stretch',
+        backgroundColor: '#4a4a4a'
       },
       unit: {
         marginTop: '40px',
         paddingLeft: '20px',
-        color: 'white',
-        fontSize: '.7em'
+        // color: 'white',
+        fontSize: '.7rem',
+
+        // position: relative;
+        // top: 10px;
+        // padding: 0 1rem;
+        color: '#fff',
+        fontWeight: 300,
+        // font-size: 10px;
+        letterSpacing: '1.15px',
+        textTransform: 'uppercase'
       },
       subject:{
-        color: 'white',
+        // color: 'white',
         paddingLeft: '20px',
-        marginBottom: '10px'
+        marginBottom: '10px',
+        // position: relative;
+        // margin: 7px 0 10px;
+        // padding: 0 16px;
+        color: '#fff',
+        fontWeight: 300,
+        fontSize: '.875rem',
+        textTransform: 'uppercase'
       }
     };
   }

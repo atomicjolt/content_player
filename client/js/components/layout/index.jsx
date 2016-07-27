@@ -20,7 +20,8 @@ class Index extends React.Component {
         width: '100%',
         height: '100%',
         fontFamily: "'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif",
-        fontWeight: '300'
+        fontWeight: '300',
+        display: 'flex'
       },
       content: {
         position: 'absolute',
