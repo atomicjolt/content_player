@@ -3,4 +3,13 @@
 //@import '../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap';
 //
 
+//Fonts
+@font-face {
+    font-family: 'open_sans';
+    src:'https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i';
+    font-weight: normal;
+    font-style: normal;
+}
+
+// Components
 @import "components/components.book-item";
