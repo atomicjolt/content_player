@@ -1,0 +1,36 @@
+.c-sidebar{
+    position: fixed;
+    top: 72px;
+    left: -300px;
+    width: 292px;
+    height: calc(100% - 72px);
+    overflow-y: scroll;
+    border-right: 3px solid deepPink;
+    z-index: 2;
+    transition: all .4s ease;
+    align-items: stretch;
+    background-color: #4a4a4a;
+}
+
+.c-sidebar--open{
+  left: 0px;
+}
+
+.unit{
+  margin-top: 40px;
+  padding-left: 20px;
+  font-size: .7rem;
+  color: #fff;
+  font-weight: 300;
+  letter-spacing: 1.15px;
+  text-transform: uppercase;
+}
+
+.subject{
+  padding-left: 20px;
+  margin-bottom: 10px;
+  color: #fff;
+  font-weight: 300;
+  font-size: .875rem;
+  text-transform: uppercase;
+}
