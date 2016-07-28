@@ -1,0 +1,25 @@
+
+.test{
+  background-color: red;
+}
+
+.c-book-item{
+  color: white;
+  font-size: .8em;
+  cursor: pointer;
+  margin-top: .125em;
+  padding: .25em 1em .5em;
+  background-color: rgba(255,255,255, 0.1);
+}
+
+// backgroundColor: props.selected ? 'deepPink' : 'gray',
+// padding: '10px 20px',
+// margin: '2px 0px',
+// color: 'white',
+// fontSize: '.8em',
+// cursor: 'pointer',
+//
+// marginTop: '.125em',
+// padding: '.25em 1em .5em',
+// backgroundColor: 'rgba(255,255,255, 0.1)'
+// cursor: pointer;
