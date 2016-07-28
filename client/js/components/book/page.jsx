@@ -32,14 +32,14 @@ export default class Page extends React.Component {
         top: '80px'
       },
       iframe: {
-        margin: 0,
+        margin: '0 auto',
         padding: 0,
         border: 'none',
         height: 'calc(100% - 72px)',
-        width: 'calc(100% - 295px)',
+        width: '90%',
+        display: 'block',
         position: 'relative',
         top: '72px',
-        left: '295px'
       },
       container: {
         height: '100%',
