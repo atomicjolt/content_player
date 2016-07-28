@@ -11,16 +11,21 @@ export default (props)=>{
 
   const styles = {
     container: {
-      backgroundColor: props.selected ? 'deepPink' : 'gray',
-      padding: '10px 20px',
-      margin: '2px 0px',
-      color: 'white',
+      // backgroundColor: props.selected ? 'deepPink' : 'gray',
+      // padding: '10px 20px',
+      // margin: '2px 0px',
+      // color: 'white',
       fontSize: '.8em',
-      cursor: 'pointer'
+      cursor: 'pointer',
+
+      marginTop: '.125em',
+      padding: '.25em 1em .5em',
+      backgroundColor: 'rgba(255,255,255, 0.1)'
+      // cursor: pointer;
     }
   };
 
-  return <div onClick={()=>openPage()} style={styles.container}>
+  return <div className="test" onClick={()=>openPage()} style={styles.container}>
     {props.content.navLabel}
   </div>;
 };
