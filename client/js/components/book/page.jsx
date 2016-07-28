@@ -10,7 +10,7 @@ const select = (state) => {
   return {
     tableOfContents : state.content.tableOfContents,
     contentName : state.settings.contentName
-  }
+  };
 };
 
 @connect(select, ContentActions)
