@@ -11,7 +11,7 @@
 
   a::before{
     position: absolute;
-    left: 253px;
+    left: 268px;
     height: 34px;
     width:6px;
     background: #fff;
@@ -41,5 +41,5 @@
 
 .c-book-item--selected{
   /* CLIx purple white bar */
-  background-image: linear-gradient(90deg, #91006a, #a31d7e 13.75em, #9c1577 17.250em, #fff 17.251em, #fff 17.6490em, #9b1675 17.6491em, #9a1675);
+  background-image: linear-gradient(90deg, #91006a, #a31d7e 0px, #9c1577 263px, #fff 263px, #fff 269px, #9b1675 269px, #9a1675);
 }
