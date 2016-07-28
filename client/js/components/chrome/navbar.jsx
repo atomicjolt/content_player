@@ -57,11 +57,9 @@ export class NavBar extends React.Component{
 
   render(){
     const img = assets("./images/newLogo.png");
-    const tocIcon = assets("./images/ic_toc_black_48px.svg");
     var styles = this.getStyles();
 
     return <div style={styles.container}>
-      <img src={tocIcon} style={styles.tocIcon} onClick={()=>this.props.toggleSidebar()}/>
       <img src={img} style={styles.logo}/>
       <span style={{...styles.navItems, ...styles.version}}>UNPLATFORM VERSION 0.0</span>
       <span style={{...styles.navItems, ...styles.newSubject}}>CHOOSE NEW SUBJECT</span>
