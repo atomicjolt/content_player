@@ -18,10 +18,15 @@ const select = (state) => {
 export default class Sidebar extends React.Component{
 
 
-
-  tableOfContents(){
-    return _.map(this.props.tableOfContents, (item)=>{
-      return <BookItem key={`bookItem_${item.id}`} content={item} selected={this.props.pageId == item.id} />;
+  tableOfContents(props){
+    if(!props.tableOfContents){return;}
+    return _.map(props.tableOfContents, (item)=>{
+      return (
+        <BookItem
+          key={`bookItem_${item.id}`}
+          content={item}
+          selected={this.props.pageId == item.id} />
+      );
     });
   }
 
@@ -33,7 +38,7 @@ export default class Sidebar extends React.Component{
         onMouseLeave={() => this.props.toggleSidebar()}>
         <div className="unit">GRADE - UNIT</div>
         <div className="subject">{this.props.title || 'LESSON SUBJECT'}</div>
-        {this.tableOfContents()}
+        {this.tableOfContents(this.props)}
       </div>
     );
   }

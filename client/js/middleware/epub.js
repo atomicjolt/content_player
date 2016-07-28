@@ -24,9 +24,10 @@ const EPUB = store => next => action => {
             let tocParser  = new DOMParser();
             let tocXml  = tocParser.parseFromString(response.text,"text/xml");
             let tocDoc = parse(tocXml);
+            let tableOfContents = _.isArray(tocDoc.navMap) ? tocDoc.navMap : [tocDoc.navMap];
             store.dispatch({
               type:     action.type + DONE,
-              tableOfContents:  tocDoc.navMap,
+              tableOfContents,
               original: action,
               tocDoc,
               contentDoc,
