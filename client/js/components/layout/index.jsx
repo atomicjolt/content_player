@@ -24,13 +24,13 @@ class Index extends React.Component {
         display: 'flex'
       },
       content: {
-        position: 'absolute',
+        // position: 'absolute',
         top: '0px',
         left: '0px',
         width: '100%',
         height: '100%',
         backgroundColor: 'lightGrey',
-        zIndex: '1'
+        // zIndex: '1'
       }
     };
   }

@@ -26,12 +26,15 @@ export default class Sidebar extends React.Component{
   }
 
   render(){
-
     var sidebarClass = this.props.sidebarOpen ? "c-sidebar c-sidebar--open" : "c-sidebar";
-    return <div className={sidebarClass} onMouseLeave={() => this.props.toggleSidebar()}>
-      <div className="unit">GRADE - UNIT</div>
-      <div className="subject">{this.props.title || 'LESSON SUBJECT'}</div>
-      {this.tableOfContents()}
-    </div>;
+    return (
+      <div
+        className={sidebarClass}
+        onMouseLeave={() => this.props.toggleSidebar()}>
+        <div className="unit">GRADE - UNIT</div>
+        <div className="subject">{this.props.title || 'LESSON SUBJECT'}</div>
+        {this.tableOfContents()}
+      </div>
+    );
   }
 }
