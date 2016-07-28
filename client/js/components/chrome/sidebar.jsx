@@ -34,8 +34,7 @@ export default class Sidebar extends React.Component{
     var sidebarClass = this.props.sidebarOpen ? "c-sidebar c-sidebar--open" : "c-sidebar";
     return (
       <div
-        className={sidebarClass}
-        onMouseLeave={() => this.props.toggleSidebar()}>
+        className={sidebarClass}>
         <div className="unit">GRADE - UNIT</div>
         <div className="subject">{this.props.title || 'LESSON SUBJECT'}</div>
         {this.tableOfContents(this.props)}
