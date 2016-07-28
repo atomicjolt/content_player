@@ -9,23 +9,11 @@ export default (props)=>{
     hashHistory.push(`/${props.content.id}`);
   };
 
-  const styles = {
-    container: {
-      // backgroundColor: props.selected ? 'deepPink' : 'gray',
-      // padding: '10px 20px',
-      // margin: '2px 0px',
-      // color: 'white',
-      fontSize: '.8em',
-      cursor: 'pointer',
+  var bookItemClass = props.selected ? "c-book-item c-book-item--selected" : "c-book-item";
 
-      marginTop: '.125em',
-      padding: '.25em 1em .5em',
-      backgroundColor: 'rgba(255,255,255, 0.1)'
-      // cursor: pointer;
-    }
-  };
-
-  return <div className="test" onClick={()=>openPage()} style={styles.container}>
-    {props.content.navLabel}
+  return <div className={bookItemClass} onClick={()=>openPage()}>
+    <a>
+      {props.content.navLabel}
+    </a>
   </div>;
 };

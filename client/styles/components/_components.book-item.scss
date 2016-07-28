@@ -1,8 +1,4 @@
 
-.test{
-  background-color: red;
-}
-
 .c-book-item{
   color: white;
   font-size: .8em;
@@ -10,16 +6,40 @@
   margin-top: .125em;
   padding: .25em 1em .5em;
   background-color: rgba(255,255,255, 0.1);
+  font-weight: 300;
+  text-decoration: none;
+
+  a::before{
+    position: absolute;
+    left: 253px;
+    height: 34px;
+    width:6px;
+    background: #fff;
+    content: '';
+    opacity: 0;
+    transform: translate3d(7px,-4px,0);
+    transition: opacity 0.35s, transform 0.35s;
+  }
+  &:hover{
+    /* CLIx magenta white bar */
+    background-image: linear-gradient(90deg, #b30062, #e5007e 13.75em, #d72a83 117.250em, #fff 17.251em, #fff 17.6490em, #d72a83 17.6491em, #cd1171);
+    /* CLIx magenta */
+    background-image: linear-gradient(90deg, #b30062, #e5007e 13.75em, #cd1171);
+    a::before{
+      opacity: 1;
+      transform: translate3d(-5px,-4px,0);
+    }
+  }
+
+  &:active{
+    /* CLIx orange white bar */
+    background-image: linear-gradient(90deg, #f54b32, #f37f2f 13.75em, #f6753f 17.250em, #fff 17.251em, #fff 17.6490em, #f56025 17.6491em, #f65e27);
+    /* CLIx orange */
+    background-image: linear-gradient(90deg, #f54b32, #f37f2f 13.75em, #f65e27);
+  }
 }
 
-// backgroundColor: props.selected ? 'deepPink' : 'gray',
-// padding: '10px 20px',
-// margin: '2px 0px',
-// color: 'white',
-// fontSize: '.8em',
-// cursor: 'pointer',
-//
-// marginTop: '.125em',
-// padding: '.25em 1em .5em',
-// backgroundColor: 'rgba(255,255,255, 0.1)'
-// cursor: pointer;
+.c-book-item--selected{
+  /* CLIx purple white bar */
+  background-image: linear-gradient(90deg, #91006a, #a31d7e 13.75em, #9c1577 17.250em, #fff 17.251em, #fff 17.6490em, #9b1675 17.6491em, #9a1675);
+}
