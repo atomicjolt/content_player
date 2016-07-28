@@ -1,50 +1,62 @@
 .c-sidebar{
     position: relative;
     top: 72px;
-    width: 0px;
+    width: 40px;
     height: calc(100% - 72px);
     border-right: 3px solid deepPink;
     transition: left .6s ease, width .4s ease;
     align-items: stretch;
     background-color: #4a4a4a;
     overflow:hidden;
-    pointer-events:none;
+    color: #fff;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 1.15px;
 
     a{
       opacity:0;
       transition: opacity .2s ease;
     }
 
+   .openButton{
+     background-color: #333;
+     padding: 15px 20px;
+     font-size: 1rem;
+   }
+
+   .openButton:hover{
+      background-color: #111;
+      border-bottom: 3px solid #666;
+   }
+
+   .openButton:active{
+     background-color: #111;
+     background-image: linear-gradient(90deg, #f54b32, #f37f2f 13.75em, #f65e27);
+     border-bottom: 3px solid #fff;
+   }
+
    .unit{
-     color: #fff;
      opacity: 0;
      transition: opacity .2s ease;
    }
 
    .subject{
-     color: #fff;
      opacity: 0;
      transition: opacity .2s ease;
    }
 }
 
 .c-sidebar--open{
-  left: 0px;
   width: 292px;
-  pointer-events: auto;
   a{
     color: #fff;
     opacity: 1;
   }
+
   .unit{
     opacity: 1;
-    margin-top: 40px;
-    padding-left: 20px;
+    padding: 10px 0px 5px 20px;
     font-size: .7rem;
-    color: #fff;
-    font-weight: 300;
-    letter-spacing: 1.15px;
-    text-transform: uppercase;
   }
 
 
@@ -52,9 +64,6 @@
     opacity: 1;
     padding-left: 20px;
     margin-bottom: 10px;
-    color: #fff;
-    font-weight: 300;
     font-size: .875rem;
-    text-transform: uppercase;
   }
 }

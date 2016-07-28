@@ -17,7 +17,6 @@ const select = (state) => {
 @connect(select, ApplicationActions)
 export default class Sidebar extends React.Component{
 
-
   tableOfContents(props){
     if(!props.tableOfContents){return;}
     return _.map(props.tableOfContents, (item)=>{
@@ -35,6 +34,11 @@ export default class Sidebar extends React.Component{
     return (
       <div
         className={sidebarClass}>
+        <div
+          onClick={() => {this.props.toggleSidebar();}} 
+          className="openButton">
+          Activity List
+        </div>
         <div className="unit">GRADE - UNIT</div>
         <div className="subject">{this.props.title || 'LESSON SUBJECT'}</div>
         {this.tableOfContents(this.props)}
