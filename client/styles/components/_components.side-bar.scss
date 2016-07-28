@@ -1,12 +1,10 @@
 .c-sidebar{
     position: relative;
     top: 72px;
-    // left: -100px;
     width: 0px;
-    // width: 292px;
     height: calc(100% - 72px);
     border-right: 3px solid deepPink;
-    transition: left .4s ease, width .4s ease;
+    transition: left .6s ease, width .4s ease;
     align-items: stretch;
     background-color: #4a4a4a;
     overflow:hidden;
@@ -14,19 +12,19 @@
 
     a{
       opacity:0;
-      transition: opacity 1s ease;//, width 3s ease-in-out;
+      transition: opacity .2s ease;
     }
 
    .unit{
      color: #fff;
      opacity: 0;
-     transition: opacity 1s ease;
+     transition: opacity .2s ease;
    }
 
    .subject{
-     color:#fff;
+     color: #fff;
      opacity: 0;
-     transition: opacity 1s ease;
+     transition: opacity .2s ease;
    }
 }
 
@@ -35,6 +33,7 @@
   width: 292px;
   pointer-events: auto;
   a{
+    color: #fff;
     opacity: 1;
   }
   .unit{
