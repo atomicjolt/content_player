@@ -1,11 +1,11 @@
 "use strict";
 
 import React                    from "react";
-import Chrome                   from '../chrome/chrome.jsx';
+import Chrome                   from '../chrome/chrome';
 import * as ContentActions      from '../../actions/content';
 import { connect }              from "react-redux";
 
-class Index extends React.Component {
+export class Index extends React.Component {
 
   componentWillMount(){
     this.props.loadContent(this.props.contentName);
@@ -24,13 +24,11 @@ class Index extends React.Component {
         display: 'flex'
       },
       content: {
-        // position: 'absolute',
         top: '0px',
         left: '0px',
         width: '100%',
         height: '100%',
         backgroundColor: 'lightGrey',
-        // zIndex: '1'
       }
     };
   }
