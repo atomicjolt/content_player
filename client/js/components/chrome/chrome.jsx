@@ -8,10 +8,7 @@ export default class Chrome extends React.Component{
   render(){
 
     return <div>
-      <Navbar />
-      <Sidebar
-        pageId={this.props.pageId}
-      />
+      <Sidebar pageId={this.props.pageId}/>
     </div>;
   }
 }
