@@ -32,6 +32,11 @@ export default class Sidebar extends React.Component{
 
   render(){
     var sidebarClass = this.props.sidebarOpen ? "c-sidebar c-sidebar--open" : "c-sidebar";
+
+    if(this.props.sidebarOpen){
+      var tableOfContents = this.tableOfContents(this.props);
+    }
+
     return (
       <div
         className={sidebarClass}>
@@ -42,7 +47,7 @@ export default class Sidebar extends React.Component{
         </div>
         <div className="unit">GRADE - UNIT</div>
         <div className="subject">{this.props.title || 'LESSON SUBJECT'}</div>
-        {this.tableOfContents(this.props)}
+        {tableOfContents}
       </div>
     );
   }
