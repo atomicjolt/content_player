@@ -2,7 +2,6 @@
 
 import React          from 'react';
 import BookItem       from './bookItem.jsx';
-import _              from 'lodash';
 import {connect}      from 'react-redux';
 import * as ApplicationActions  from '../../actions/application';
 
@@ -14,8 +13,7 @@ const select = (state) => {
   };
 };
 
-@connect(select, ApplicationActions)
-export default class Sidebar extends React.Component{
+export class Sidebar extends React.Component{
 
   tableOfContents(props){
     if(!props.tableOfContents){return;}
@@ -35,7 +33,7 @@ export default class Sidebar extends React.Component{
       <div
         className={sidebarClass}>
         <div
-          onClick={() => {this.props.toggleSidebar();}} 
+          onClick={() => {this.props.toggleSidebar();}}
           className="openButton">
           Activity List
         </div>
@@ -46,3 +44,5 @@ export default class Sidebar extends React.Component{
     );
   }
 }
+
+export default connect(select, ApplicationActions)(Sidebar);
