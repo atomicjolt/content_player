@@ -24,7 +24,8 @@ export default class Sidebar extends React.Component{
         <BookItem
           key={`bookItem_${item.id}`}
           content={item}
-          selected={this.props.pageId == item.id} />
+          selected={this.props.pageId == item.id}
+          sidebarOpen={this.props.sidebarOpen} />
       );
     });
   }
@@ -35,7 +36,7 @@ export default class Sidebar extends React.Component{
       <div
         className={sidebarClass}>
         <div
-          onClick={() => {this.props.toggleSidebar();}} 
+          onClick={() => {this.props.toggleSidebar();}}
           className="openButton">
           Activity List
         </div>
