@@ -2,7 +2,7 @@
 
 import React              from 'react';
 import Navbar             from './navbar.jsx';
-import Sidebar    from './sidebar.jsx';
+import Sidebar            from './sidebar.jsx';
 
 export default class Chrome extends React.Component{
   render(){
