@@ -4,58 +4,45 @@ import React          from 'react';
 import BookItem       from './bookItem.jsx';
 import _              from 'lodash';
 import {connect}      from 'react-redux';
+import * as ApplicationActions  from '../../actions/application';
 
 const select = (state) => {
   return {
     tableOfContents: state.content.tableOfContents,
     title: state.content.title,
-  }
+    sidebarOpen: state.application.sidebarOpen
+  };
 };
 
-@connect(select)
+@connect(select, ApplicationActions)
 export default class Sidebar extends React.Component{
 
-  getStyles(){
-    return {
-      container: {
-        position: 'fixed',
-        top: '72px',
-        left: this.props.sidebarOpen ? '0px' : '-300px',
-        width: '292px',
-        height: 'calc(100% - 72px)',
-        backgroundColor: 'dimGrey',
-        overflowY: 'scroll',
-        borderRight: '3px solid deepPink',
-        zIndex: '2',
-        transition: 'all .4s ease'
-      },
-      unit: {
-        marginTop: '40px',
-        paddingLeft: '20px',
-        color: 'white',
-        fontSize: '.7em'
-      },
-      subject:{
-        color: 'white',
-        paddingLeft: '20px',
-        marginBottom: '10px'
-      }
-    };
-  }
-
-  tableOfContents(){
-    return _.map(this.props.tableOfContents, (item)=>{
-      return <BookItem key={`bookItem_${item.id}`} content={item} selected={this.props.pageId == item.id} />;
+  tableOfContents(props){
+    if(!props.tableOfContents){return;}
+    return _.map(props.tableOfContents, (item)=>{
+      return (
+        <BookItem
+          key={`bookItem_${item.id}`}
+          content={item}
+          selected={this.props.pageId == item.id} />
+      );
     });
   }
 
   render(){
-    const styles = this.getStyles();
-
-    return <div style={styles.container}>
-      <div style={styles.unit}>GRADE - UNIT</div>
-      <div style={styles.subject}>{this.props.title || 'LESSON SUBJECT'}</div>
-      {this.tableOfContents()}
-    </div>;
+    var sidebarClass = this.props.sidebarOpen ? "c-sidebar c-sidebar--open" : "c-sidebar";
+    return (
+      <div
+        className={sidebarClass}>
+        <div
+          onClick={() => {this.props.toggleSidebar();}} 
+          className="openButton">
+          Activity List
+        </div>
+        <div className="unit">GRADE - UNIT</div>
+        <div className="subject">{this.props.title || 'LESSON SUBJECT'}</div>
+        {this.tableOfContents(this.props)}
+      </div>
+    );
   }
 }

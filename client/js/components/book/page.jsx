@@ -8,55 +8,29 @@ import { connect }              from "react-redux";
 
 const select = (state) => {
   return {
-    pages :            state.content.pages,
-    tableOfContents : state.content.tableOfContents
-  }
+    tableOfContents : state.content.tableOfContents,
+    contentName : state.settings.contentName
+  };
 };
 
 @connect(select, ContentActions)
 export default class Page extends React.Component {
-  constructor(props){
-    super();
-    var page = _.find(props.pages, page => page.id ==  props.params.pageId );
-    this.state = { content: page ? page.body : null }
-  }
 
-  componentWillUpdate(nextProps){
-    if(this.props.params.pageId != nextProps.params.pageId){
-      var page = _.find(this.props.pages, page => page.id ==  nextProps.params.pageId );
-      if(page){
-        this.setState({ content: page.body});
-      } else {
-        var entry = _.find(this.props.tableOfContents, (item) => item.id == nextProps.params.pageId);
-        if(entry){ this.props.loadPage(nextProps.params.pageId, unescape(entry.content)); }
-      }
-    }
-  }
-
-  getStyles(){
-    return{
-      logo: {
-        position: 'absolute',
-        bottom: '20px',
-        right: '20px'
-      },
-      content: {
-        position: 'relative',
-        left: '300px',
-        top: '80px'
-      }
-    };
+  iframe(props){
+    var current = _.find(
+      props.tableOfContents,
+      (item) => item.id == this.props.params.pageId
+    );
+    if(!current){return;}
+    return (
+      <iframe src={`pubs/${props.contentName}/OEBPS/${current.content}`} />
+    );
   }
 
   render(){
-    const styles = this.getStyles();
-    const img = assets("./images/atomicjolt.jpg");
-
-    //There are assets issues, iframing may be a better idea
     return (
-      <div>
-        <div style={styles.content} dangerouslySetInnerHTML={{__html: this.state.content}} />
-        <img src={img} style={styles.logo}/>
+      <div className="c-page">
+        {this.iframe(this.props)}
       </div>
     );
   }
