@@ -27,7 +27,6 @@ class Index extends React.Component {
         left: '0px',
         width: '100%',
         height: '100%',
-        backgroundColor: 'lightGrey',
       }
     };
   }
