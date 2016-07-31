@@ -1,8 +1,8 @@
 .c-sidebar{
     position: relative;
-    width: 107px;
+    width: 120px;
     height: 100%;
-    transition: width .6s ease;
+    transition: all .6s ease;
     align-items: stretch;
     background-color: #4a4a4a;
     overflow:hidden;
@@ -12,6 +12,16 @@
     a{
       opacity:0;
       transition: opacity .2s ease;
+    }
+
+    svg{
+      height: 12px;
+      width: 8px;
+      position: relative;
+      left: .7rem;
+      top: .1rem;
+      transform:rotate(180deg);
+      transition: all .6s ease;
     }
 
    .openButton{
@@ -58,6 +68,9 @@
     color: #fff;
     opacity: 1;
     transition: opacity .8s ease;
+  }
+  svg{
+    transform:rotate(0deg);
   }
 
   .unit{
