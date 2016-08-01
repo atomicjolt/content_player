@@ -2,6 +2,13 @@ import api         from "../libs/api";
 import { DONE }    from "../constants/wrapper";
 import { parse }   from "../libs/parser";
 
+
+function getToc(contentDoc){
+  var tocID = contentDoc.spine.toc;
+  var toc = contentDoc.manifest.filter((item) => {if(item.id == tocID) return true;});
+  return toc[0];
+}
+
 const EPUB = store => next => action => {
 
   function request(method, name, params, body){
@@ -19,7 +26,10 @@ const EPUB = store => next => action => {
           let contentXml  = contentParser.parseFromString(response.text,"text/xml");
           let contentDoc = parse(contentXml);
           // fix if we really do this.
-          let tocPromise = api.execRequest(method, `pubs/${name}/OEBPS/${contentDoc.manifest[0].href}`, state.settings.apiUrl, state.jwt, state.settings.csrfToken, params, body);
+          // TODO How to tell if ncx or not
+          let toc = getToc(contentDoc);
+
+          let tocPromise = api.execRequest(method, `pubs/${name}/OEBPS/og${toc.href}`, state.settings.apiUrl, state.jwt, state.settings.csrfToken, params, body);
           tocPromise.then((response, error)=>{
             let tocParser  = new DOMParser();
             let tocXml  = tocParser.parseFromString(response.text,"text/xml");
