@@ -10,8 +10,9 @@ export default (state = initialState, action) => {
 
   switch(action.type){
     case ApplicationConstants.TOGGLE_SIDEBAR:
-      state.sidebarOpen = !state.sidebarOpen
-      return Object.assign({}, state);
+      var toggled = Object.assign({}, state);
+      toggled.sidebarOpen = !toggled.sidebarOpen;
+      return toggled;
       break;
     default:
       return state;

@@ -19,7 +19,6 @@ export class Index extends React.Component {
         left: '0px',
         width: '100%',
         height: '100%',
-        fontFamily: "'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif",
         fontWeight: '300',
         display: 'flex'
       },
@@ -28,7 +27,6 @@ export class Index extends React.Component {
         left: '0px',
         width: '100%',
         height: '100%',
-        backgroundColor: 'lightGrey',
       }
     };
   }

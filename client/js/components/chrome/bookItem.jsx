@@ -9,7 +9,10 @@ export default (props)=>{
     hashHistory.push(`/${props.content.id}`);
   };
 
-  var bookItemClass = props.selected ? "c-book-item c-book-item--selected" : "c-book-item";
+  var bookItemClass = 'c-book-item';
+  if(props.sidebarOpen && props.selected){
+    bookItemClass = 'c-book-item c-book-item--selected';
+  }
 
   return <div className={bookItemClass} onClick={()=>openPage()}>
     <a>

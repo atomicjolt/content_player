@@ -1,15 +1,18 @@
 @import '_defines';
-//@import '../../node_modules/font-awesome/scss/font-awesome';
-//@import '../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap';
-//
+@import 'base/reset';
 
-//Fonts
-@font-face {
-    font-family: 'open_sans';
-    src:'https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i';
-    font-weight: normal;
-    font-style: normal;
+
+@font-face{
+  font-family: 'open_sans_regular';
+  src: url('fonts/OpenSans-Regular-webfont.woff') format('woff'),
+       url('fonts/OpenSans-Regular-webfont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
 }
+// @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i);
+
+
+@import "base/base";
 
 // Components
 @import "components/components.book-item";

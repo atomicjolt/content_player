@@ -22,13 +22,19 @@ export class Sidebar extends React.Component{
         <BookItem
           key={`bookItem_${item.id}`}
           content={item}
-          selected={this.props.pageId == item.id} />
+          selected={this.props.pageId == item.id}
+          sidebarOpen={this.props.sidebarOpen} />
       );
     });
   }
 
   render(){
     var sidebarClass = this.props.sidebarOpen ? "c-sidebar c-sidebar--open" : "c-sidebar";
+
+    if(this.props.sidebarOpen){
+      var tableOfContents = this.tableOfContents(this.props);
+    }
+
     return (
       <div
         className={sidebarClass}>
@@ -36,10 +42,19 @@ export class Sidebar extends React.Component{
           onClick={() => {this.props.toggleSidebar();}}
           className="openButton">
           Activity List
+          <svg viewBox="0 0 8 12" version="1.1">
+            <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+                <g id="Core" transform="translate(-260.000000, -90.000000)" fill="#FFFFFF">
+                    <g id="chevron-right" transform="translate(259.500000, 90.000000)">
+                        <polygon id="Shape" points="2 0 0.6 1.4 5.2 6 0.6 10.6 2 12 8 6"></polygon>
+                    </g>
+                </g>
+            </g>
+        </svg>
         </div>
         <div className="unit">GRADE - UNIT</div>
         <div className="subject">{this.props.title || 'LESSON SUBJECT'}</div>
-        {this.tableOfContents(this.props)}
+        {tableOfContents}
       </div>
     );
   }

@@ -4,19 +4,17 @@
   font-size: .8em;
   cursor: pointer;
   margin-top: .125em;
-  padding: 1em 1em 1em;
+  padding: 5px 16px 8px;
   background-color: rgba(255,255,255, 0.1);
   font-weight: 300;
   text-decoration: none;
-  // font-family: 'Open Sans', Arial, sans-serif;
   overflow:hidden;
   position: relative;
-
 
   a::before{
     position: absolute;
     top: 0px;
-    left: 268px;
+    left: 280px;
     height: 100%;
     width:6px;
     background: #fff;
@@ -38,7 +36,7 @@
 
   &:active{
     /* CLIx orange white bar */
-    background-image: linear-gradient(90deg, #f54b32, #f37f2f 0px, #f6753f 263px, #fff 263px, #fff 263px, #f56025 269px, #f65e27);
+    background-image: linear-gradient(90deg, #f54b32, #f37f2f 0px, #f6753f 275px, #fff 275px, #fff 281px, #f56025 281px, #f65e27);
     /* CLIx orange */
     background-image: linear-gradient(90deg, #f54b32, #f37f2f 0px, #f65e27);
   }
@@ -46,5 +44,5 @@
 
 .c-book-item--selected{
   /* CLIx purple white bar */
-  background-image: linear-gradient(90deg, #91006a, #a31d7e 0px, #9c1577 263px, #fff 263px, #fff 269px, #9b1675 269px, #9a1675);
+  background-image: linear-gradient(90deg, #91006a, #a31d7e 0px, #9c1577 275px, #fff 275px, #fff 281px, #9b1675 281px, #9a1675);
 }
