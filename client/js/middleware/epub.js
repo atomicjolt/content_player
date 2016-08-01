@@ -21,14 +21,14 @@ function getToc(contentDoc){
   return toc[0];
 }
 
-const EPUB = store => next => action => {
+function handleResponse(response, handleItem){
+  let parser  = new DOMParser();
+  let xmlDoc  = parser.parseFromString(response.text,"text/xml");
+  let item = parse(xmlDoc);
+  if(handleItem){return handleItem(item);}
+}
 
-  function handleResponse(response, handleItem){
-    let parser  = new DOMParser();
-    let xmlDoc  = parser.parseFromString(response.text,"text/xml");
-    let item = parse(xmlDoc);
-    return handleItem(item);
-  }
+const EPUB = store => next => action => {
 
   function requestToc(method, name, params, body){
     const state = store.getState();
@@ -49,18 +49,18 @@ const EPUB = store => next => action => {
         contentPromise.then((response) => {
 
           var tocPromise = handleResponse(response, (item) => {
-            let toc = getToc(contentDoc);
+            let toc = getToc(item);
             return api.execRequest(method, `${contentPath}/${toc.href}`, state.settings.apiUrl, state.jwt, state.settings.csrfToken, params, body);
           });
 
           tocPromise.then((response) => {
-            handleResponse((item) => {
-              let tableOfContents = _.isArray(tocDoc.navMap) ? tocDoc.navMap : [tocDoc.navMap];
+            handleResponse(response, (item) => {
+              let tableOfContents = _.isArray(item.navMap) ? item.navMap : [item.navMap];
               store.dispatch({
                 type:     action.type + DONE,
                 tableOfContents,
                 original: action,
-                tocDoc,
+                tocDoc: item,
                 contentPath,
               });
             });
