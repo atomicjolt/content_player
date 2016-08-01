@@ -19,7 +19,7 @@ function getRelativePath(manifest){
 const EPUB = store => next => action => {
 
   function request(method, name, params, body){
-    console.log(method, name, params, body);
+    var epubPath = `pubs/${name}`;
     const state = store.getState();
     const promise = api.execRequest(method, `pubs/${name}/META-INF/container.xml`, state.settings.apiUrl, state.jwt, state.settings.csrfToken, params, body);
     if(promise){
@@ -28,6 +28,7 @@ const EPUB = store => next => action => {
         let xmlDoc  = parser.parseFromString(response.text,"text/xml");
         let manifest = parse(xmlDoc);
         let relativePath = getRelativePath(manifest);
+        if(!_.isEmpty(relativePath)){epubPath += `/${relativePath}`;} //TODO doc
 
         let contentPromise = api.execRequest(method, `pubs/${name}/${manifest.rootfiles["full-path"]}`, state.settings.apiUrl, state.jwt, state.settings.csrfToken, params, body);
         contentPromise.then((response, error)=>{
@@ -35,7 +36,6 @@ const EPUB = store => next => action => {
           let contentXml  = contentParser.parseFromString(response.text,"text/xml");
           let contentDoc = parse(contentXml);
           // fix if we really do this.
-          // TODO How to tell if ncx or not
           let toc = getToc(contentDoc);
           let tocPromise = api.execRequest(method, `pubs/${name}/${relativePath}/${toc.href}`, state.settings.apiUrl, state.jwt, state.settings.csrfToken, params, body);
           tocPromise.then((response, error)=>{
@@ -50,17 +50,11 @@ const EPUB = store => next => action => {
               tocDoc,
               contentDoc,
               manifest,
+              epubPath,
               error
             }); // Dispatch the new data
           });
         });
-        // store.dispatch({
-        //   type:     action.type + DONE,
-        //   payload:  response.body,
-        //   original: action,
-        //   response,
-        //   error
-        // }); // Dispatch the new data
       });
     }
   }

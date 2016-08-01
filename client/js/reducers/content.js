@@ -13,6 +13,7 @@ export default (state = {}, action) => {
     case ContentConstants.LOAD_CONTENT_DONE:
       nextState.tableOfContents = action.tableOfContents;
       nextState.title = action.tocDoc.docTitle;
+      nextState.epubPath = action.epubPath;
       return nextState;
 
     default:
