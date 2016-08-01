@@ -1,7 +1,7 @@
 "use strict";
 
 import React                    from "react";
-import Chrome                   from '../chrome/chrome.jsx';
+import Sidebar from '../chrome/sidebar';
 import * as ContentActions      from '../../actions/content';
 import { connect }              from "react-redux";
 
@@ -14,7 +14,7 @@ class Index extends React.Component {
   render(){
     return (
       <div className="c-container">
-        <Chrome pageId={this.props.params.pageId}/>
+        <Sidebar pageId={this.props.params.pageId}/>
         <div className="c-content">
           {this.props.children}
         </div>
