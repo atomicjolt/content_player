@@ -11,32 +11,11 @@ class Index extends React.Component {
     this.props.loadContent(this.props.contentName);
   }
 
-  getStyles(){
-    return{
-      body: {
-        position: 'fixed',
-        top: '0px',
-        left: '0px',
-        width: '100%',
-        height: '100%',
-        fontWeight: '300',
-        display: 'flex'
-      },
-      content: {
-        top: '0px',
-        left: '0px',
-        width: '100%',
-        height: '100%',
-      }
-    };
-  }
-
   render(){
-    const styles = this.getStyles();
     return (
-      <div style={styles.body}>
+      <div className="c-container">
         <Chrome pageId={this.props.params.pageId}/>
-        <div style={styles.content}>
+        <div className="c-content">
           {this.props.children}
         </div>
       </div>
