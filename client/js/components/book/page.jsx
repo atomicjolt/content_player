@@ -10,7 +10,7 @@ const select = (state) => {
   return {
     tableOfContents : state.content.tableOfContents,
     contentName : state.settings.contentName,
-    epubPath: state.content.epubPath
+    contentPath: state.content.contentPath
   };
 };
 
@@ -24,7 +24,7 @@ export default class Page extends React.Component {
     );
     if(!current){return;}
     return (
-      <iframe src={`${this.props.epubPath}/${current.content}`} />
+      <iframe src={`${this.props.contentPath}/${current.content}`} />
     );
   }
 
