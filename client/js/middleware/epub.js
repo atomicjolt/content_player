@@ -13,15 +13,6 @@ function getRelativePath(manifest){
   return `${segments.join('/')}`;
 }
 
-/**
- * Returns path of the table of contents relative to the epub 'rootfile'
- */
-function getToc(contentDoc){
-  var tocID = contentDoc.spine.toc;
-  var toc = contentDoc.manifest.filter((item) => {if(item.id == tocID) return true;});
-  return toc[0];
-}
-
 function handleResponse(response, handleItem, params = []){
   let parser  = new DOMParser();
   let xmlDoc  = parser.parseFromString(response.text,"text/xml");
@@ -71,8 +62,8 @@ const EPUB = store => next => action => {
             tocDoc: item,
             contentPath: epubUrl,
           });
-        })
-      })
+        });
+      });
     });
   }
 
