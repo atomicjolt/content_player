@@ -23,45 +23,47 @@ function getToc(contentDoc){
 
 const EPUB = store => next => action => {
 
-  function request(method, name, params, body){
+  function handleResponse(response, handleItem){
+    let parser  = new DOMParser();
+    let xmlDoc  = parser.parseFromString(response.text,"text/xml");
+    let item = parse(xmlDoc);
+    return handleItem(item);
+  }
+
+  function requestToc(method, name, params, body){
     const state = store.getState();
-    const promise = api.execRequest(method, `pubs/${name}/META-INF/container.xml`, state.settings.apiUrl, state.jwt, state.settings.csrfToken, params, body);
-    if(promise){
-      promise.then((response, error) => {
-        let parser  = new DOMParser();
-        let xmlDoc  = parser.parseFromString(response.text,"text/xml");
-        let manifest = parse(xmlDoc);
+    const metaPromise = api.execRequest(method, `pubs/${name}/META-INF/container.xml`, state.settings.apiUrl, state.jwt, state.settings.csrfToken, params, body);
+    if(metaPromise){
+      metaPromise.then((response) => {
+        var contentPath;
+        var contentPromise = handleResponse(response, (item) => {
+          // Path to epub content
+          contentPath = `pubs/${name}`;
+          let relativePath = getRelativePath(item);
 
-        // Path to epub content
-        var contentPath = `pubs/${name}`;
-        let relativePath = getRelativePath(manifest);
+          // if there is a relative path within the epub to the content then append it.
+          if(!_.isEmpty(relativePath)){contentPath += `/${relativePath}`;}
+          return api.execRequest(method, `pubs/${name}/${item.rootfiles["full-path"]}`, state.settings.apiUrl, state.jwt, state.settings.csrfToken, params, body);
+        });
 
-        // if there is a relative path within the epub to the content then append it.
-        if(!_.isEmpty(relativePath)){contentPath += `/${relativePath}`;}
+        contentPromise.then((response) => {
 
-        let contentPromise = api.execRequest(method, `pubs/${name}/${manifest.rootfiles["full-path"]}`, state.settings.apiUrl, state.jwt, state.settings.csrfToken, params, body);
-        contentPromise.then((response, error)=>{
-          let contentParser  = new DOMParser();
-          let contentXml  = contentParser.parseFromString(response.text,"text/xml");
-          let contentDoc = parse(contentXml);
-          let toc = getToc(contentDoc);
+          var tocPromise = handleResponse(response, (item) => {
+            let toc = getToc(contentDoc);
+            return api.execRequest(method, `${contentPath}/${toc.href}`, state.settings.apiUrl, state.jwt, state.settings.csrfToken, params, body);
+          });
 
-          let tocPromise = api.execRequest(method, `${contentPath}/${toc.href}`, state.settings.apiUrl, state.jwt, state.settings.csrfToken, params, body);
-          tocPromise.then((response, error)=>{
-            let tocParser  = new DOMParser();
-            let tocXml  = tocParser.parseFromString(response.text,"text/xml");
-            let tocDoc = parse(tocXml);
-            let tableOfContents = _.isArray(tocDoc.navMap) ? tocDoc.navMap : [tocDoc.navMap];
-            store.dispatch({
-              type:     action.type + DONE,
-              tableOfContents,
-              original: action,
-              tocDoc,
-              contentDoc,
-              manifest,
-              contentPath,
-              error
-            }); // Dispatch the new data
+          tocPromise.then((response) => {
+            handleResponse((item) => {
+              let tableOfContents = _.isArray(tocDoc.navMap) ? tocDoc.navMap : [tocDoc.navMap];
+              store.dispatch({
+                type:     action.type + DONE,
+                tableOfContents,
+                original: action,
+                tocDoc,
+                contentPath,
+              });
+            });
           });
         });
       });
@@ -69,7 +71,7 @@ const EPUB = store => next => action => {
   }
 
   if(action.epubMethod){
-    request(action.epubMethod, action.name, action.params, action.body);
+    requestToc(action.epubMethod, action.name, action.params, action.body);
   }
 
 
