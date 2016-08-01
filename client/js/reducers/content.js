@@ -8,12 +8,13 @@ import { Constants as ContentConstants } from "../actions/content";
 
 
 export default (state = {}, action) => {
+  var nextState = _.merge({}, {...state});
   switch (action.type) {
-
     case ContentConstants.LOAD_CONTENT_DONE:
-      state.tableOfContents = action.tableOfContents;
-      state.title = action.tocDoc.docTitle;
-      return _.merge({}, {...state});
+      nextState.tableOfContents = action.tableOfContents;
+      nextState.title = action.tocDoc.docTitle;
+      nextState.contentPath = action.contentPath;
+      return nextState;
 
     default:
       return state;

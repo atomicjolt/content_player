@@ -9,7 +9,8 @@ import { connect }              from "react-redux";
 const select = (state) => {
   return {
     tableOfContents : state.content.tableOfContents,
-    contentName : state.settings.contentName
+    contentName : state.settings.contentName,
+    contentPath: state.content.contentPath
   };
 };
 
@@ -23,7 +24,7 @@ export default class Page extends React.Component {
     );
     if(!current){return;}
     return (
-      <iframe src={`pubs/${props.contentName}/OEBPS/${current.content}`} />
+      <iframe src={`${this.props.contentPath}/${current.content}`} />
     );
   }
 
