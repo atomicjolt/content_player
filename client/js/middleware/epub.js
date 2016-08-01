@@ -57,48 +57,8 @@ function requestTableOfContents(state, manifest, epubUrl, next){
 
 
 const EPUB = store => next => action => {
-  // function requestToc(method, name, params, body){
-  //   const state = store.getState();
-  //   const metaPromise = api.execRequest(method, `pubs/${name}/META-INF/container.xml`, state.settings.apiUrl, state.jwt, state.settings.csrfToken, params, body);
-  //   if(metaPromise){
-  //     metaPromise.then((response) => {
-  //       var contentPath;
-  //       var contentPromise = handleResponse(response, (item) => {
-  //         // Path to epub content
-  //         contentPath = `pubs/${name}`;
-  //         let relativePath = getRelativePath(item);
-  //
-  //         // if there is a relative path within the epub to the content then append it.
-  //         if(!_.isEmpty(relativePath)){contentPath += `/${relativePath}`;}
-  //         return api.execRequest(method, `pubs/${name}/${item.rootfiles["full-path"]}`, state.settings.apiUrl, state.jwt, state.settings.csrfToken, params, body);
-  //       });
-  //
-  //       contentPromise.then((response) => {
-  //
-  //         var tocPromise = handleResponse(response, (item) => {
-  //           let toc = getToc(item);
-  //           return api.execRequest(method, `${contentPath}/${toc.href}`, state.settings.apiUrl, state.jwt, state.settings.csrfToken, params, body);
-  //         });
-  //
-  //         tocPromise.then((response) => {
-  //           handleResponse(response, (item) => {
-  //             let tableOfContents = _.isArray(item.navMap) ? item.navMap : [item.navMap];
-  //             store.dispatch({
-  //               type:     action.type + DONE,
-  //               tableOfContents,
-  //               original: action,
-  //               tocDoc: item,
-  //               contentPath,
-  //             });
-  //           });
-  //         });
-  //       });
-  //     });
-  //   }
-  // }
 
   if(action.epubMethod){
-    // requestToc(action.epubMethod, action.name, action.params, action.body);
     const state = store.getState();
     requestContainer(state, `pubs/${action.name}`, (item, epubUrl) => {
       requestRootFile(state, item, epubUrl, getRelativePath(item), (item, epubUrl) => {
