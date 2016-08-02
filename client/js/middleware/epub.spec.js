@@ -87,14 +87,37 @@ fdescribe('epub middleware', () => {
   });
 
   describe('requestContainer', () => {
-    it("should make request", (done) => {
-      spyOn(mocks, 'fakeRequest');
+    it("should make request", () => {
+      requestContainer({settings:{}}, 'fakeUrl');
+      expect(requestCalled).toEqual(true);
+    });
+
+    it("should call next", (done) => {
       requestContainer({settings:{}}, 'fakeUrl', () => {
         done();
       });
-      expect(requestCalled).toEqual(true);
     });
   });
-  // describe('requestRootFile', () => {});
-  // describe('requestTableOfContents', () => {});
+
+  describe('requestRootFile', () => {
+    const container = {
+      rootfiles:{
+        ['full-path']:""
+      }
+    };
+
+    it("should make request", () => {
+      requestRootFile({settings:{}}, container, 'fakeUrl');
+      expect(requestCalled).toEqual(true);
+    });
+
+    it("should call next", (done) => {
+      requestRootFile({settings:{}}, container,'fakeUrl', 'fakepath', () => {
+        done();
+      });
+    });
+
+  });
+
+  describe('requestTableOfContents', () => {});
 });
