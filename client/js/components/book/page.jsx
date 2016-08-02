@@ -14,8 +14,7 @@ const select = (state) => {
   };
 };
 
-@connect(select, ContentActions)
-export default class Page extends React.Component {
+export class Page extends React.Component {
 
   iframe(props){
     var current = _.find(
@@ -35,5 +34,6 @@ export default class Page extends React.Component {
       </div>
     );
   }
-
 }
+
+export default connect(select, ContentActions)(Page);
