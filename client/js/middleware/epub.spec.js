@@ -1,7 +1,29 @@
-import * as Epub from './epub';
+import {
+  handleResponse,
+  getRelativePath,
+  requestContainer,
+  requestRootFile,
+  requestTableOfContents,
+  __RewireAPI__ as EpubRewire } from './epub';
 
+var requestCalled = false;
+const mocks = {
+  fakeRequest: () => {
+    requestCalled = true;
+    return new Promise((resolve, reject) => {
+      resolve({text:""});
+    });
+  }
+};
 
-describe('epub middleware', () => {
+fdescribe('epub middleware', () => {
+  beforeEach(() => {
+    EpubRewire.__Rewire__('request', mocks.fakeRequest);
+    requestCalled = false;
+  });
+
+  afterEach(() => { EpubRewire.__ResetDependency__('request'); });
+
   describe('handleResponse', () => {
     const params = {
 
@@ -29,7 +51,7 @@ describe('epub middleware', () => {
     it("calls handleItem", () => {
       spyOn(params, 'handleItem');
       const callbackParams =  [1,2,3];
-      Epub.handleResponse(params.response, params.handleItem, callbackParams);
+      handleResponse(params.response, params.handleItem, callbackParams);
 
       expect(params.handleItem).toHaveBeenCalledWith(parsedItem, ...callbackParams);
     });
@@ -37,7 +59,7 @@ describe('epub middleware', () => {
 
   describe('getRelativePath', () => {
     it("removes rootfile", () => {
-      var result = Epub.getRelativePath({
+      var result = getRelativePath({
         rootfiles: {
           ['full-path']: "folder/content.opf"
         }
@@ -46,7 +68,7 @@ describe('epub middleware', () => {
     });
 
     it("returns path from epub root to rootfile", () => {
-      var result = Epub.getRelativePath({
+      var result = getRelativePath({
         rootfiles: {
           ['full-path']: "deeply/nested/folder/content.opf"
         }
@@ -55,7 +77,7 @@ describe('epub middleware', () => {
     });
 
     it("returns empty string when rootfile is at epub root", () => {
-      var result = Epub.getRelativePath({
+      var result = getRelativePath({
         rootfiles: {
           ['full-path']: "content.opf"
         }
@@ -64,7 +86,15 @@ describe('epub middleware', () => {
     });
   });
 
-  describe('requestContainer', () => {});
-  describe('requestRootFile', () => {});
-  describe('requestTableOfContents', () => {});
+  describe('requestContainer', () => {
+    it("should make request", (done) => {
+      spyOn(mocks, 'fakeRequest');
+      requestContainer({settings:{}}, 'fakeUrl', () => {
+        done();
+      });
+      expect(requestCalled).toEqual(true);
+    });
+  });
+  // describe('requestRootFile', () => {});
+  // describe('requestTableOfContents', () => {});
 });
