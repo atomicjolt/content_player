@@ -14,17 +14,16 @@ const select = (state) => {
   };
 };
 
-@connect(select, ContentActions)
-export default class Page extends React.Component {
+export class Page extends React.Component {
 
   iframe(props){
     var current = _.find(
       props.tableOfContents,
-      (item) => item.id == this.props.params.pageId
+      (item) => item.id == props.params.pageId
     );
     if(!current){return;}
     return (
-      <iframe src={`${this.props.contentPath}/${current.content}`} />
+      <iframe src={`${props.contentPath}/${current.content}`} />
     );
   }
 
@@ -35,5 +34,6 @@ export default class Page extends React.Component {
       </div>
     );
   }
-
 }
+
+export default connect(select, ContentActions)(Page);

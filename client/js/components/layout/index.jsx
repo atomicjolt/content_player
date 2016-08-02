@@ -5,7 +5,7 @@ import Sidebar from '../chrome/sidebar';
 import * as ContentActions      from '../../actions/content';
 import { connect }              from "react-redux";
 
-class Index extends React.Component {
+export class Index extends React.Component {
 
   componentWillMount(){
     this.props.loadContent(this.props.contentName);
