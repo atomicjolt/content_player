@@ -35,7 +35,35 @@ describe('epub middleware', () => {
     });
   });
 
-  describe('getRelativePath', () => {});
+  describe('getRelativePath', () => {
+    it("removes rootfile", () => {
+      var result = Epub.getRelativePath({
+        rootfiles: {
+          ['full-path']: "folder/content.opf"
+        }
+      });
+      expect(result).toEqual('folder');
+    });
+
+    it("returns path from epub root to rootfile", () => {
+      var result = Epub.getRelativePath({
+        rootfiles: {
+          ['full-path']: "deeply/nested/folder/content.opf"
+        }
+      });
+      expect(result).toEqual('deeply/nested/folder');
+    });
+
+    it("returns empty string when rootfile is at epub root", () => {
+      var result = Epub.getRelativePath({
+        rootfiles: {
+          ['full-path']: "content.opf"
+        }
+      });
+      expect(result).toEqual('');
+    });
+  });
+
   describe('requestContainer', () => {});
   describe('requestRootFile', () => {});
   describe('requestTableOfContents', () => {});
