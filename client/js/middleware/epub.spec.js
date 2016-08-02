@@ -16,7 +16,7 @@ const mocks = {
   }
 };
 
-fdescribe('epub middleware', () => {
+describe('epub middleware', () => {
   beforeEach(() => {
     EpubRewire.__Rewire__('request', mocks.fakeRequest);
     requestCalled = false;

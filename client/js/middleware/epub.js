@@ -4,10 +4,16 @@ import { DONE }    from "../constants/wrapper";
 import { parse }   from "../libs/parser";
 import _           from 'lodash';
 
+/**
+ * Request wrapper to enable us to mock requests with Rewire
+ */
 function request(method, url, apiUrl, jwt, csrfToken){
   return api.execRequest(method, url, apiUrl, jwt, csrfToken);
 }
 
+/**
+ * Parse response from server and pass to callback function along with optional params.
+ */
 export function handleResponse(response, handleItem, params = []){
   let parser  = new DOMParser();
   let xmlDoc  = parser.parseFromString(response.text,"text/xml");
@@ -24,8 +30,11 @@ export function getRelativePath(manifest){
   return `${segments.join('/')}`;
 }
 
+/**
+ * Make request for epub container document, then calls callback with parsed container
+ * document.
+ */
 export function requestContainer(state, epubUrl, next){
-  // const metaPromise = api.execRequest(Network.GET, `${epubUrl}/META-INF/container.xml`, state.settings.apiUrl, state.jwt, state.settings.csrfToken);
   const metaPromise = request(Network.GET, `${epubUrl}/META-INF/container.xml`, state.settings.apiUrl, state.jwt, state.settings.csrfToken);
   if(metaPromise){
     metaPromise.then((response) => {
@@ -34,6 +43,10 @@ export function requestContainer(state, epubUrl, next){
   }
 }
 
+/**
+ * Makes request for root file, parses it, and passes it to the callback along with
+ * the url where epub content is located.
+ */
 export function requestRootFile(state, container, epubUrl, epubPath, next){
   var rootfile = request(Network.GET, `${epubUrl}/${container.rootfiles["full-path"]}`, state.settings.apiUrl, state.jwt, state.settings.csrfToken);
   if(!_.isEmpty(epubPath)){epubUrl += `/${epubPath}`;}
@@ -42,9 +55,13 @@ export function requestRootFile(state, container, epubUrl, epubPath, next){
   });
 }
 
-export function requestTableOfContents(state, manifest, epubUrl, next){
-  var tocID = manifest.spine.toc;
-  var toc = manifest.manifest.filter((item) => {if(item.id == tocID) return true;})[0];
+/**
+ * Makes request for epub table fo contents, parses it, and passes to the callback
+ * along with the url where epub content will be located.
+ */
+export function requestTableOfContents(state, rootfile, epubUrl, next){
+  var tocID = rootfile.spine.toc;
+  var toc = rootfile.manifest.filter((item) => {if(item.id == tocID) return true;})[0];
   var tocPromise = request(Network.GET, `${epubUrl}/${toc.href}`, state.settings.apiUrl, state.jwt, state.settings.csrfToken);
   tocPromise.then((response) => {
     handleResponse(response, next, [epubUrl]);
