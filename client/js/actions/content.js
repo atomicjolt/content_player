@@ -19,8 +19,8 @@ export const resetValue = (key) => ({
   key
 });
 
-export const loadContent = (name) => ({
+export const loadContent = (epubUrl) => ({
   type: Constants.LOAD_CONTENT,
   epubMethod: Network.GET,
-  name
+  epubUrl
 });
