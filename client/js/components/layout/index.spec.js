@@ -6,34 +6,38 @@ import TestUtils    from 'react/lib/ReactTestUtils';
 import { Provider } from 'react-redux';
 import Helper       from '../../../specs_support/helper';
 import { Index }        from './index';
-import { __RewireAPI__ as ChromeRewireApi } from './index';
+import { __RewireAPI__ as SidebarRewire } from './index';
 
 
-const FakeChrome = React.createClass({
+const FakeSidebar = React.createClass({
   render(){
-    return <div>Howdy</div>;
+    return <div></div>;
   }
 });
 
 describe('index', function() {
-  var result;
+  var result, subject;
   var props;
 
   beforeEach(()=>{
-    ChromeRewireApi.__Rewire__('Chrome', FakeChrome);
+    SidebarRewire.__Rewire__('Sidebar', FakeSidebar);
 
     props = {
       loadContent: () => {},
       params: {}
     };
-    result = TestUtils.renderIntoDocument(<Index {...props} />);
+    result = TestUtils.renderIntoDocument(<Index {...props}><h1>Howdy</h1></Index>);
+    subject = ReactDOM.findDOMNode(result);
   });
 
   afterEach(() => {
-    ChromeRewireApi.__ResetDependency__('Chrome');
+    SidebarRewire.__ResetDependency__('Sidebar');
   });
 
   it('renders the index', function() {
     expect(ReactDOM.findDOMNode(result)).toBeDefined();
+  });
+  it("renders children", () => {
+    expect(subject.innerHTML).toContain('Howdy');
   });
 });
