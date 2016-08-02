@@ -116,8 +116,23 @@ fdescribe('epub middleware', () => {
         done();
       });
     });
-
   });
 
-  describe('requestTableOfContents', () => {});
+  describe('requestTableOfContents', () => {
+    const manifest = {
+      manifest:[{id:'not-toc'}, {id:'toc'}],
+      spine:{toc:'toc'}
+    };
+
+    it("should make request", () => {
+      requestTableOfContents({settings:{}}, manifest, 'fakeUrl');
+      expect(requestCalled).toEqual(true);
+    });
+
+    it("should call next", (done) => {
+      requestTableOfContents({settings:{}}, manifest,'fakeUrl', () => {
+        done();
+      });
+    });
+  });
 });
