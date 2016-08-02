@@ -1,7 +1,7 @@
 "use strict";
 
 import React                    from "react";
-import Chrome                   from '../chrome/chrome';
+import Sidebar from '../chrome/sidebar';
 import * as ContentActions      from '../../actions/content';
 import { connect }              from "react-redux";
 
@@ -11,32 +11,11 @@ export class Index extends React.Component {
     this.props.loadContent(this.props.contentName);
   }
 
-  getStyles(){
-    return{
-      body: {
-        position: 'fixed',
-        top: '0px',
-        left: '0px',
-        width: '100%',
-        height: '100%',
-        fontWeight: '300',
-        display: 'flex'
-      },
-      content: {
-        top: '0px',
-        left: '0px',
-        width: '100%',
-        height: '100%',
-      }
-    };
-  }
-
   render(){
-    const styles = this.getStyles();
     return (
-      <div style={styles.body}>
-        <Chrome pageId={this.props.params.pageId}/>
-        <div style={styles.content}>
+      <div className="c-container">
+        <Sidebar pageId={this.props.params.pageId}/>
+        <div className="c-content">
           {this.props.children}
         </div>
       </div>
