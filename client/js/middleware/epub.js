@@ -4,23 +4,23 @@ import { DONE }    from "../constants/wrapper";
 import { parse }   from "../libs/parser";
 import _           from 'lodash';
 
-/**
- * Returns path from the epub root to epub content
- */
-function getRelativePath(manifest){
-  let segments = manifest.rootfiles['full-path'].split('/');
-  segments.splice(-1,1); // Remove last element
-  return `${segments.join('/')}`;
-}
-
-function handleResponse(response, handleItem, params = []){
+export function handleResponse(response, handleItem, params = []){
   let parser  = new DOMParser();
   let xmlDoc  = parser.parseFromString(response.text,"text/xml");
   let item = parse(xmlDoc);
   if(handleItem){return handleItem(item, ...params);}
 }
 
-function requestContainer(state, epubUrl, next){
+/**
+ * Returns path from the epub root to epub content
+ */
+export function getRelativePath(manifest){
+  let segments = manifest.rootfiles['full-path'].split('/');
+  segments.splice(-1,1); // Remove last element
+  return `${segments.join('/')}`;
+}
+
+export function requestContainer(state, epubUrl, next){
   const metaPromise = api.execRequest(Network.GET, `${epubUrl}/META-INF/container.xml`, state.settings.apiUrl, state.jwt, state.settings.csrfToken);
   if(metaPromise){
     metaPromise.then((response) => {
@@ -29,7 +29,7 @@ function requestContainer(state, epubUrl, next){
   }
 }
 
-function requestRootFile(state, container, epubUrl, epubPath, next){
+export function requestRootFile(state, container, epubUrl, epubPath, next){
   var rootfile = api.execRequest(Network.GET, `${epubUrl}/${container.rootfiles["full-path"]}`, state.settings.apiUrl, state.jwt, state.settings.csrfToken);
   if(!_.isEmpty(epubPath)){epubUrl += `/${epubPath}`;}
   rootfile.then((response) => {
@@ -37,7 +37,7 @@ function requestRootFile(state, container, epubUrl, epubPath, next){
   });
 }
 
-function requestTableOfContents(state, manifest, epubUrl, next){
+export function requestTableOfContents(state, manifest, epubUrl, next){
   var tocID = manifest.spine.toc;
   var toc = manifest.manifest.filter((item) => {if(item.id == tocID) return true;})[0];
   var tocPromise = api.execRequest(Network.GET, `${epubUrl}/${toc.href}`, state.settings.apiUrl, state.jwt, state.settings.csrfToken);
