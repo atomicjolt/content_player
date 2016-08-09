@@ -14,6 +14,7 @@ export default (state = {}, action) => {
       nextState.tableOfContents = action.tableOfContents;
       nextState.title = action.tocDoc.docTitle;
       nextState.contentPath = action.contentPath;
+      nextState.tocMeta = action.tocMeta;
       return nextState;
 
     default:
