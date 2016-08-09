@@ -1,9 +1,12 @@
+import _              from 'lodash';
+import {hashHistory}  from "react-router";
+
 import api         from "../libs/api";
-import Network    from '../constants/network';
+import Network     from '../constants/network';
 import { DONE }    from "../constants/wrapper";
 import { parse }   from "../libs/parser";
-import _           from 'lodash';
-
+import {Constants as ApplicationConstants} from '../actions/application';
+import {Constants as ContentConstants} from '../actions/content';
 /**
  * Request wrapper to enable us to mock requests with Rewire
  */
@@ -79,27 +82,34 @@ export function requestTableOfContents(state, rootfile, epubUrl, next){
 
 
 const EPUB = store => next => action => {
-  if(action.epubMethod){
-    const state = store.getState();
-    requestContainer(state, action.epubUrl, (item, epubUrl) => {
-      requestRootFile(state, item, epubUrl, getRelativePath(item), (item, epubUrl) => {
-        requestTableOfContents(
-          state,
-          item,
-          epubUrl,
-          (item, epubUrl, tocMeta) => {
-            let tableOfContents = _.isArray(item.navMap) ? item.navMap : [item.navMap];
-            store.dispatch({
-              type:     action.type + DONE,
-              tableOfContents,
-              original: action,
-              tocDoc: item,
-              contentPath: epubUrl,
-              tocMeta
-            });
+  switch (action.type) {
+    case ApplicationConstants.SELECT_PAGE:
+      hashHistory.push(`${action.pageId}`);
+      break;
+    case ContentConstants.LOAD_CONTENT:
+      if(action.epubMethod){
+        const state = store.getState();
+        requestContainer(state, action.epubUrl, (item, epubUrl) => {
+          requestRootFile(state, item, epubUrl, getRelativePath(item), (item, epubUrl) => {
+            requestTableOfContents(
+              state,
+              item,
+              epubUrl,
+              (item, epubUrl, tocMeta) => {
+                let tableOfContents = _.isArray(item.navMap) ? item.navMap : [item.navMap];
+                store.dispatch({
+                  type:     action.type + DONE,
+                  tableOfContents,
+                  original: action,
+                  tocDoc: item,
+                  contentPath: epubUrl,
+                  tocMeta
+                });
+              });
           });
-      });
-    });
+        });
+      }
+      break;
   }
 
 
