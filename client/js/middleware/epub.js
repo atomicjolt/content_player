@@ -60,11 +60,15 @@ export function requestRootFile(state, container, epubUrl, epubPath, next){
  * along with the url where epub content will be located.
  */
 export function requestTableOfContents(state, rootfile, epubUrl, next){
+  var titles = rootfile.metadata['dc:title'];
+  var subjectLesson = (titles.find((item) => item.id === 'subj-lesson') || {}).text;
+  var gradeUnit = (titles.find((item) => item.id === 'grd-unit') || {}).text;
+  var language = rootfile.metadata['dc:language'];
   var tocID = rootfile.spine.toc;
   var toc = rootfile.manifest.filter((item) => {if(item.id == tocID) return true;})[0];
   var tocPromise = request(Network.GET, `${epubUrl}/${toc.href}`, state.settings.apiUrl, state.jwt, state.settings.csrfToken);
   tocPromise.then((response) => {
-    handleResponse(response, next, [epubUrl]);
+    handleResponse(response, next, [epubUrl, { subjectLesson, gradeUnit, language}]);
   });
 }
 
@@ -74,16 +78,21 @@ const EPUB = store => next => action => {
     const state = store.getState();
     requestContainer(state, action.epubUrl, (item, epubUrl) => {
       requestRootFile(state, item, epubUrl, getRelativePath(item), (item, epubUrl) => {
-        requestTableOfContents(state, item, epubUrl, (item, epubUrl) => {
-          let tableOfContents = _.isArray(item.navMap) ? item.navMap : [item.navMap];
-          store.dispatch({
-            type:     action.type + DONE,
-            tableOfContents,
-            original: action,
-            tocDoc: item,
-            contentPath: epubUrl,
+        requestTableOfContents(
+          state,
+          item,
+          epubUrl,
+          (item, epubUrl, tocMeta) => {
+            let tableOfContents = _.isArray(item.navMap) ? item.navMap : [item.navMap];
+            store.dispatch({
+              type:     action.type + DONE,
+              tableOfContents,
+              original: action,
+              tocDoc: item,
+              contentPath: epubUrl,
+              tocMeta
+            });
           });
-        });
       });
     });
   }
