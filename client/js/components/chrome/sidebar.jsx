@@ -57,7 +57,7 @@ export class Sidebar extends React.Component{
         <div className="subject">{this.props.tocMeta.subjectLesson}</div>
         {tableOfContents}
         <div>
-          <p className="clix-v">CLIx release date: 2016-08-09, 16:30 IST</p>
+          <p className="clix-v">{`CLIx release date: ${this.props.tocMeta.lastModified}`}</p>
         </div>
       </div>
     );
