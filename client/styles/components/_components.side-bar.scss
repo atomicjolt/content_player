@@ -1,6 +1,6 @@
 .c-sidebar{
     position: relative;
-    width: 130px;
+    width: 136px;
     height: 100vh;
     transition: all .6s ease;
     align-items: stretch;
@@ -59,6 +59,17 @@
      text-transform: uppercase;
      opacity: 0;
      transition: opacity .2s ease;
+   }
+
+   .clix-v{
+      position: absolute;
+      left: 1rem;
+      bottom: 1rem;
+      color: #fff;
+      font-weight: 300;
+      font-size: 10px;
+      letter-spacing: 1.15px;
+      text-transform: uppercase;
    }
 }
 

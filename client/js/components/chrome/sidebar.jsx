@@ -55,6 +55,9 @@ export class Sidebar extends React.Component{
         <div className="unit">GRADE - UNIT</div>
         <div className="subject">{this.props.title || 'LESSON SUBJECT'}</div>
         {tableOfContents}
+        <div>
+          <p className="clix-v">CLIx release date: 2016-08-09, 16:30 IST</p>
+        </div>
       </div>
     );
   }
