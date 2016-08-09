@@ -63,7 +63,7 @@ export function requestTableOfContents(state, rootfile, epubUrl, next){
   var lastModifiedString = (rootfile.metadata.meta.find((item) => item.property === 'dcterms:modified') || {}).text;
   var lastModifiedDate = new Date(lastModifiedString);
   if(lastModifiedDate != 'Invalid Date'){
-    var lastModified = lastModifiedDate.toLocaleString('en-GB');
+    var lastModified = lastModifiedDate.toLocaleString('en-GB', {timeZoneName: 'long'});
   }
   var titles = rootfile.metadata['dc:title'];
   var subjectLesson = (titles.find((item) => item.id === 'subj-lesson') || {}).text;

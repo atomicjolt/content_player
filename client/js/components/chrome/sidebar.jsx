@@ -56,9 +56,6 @@ export class Sidebar extends React.Component{
         <div className="unit">{this.props.tocMeta.gradeUnit}</div>
         <div className="subject">{this.props.tocMeta.subjectLesson}</div>
         {tableOfContents}
-        <div>
-          <p className="clix-v">{`CLIx release date: ${this.props.tocMeta.lastModified}`}</p>
-        </div>
       </div>
     );
   }
