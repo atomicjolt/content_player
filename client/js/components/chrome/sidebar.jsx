@@ -24,7 +24,8 @@ export class Sidebar extends React.Component{
           key={`bookItem_${item.id}`}
           content={item}
           selected={this.props.pageId == item.id}
-          sidebarOpen={this.props.sidebarOpen} />
+          sidebarOpen={this.props.sidebarOpen}
+          selectPage={this.props.selectPage}/>
       );
     });
   }
