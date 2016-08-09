@@ -4,10 +4,11 @@ import _                              from "lodash";
 
 import { Constants as ContentConstants } from "../actions/content";
 
+const initialState = {
+  tocMeta: {}
+};
 
-
-
-export default (state = {}, action) => {
+export default (state = initialState, action) => {
   var nextState = _.merge({}, {...state});
   switch (action.type) {
     case ContentConstants.LOAD_CONTENT_DONE:
