@@ -68,9 +68,13 @@ export function requestTableOfContents(state, rootfile, epubUrl, next){
   if(lastModifiedDate != 'Invalid Date'){
     var lastModified = lastModifiedDate.toLocaleString('en-GB', {timeZoneName: 'long'});
   }
+
   var titles = rootfile.metadata['dc:title'];
-  var subjectLesson = (titles.find((item) => item.id === 'subj-lesson') || {}).text;
-  var gradeUnit = (titles.find((item) => item.id === 'grd-unit') || {}).text;
+  if(titles){
+    var subjectLesson = (titles.find((item) => item.id === 'subj-lesson') || {}).text;
+    var gradeUnit = (titles.find((item) => item.id === 'grd-unit') || {}).text;
+  }
+  
   var language = rootfile.metadata['dc:language'];
   var tocID = rootfile.spine.toc;
   var toc = rootfile.manifest.filter((item) => {if(item.id == tocID) return true;})[0];

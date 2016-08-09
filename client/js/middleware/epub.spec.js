@@ -121,7 +121,8 @@ describe('epub middleware', () => {
   describe('requestTableOfContents', () => {
     const manifest = {
       manifest:[{id:'not-toc'}, {id:'toc'}],
-      spine:{toc:'toc'}
+      spine:{toc:'toc'},
+      metadata: {meta:[]},
     };
 
     it("should make request", () => {
