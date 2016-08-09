@@ -8,7 +8,7 @@ import { connect }              from "react-redux";
 export class Index extends React.Component {
 
   componentWillMount(){
-    this.props.loadContent(this.props.contentName);
+    this.props.loadContent(this.props.epubUrl);
   }
 
   render(){
@@ -26,7 +26,8 @@ export class Index extends React.Component {
 
 const select = (state) => {
   return {
-    contentName: state.settings.contentName
+    contentName: state.settings.contentName,
+    epubUrl: state.settings.epubUrl
   };
 };
 

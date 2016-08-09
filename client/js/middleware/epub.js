@@ -70,10 +70,9 @@ export function requestTableOfContents(state, rootfile, epubUrl, next){
 
 
 const EPUB = store => next => action => {
-
   if(action.epubMethod){
     const state = store.getState();
-    requestContainer(state, `pubs/${action.name}`, (item, epubUrl) => {
+    requestContainer(state, action.epubUrl, (item, epubUrl) => {
       requestRootFile(state, item, epubUrl, getRelativePath(item), (item, epubUrl) => {
         requestTableOfContents(state, item, epubUrl, (item, epubUrl) => {
           let tableOfContents = _.isArray(item.navMap) ? item.navMap : [item.navMap];
