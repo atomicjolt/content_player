@@ -29,11 +29,13 @@ export class Page extends React.Component {
   }
 
   render(){
+    var lastModified = this.props.tocMeta.lastModified;
+    var footerText = lastModified ? `CLIx release date: ${lastModified}` : undefined;
     return (
       <div className="c-page">
         {this.iframe(this.props)}
         <div className="c-release">
-          {`CLIx release date: ${this.props.tocMeta.lastModified}`}
+          {footerText}
         </div>
       </div>
     );
