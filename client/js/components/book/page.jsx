@@ -10,6 +10,7 @@ const select = (state) => {
   return {
     tableOfContents : state.content.tableOfContents,
     contentName : state.settings.contentName,
+    tocMeta: state.content.tocMeta,
     contentPath: state.content.contentPath
   };
 };
@@ -28,9 +29,14 @@ export class Page extends React.Component {
   }
 
   render(){
+    var lastModified = this.props.tocMeta.lastModified;
+    var footerText = lastModified ? `CLIx release date: ${lastModified}` : undefined;
     return (
       <div className="c-page">
         {this.iframe(this.props)}
+        <div className="c-release">
+          {footerText}
+        </div>
       </div>
     );
   }

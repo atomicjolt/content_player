@@ -2,7 +2,8 @@ import wrapper from "../constants/wrapper";
 
 // Local actions
 const actions = [
-  "TOGGLE_SIDEBAR"
+  "TOGGLE_SIDEBAR",
+  "SELECT_PAGE"
 ];
 
 export const Constants = wrapper(actions);
@@ -10,4 +11,9 @@ export const Constants = wrapper(actions);
 
 export const toggleSidebar = () => ({
   type: Constants.TOGGLE_SIDEBAR
+});
+
+export const selectPage = (pageId) => ({
+  type: Constants.SELECT_PAGE,
+  pageId
 });

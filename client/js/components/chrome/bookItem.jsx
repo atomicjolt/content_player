@@ -1,12 +1,11 @@
 'use strict';
 
 import React          from 'react';
-import {hashHistory}  from "react-router";
 
 export default (props)=>{
 
   const openPage = ()=>{
-    hashHistory.push(`/${props.content.id}`);
+    props.selectPage(`/${props.content.id}`);
   };
 
   var bookItemClass = 'c-book-item';

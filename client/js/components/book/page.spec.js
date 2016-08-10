@@ -9,11 +9,11 @@ var page;
 var props;
 describe('page', () => {
   beforeEach(() => {
-    page = TestUtils.renderIntoDocument(<Page />);
+    page = TestUtils.renderIntoDocument(<Page tocMeta={{}} />);
     props = {
       tableOfContents: [{id:1}, {id:2}],
       contentPath:"FakeUrl",
-      params:{pageId:1}
+      params:{pageId:1},
     };
   });
 
