@@ -1,7 +1,7 @@
 .c-sidebar{
     position: relative;
     width: 140px;
-    min-width: 140px;
+    // min-width: 140px;
     height: 100vh;
     transition: all .6s ease;
     align-items: stretch;
@@ -19,10 +19,9 @@
     svg{
       height: 12px;
       width: 8px;
-      position: relative;
-      float: right;
-      left: .3rem;
-      top: .1rem;
+      position: absolute;
+      right:0.5rem;
+      top: 0.9rem;
       transform:rotate(0deg);
       transition: all .6s ease;
     }
