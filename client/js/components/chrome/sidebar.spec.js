@@ -19,7 +19,8 @@ describe('sidebar', function() {
       tableOfContents: [{id:1, navLabel:"tocA"}, {id:2, navLabel:"tocB"}],
       title: "title",
       sidebarOpen: true,
-      tocMeta: { }
+      tocMeta: { },
+      localizedStrings: {sidebar: {activityList: 'Activity List'}}
     };
     renderResult();
   });

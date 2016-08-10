@@ -4,13 +4,15 @@ import React          from 'react';
 import BookItem       from './bookItem.jsx';
 import {connect}      from 'react-redux';
 import * as ApplicationActions  from '../../actions/application';
+import { localizeStrings }      from '../../selectors/locale';
 
 const select = (state) => {
   return {
     tableOfContents: state.content.tableOfContents,
     title: state.content.title,
     tocMeta: state.content.tocMeta,
-    sidebarOpen: state.application.sidebarOpen
+    sidebarOpen: state.application.sidebarOpen,
+    localizedStrings: localizeStrings(state)
   };
 };
 
@@ -43,7 +45,7 @@ export class Sidebar extends React.Component{
         <div
           onClick={() => {this.props.toggleSidebar();}}
           className="openButton">
-          Activity List
+          {this.props.localizedStrings.sidebar.activityList}
           <svg viewBox="0 0 8 12" version="1.1">
             <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
                 <g id="Core" transform="translate(-260.000000, -90.000000)" fill="#FFFFFF">
