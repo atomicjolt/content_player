@@ -44,7 +44,7 @@ module.exports = function(stage){
 
   var jsLoaders = [babel];
 
-  var cssLoaders = ['css-loader', 'autoprefixer-loader?' + autoprefix];
+  var cssLoaders = ['css-loader?-url', 'autoprefixer-loader?' + autoprefix];
 
   var scssLoaders = cssLoaders.slice(0);
     scssLoaders.push('sass-loader?outputStyle=expanded&includePaths[]=' + (path.resolve(__dirname, './node_modules/bootstrap-sass')));
