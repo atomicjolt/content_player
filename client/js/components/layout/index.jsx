@@ -1,14 +1,24 @@
 "use strict";
 
 import React                    from "react";
-import Sidebar from '../chrome/sidebar';
+
+import Sidebar                  from '../chrome/sidebar';
 import * as ContentActions      from '../../actions/content';
+import * as ApplicationActions  from '../../actions/application';
 import { connect }              from "react-redux";
 
 export class Index extends React.Component {
 
   componentWillMount(){
     this.props.loadContent(this.props.epubUrl);
+  }
+
+  componentWillReceiveProps(nextProps){
+    const toc = nextProps.tableOfContents
+    const currentPage = this.props.currentPage;
+    if(!currentPage && toc && toc[0]){
+      this.props.selectPage(`/${toc[0].id}`);
+    }
   }
 
   render(){
@@ -27,8 +37,10 @@ export class Index extends React.Component {
 const select = (state) => {
   return {
     contentName: state.settings.contentName,
-    epubUrl: state.settings.epubUrl
+    epubUrl: state.settings.epubUrl,
+    tableOfContents: state.content.tableOfContents,
+    currentPage: state.application.currentPage
   };
 };
 
-export default connect(select, ContentActions)(Index);
+export default connect(select, {...ContentActions, ...ApplicationActions})(Index);

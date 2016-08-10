@@ -7,9 +7,18 @@
     margin: 0 auto;
     padding: 15px;
     border: none;
-    height: 100%;
+    height: calc(100% - 3rem);
     width: 95%;
     display: block;
     position: relative;
+   }
+   .c-release{
+     min-height: 2rem;
+     text-align: center;
+     color: #777;
+     font-size: .8rem;
+     border-top: 1px solid #ccc;
+     width: 80%;
+     margin: auto;
    }
 }

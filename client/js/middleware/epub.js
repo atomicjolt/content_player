@@ -1,9 +1,12 @@
+import _              from 'lodash';
+import {hashHistory}  from "react-router";
+
 import api         from "../libs/api";
-import Network    from '../constants/network';
+import Network     from '../constants/network';
 import { DONE }    from "../constants/wrapper";
 import { parse }   from "../libs/parser";
-import _           from 'lodash';
-
+import {Constants as ApplicationConstants} from '../actions/application';
+import {Constants as ContentConstants} from '../actions/content';
 /**
  * Request wrapper to enable us to mock requests with Rewire
  */
@@ -60,32 +63,59 @@ export function requestRootFile(state, container, epubUrl, epubPath, next){
  * along with the url where epub content will be located.
  */
 export function requestTableOfContents(state, rootfile, epubUrl, next){
+  if(_.isArray(rootfile.metadata.meta)){
+    var lastModifiedString = (rootfile.metadata.meta.find((item) => item.property === 'dcterms:modified') || {}).text;
+    var lastModifiedDate = new Date(lastModifiedString);
+    if(lastModifiedDate != 'Invalid Date'){
+      var lastModified = lastModifiedDate.toLocaleString('en-GB', {timeZoneName: 'long'});
+    }
+  }
+
+  var titles = rootfile.metadata['dc:title'];
+  if(_.isArray(titles)){
+    var subjectLesson = (titles.find((item) => item.id === 'subj-lesson') || {}).text;
+    var gradeUnit = (titles.find((item) => item.id === 'grd-unit') || {}).text;
+  }
+
+  var language = rootfile.metadata['dc:language'];
   var tocID = rootfile.spine.toc;
   var toc = rootfile.manifest.filter((item) => {if(item.id == tocID) return true;})[0];
   var tocPromise = request(Network.GET, `${epubUrl}/${toc.href}`, state.settings.apiUrl, state.jwt, state.settings.csrfToken);
   tocPromise.then((response) => {
-    handleResponse(response, next, [epubUrl]);
+    handleResponse(response, next, [epubUrl, { subjectLesson, gradeUnit, language, lastModified}]);
   });
 }
 
 
 const EPUB = store => next => action => {
-  if(action.epubMethod){
-    const state = store.getState();
-    requestContainer(state, action.epubUrl, (item, epubUrl) => {
-      requestRootFile(state, item, epubUrl, getRelativePath(item), (item, epubUrl) => {
-        requestTableOfContents(state, item, epubUrl, (item, epubUrl) => {
-          let tableOfContents = _.isArray(item.navMap) ? item.navMap : [item.navMap];
-          store.dispatch({
-            type:     action.type + DONE,
-            tableOfContents,
-            original: action,
-            tocDoc: item,
-            contentPath: epubUrl,
+  switch (action.type) {
+    case ApplicationConstants.SELECT_PAGE:
+      hashHistory.push(`${action.pageId}`);
+      break;
+    case ContentConstants.LOAD_CONTENT:
+      if(action.epubMethod){
+        const state = store.getState();
+        requestContainer(state, action.epubUrl, (item, epubUrl) => {
+          requestRootFile(state, item, epubUrl, getRelativePath(item), (item, epubUrl) => {
+            requestTableOfContents(
+              state,
+              item,
+              epubUrl,
+              (item, epubUrl, tocMeta) => {
+                let tableOfContents = _.isArray(item.navMap) ? item.navMap : [item.navMap];
+                store.dispatch({
+                  type:     action.type + DONE,
+                  tableOfContents,
+                  original: action,
+                  tocDoc: item,
+                  contentPath: epubUrl,
+                  tocMeta
+                });
+              });
           });
         });
-      });
-    });
+      }
+      break;
   }
 
 

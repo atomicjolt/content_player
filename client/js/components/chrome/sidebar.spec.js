@@ -18,7 +18,8 @@ describe('sidebar', function() {
     props = {
       tableOfContents: [{id:1, navLabel:"tocA"}, {id:2, navLabel:"tocB"}],
       title: "title",
-      sidebarOpen: true
+      sidebarOpen: true,
+      tocMeta: { }
     };
     renderResult();
   });
@@ -32,7 +33,7 @@ describe('sidebar', function() {
     expect(subject.outerHTML).toContain('c-sidebar c-sidebar--open');
     props.sidebarOpen = false;
     renderResult();
-    
+
     expect(subject.outerHTML).not.toContain('c-sidebar--open');
   });
 });

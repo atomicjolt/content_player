@@ -9,6 +9,7 @@ const select = (state) => {
   return {
     tableOfContents: state.content.tableOfContents,
     title: state.content.title,
+    tocMeta: state.content.tocMeta,
     sidebarOpen: state.application.sidebarOpen
   };
 };
@@ -23,7 +24,8 @@ export class Sidebar extends React.Component{
           key={`bookItem_${item.id}`}
           content={item}
           selected={this.props.pageId == item.id}
-          sidebarOpen={this.props.sidebarOpen} />
+          sidebarOpen={this.props.sidebarOpen}
+          selectPage={this.props.selectPage}/>
       );
     });
   }
@@ -52,8 +54,8 @@ export class Sidebar extends React.Component{
             </g>
         </svg>
         </div>
-        <div className="unit">GRADE - UNIT</div>
-        <div className="subject">{this.props.title || 'LESSON SUBJECT'}</div>
+        <div className="unit">{this.props.tocMeta.gradeUnit}</div>
+        <div className="subject">{this.props.tocMeta.subjectLesson}</div>
         {tableOfContents}
       </div>
     );

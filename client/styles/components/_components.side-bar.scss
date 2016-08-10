@@ -1,17 +1,19 @@
 .c-sidebar{
     position: relative;
-    width: 130px;
+    width: 140px;
+    min-width: 140px;
     height: 100vh;
     transition: all .6s ease;
     align-items: stretch;
     background-color: #4a4a4a;
-    overflow:hidden;
+    overflow-x: hidden;
+    overflow-y: scroll;
     color: #fff;
     font-weight: 300;
 
     a{
       opacity:0;
-      transition: opacity .2s ease;
+      // transition: opacity .2s ease;
     }
 
     svg{
@@ -49,7 +51,7 @@
      padding: 28px 0px 0px 16px;
      text-transform: uppercase;
      opacity: 0;
-     transition: opacity .2s ease;
+    //  transition: opacity .2s ease;
      font-size: .625rem;
    }
 
@@ -58,7 +60,18 @@
      padding: 0px 0px 5px 16px;
      text-transform: uppercase;
      opacity: 0;
-     transition: opacity .2s ease;
+    //  transition: opacity .2s ease;
+   }
+
+   .clix-v{
+      position: absolute;
+      left: 1rem;
+      bottom: 1rem;
+      color: #fff;
+      font-weight: 300;
+      font-size: 10px;
+      letter-spacing: 1.15px;
+      text-transform: uppercase;
    }
 }
 
@@ -68,6 +81,7 @@
   a{
     color: #fff;
     opacity: 1;
+    transition: opacity .6s ease;
   }
   svg{
     transform:rotate(180deg);
@@ -75,11 +89,11 @@
 
   .unit{
     opacity: 1;
-    transition: opacity .8s ease;
+    transition: opacity .6s ease;
   }
 
   .subject{
     opacity: 1;
-    transition: opacity .8s ease;
+    transition: opacity .6s ease;
   }
 }
