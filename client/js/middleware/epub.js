@@ -67,7 +67,7 @@ export function requestTableOfContents(state, rootfile, epubUrl, next){
     var lastModifiedString = (rootfile.metadata.meta.find((item) => item.property === 'dcterms:modified') || {}).text;
     var lastModifiedDate = new Date(lastModifiedString);
     if(lastModifiedDate != 'Invalid Date'){
-      var lastModified = lastModifiedDate.toLocaleString('en-GB', {timeZoneName: 'long'});
+      var lastModified = lastModifiedDate.toLocaleDateString('zh');
     }
   }
 
@@ -82,7 +82,7 @@ export function requestTableOfContents(state, rootfile, epubUrl, next){
   var toc = rootfile.manifest.filter((item) => {if(item.id == tocID) return true;})[0];
   var tocPromise = request(Network.GET, `${epubUrl}/${toc.href}`, state.settings.apiUrl, state.jwt, state.settings.csrfToken);
   tocPromise.then((response) => {
-    handleResponse(response, next, [epubUrl, { subjectLesson, gradeUnit, language, lastModified}]);
+    handleResponse(response, next, [epubUrl, {subjectLesson, gradeUnit, language, lastModified}]);
   });
 }
 
