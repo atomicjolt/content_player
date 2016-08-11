@@ -105,7 +105,7 @@ module.exports = function(stage){
   var loaders = [
     { test: /\.js$/,              loaders: jsLoaders, exclude: /node_modules/ },
     { test: /\.jsx?$/,            loaders: jsLoaders, exclude: /node_modules/ },
-    { test: /\.scss$/i,           loader: extractCSS.extract(scssLoaders) },
+    { test: /\.scss$/i,           loader: extractCSS.extract(scssLoaders, {publicPath: ''}) },
     { test: /\.css$/i ,           loader: extractCSS.extract(cssLoaders) },
     { test: /\.less$/i ,          loader: extractCSS.extract(lessLoaders) },
     { test: /.*\.(gif|png|jpg|jpeg|svg)$/, loaders: ['url?limit=5000&hash=sha512&digest=hex&size=16&name=[name]-[hash].[ext]']}, //'image-webpack-loader?optimizationLevel=7&interlaced=false'
