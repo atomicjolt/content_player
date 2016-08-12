@@ -20,6 +20,14 @@ then visit http://localhost:8081?contentName=lesson1
 Live version deployed to:
 http://www.epubmix.com.s3-website-us-east-1.amazonaws.com/?contentName=lesson1
 
+#### Settings - can be passed via window.DEFAULT_SETTINGS or url params
+-----------------------
+
+    ##### General
+    epubUrl                      - The url where the epub is served from. Ex. '?epubUrl=http://goodpubs/my-fav-pub'
+    locale                       - Sets the language for the epub reader controls. Ex. '?locale=en'
+
+
 ## React.js
 -----------
 React code can be found in client/js. We use Redux and the React-Router.
