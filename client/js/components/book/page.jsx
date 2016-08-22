@@ -8,11 +8,13 @@ import * as ContentActions  from "../../actions/content";
 import assets               from "../../libs/assets";
 
 const select = (state) => {
+  let lang = state.content.tocMeta.language;
   return {
-    tableOfContents : state.content.tableOfContents,
-    contentName : state.settings.contentName,
-    tocMeta: state.content.tocMeta,
-    contentPath: state.content.contentPath
+    tableOfContents:  state.content.tableOfContents,
+    contentName:      state.settings.contentName,
+    tocMeta:          state.content.tocMeta,
+    contentPath:      state.content.contentPath,
+    locale:           lang && lang.text
   };
 };
 
@@ -30,7 +32,7 @@ export class Page extends React.Component {
       case "open_assessments_available_locales":
         message.source.postMessage({
           open_assessments_msg: "open_assessments_set_locale",
-          locale: "hi"
+          locale: this.props.locale
         }, "*");
         break;
     }
