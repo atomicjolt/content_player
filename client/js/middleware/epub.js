@@ -67,7 +67,8 @@ export function requestTableOfContents(state, rootfile, epubUrl, next){
     var lastModifiedString = (rootfile.metadata.meta.find((item) => item.property === 'dcterms:modified') || {}).text;
     var lastModifiedDate = new Date(lastModifiedString);
     if(lastModifiedDate != 'Invalid Date'){
-      var lastModified = lastModifiedDate.toLocaleDateString('zh');
+      // Only take the date portion of the ISO string
+      var lastModified = lastModifiedDate.toISOString().split('T')[0];
     }
   }
 
