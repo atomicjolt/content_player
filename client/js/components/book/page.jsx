@@ -14,7 +14,7 @@ const select = (state) => {
     contentName:      state.settings.contentName,
     tocMeta:          state.content.tocMeta,
     contentPath:      state.content.contentPath,
-    locale:           lang && lang.text
+    locale:           lang
   };
 };
 
