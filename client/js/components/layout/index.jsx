@@ -21,33 +21,6 @@ export class Index extends React.Component {
     }
   }
 
-  scrollToAssessment(){
-    var pubFrame = document.getElementsByTagName('iframe')[0];
-    var epubBody = pubFrame.contentDocument.body;
-    if(!epubBody){ return; }
-
-    var quizIframe = pubFrame.contentDocument.getElementById('openassessments_container');
-    if(!quizIframe){ return; }
-
-    var quizTop = quizIframe.getBoundingClientRect().top;
-    epubBody.scrollTop += quizTop;
-  }
-
-  onMessage(message){
-    if(message.data) {
-      var assessmentMessage = JSON.parse(message.data);
-    } else { return; }
-    switch (assessmentMessage.subject) {
-      case "lti.scrollToTop":
-        this.scrollToAssessment();
-        break;
-    }
-  }
-
-  componentDidMount(){
-    window.addEventListener("message", (message) => this.onMessage(message), false);
-  }
-
   render(){
     return (
       <div className="c-container">
