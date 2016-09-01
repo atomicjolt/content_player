@@ -43,7 +43,7 @@ export class Page extends React.Component {
     if(_.isString(message.data)){
       data = JSON.parse(message.data);
     }
-    const type = data.open_assessments_msg || data.subject;
+    const type = data.open_assessments_msg;
 
     switch(type) {
       case "open_assessments_available_locales":
@@ -52,7 +52,7 @@ export class Page extends React.Component {
           locale: this.props.locale
         }, "*");
         break;
-      case "lti.scrollToTop":
+      case "scrollToTop":
         this.scrollToAssessment();
         break;
     }
