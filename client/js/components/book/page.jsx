@@ -14,11 +14,24 @@ const select = (state) => {
     contentName:      state.settings.contentName,
     tocMeta:          state.content.tocMeta,
     contentPath:      state.content.contentPath,
-    locale:           lang && lang.text
+    locale:           lang
   };
 };
 
 export class Page extends React.Component {
+
+  scrollToAssessment(){
+    var pubFrame = document.getElementsByTagName('iframe')[0];
+    var epubBody = pubFrame.contentDocument.body;
+    if(!epubBody){ return; }
+
+    var quizIframe = pubFrame.contentDocument.getElementById('openassessments_container');
+    if(!quizIframe){ return; }
+
+    var quizTop = quizIframe.getBoundingClientRect().top;
+    epubBody.scrollTop += quizTop;
+  }
+
 
   onMessage(message) {
     // Inconveniently, we don't seem to be able to locate the
@@ -26,14 +39,21 @@ export class Page extends React.Component {
     // the assessment-player sends a message up to us to indicate its available
     // locales.  Although we ignore the available locales, we use that message's
     // source to target a message back down to the assessment-player.
-    const data = message.data;
+    var data = message.data;
+    if(_.isString(message.data)){
+      data = JSON.parse(message.data);
+    }
     const type = data.open_assessments_msg;
+
     switch(type) {
       case "open_assessments_available_locales":
         message.source.postMessage({
           open_assessments_msg: "open_assessments_set_locale",
           locale: this.props.locale
         }, "*");
+        break;
+      case "scrollToTop":
+        this.scrollToAssessment();
         break;
     }
   }

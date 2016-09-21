@@ -14,7 +14,7 @@ export class Index extends React.Component {
   }
 
   componentWillReceiveProps(nextProps){
-    const toc = nextProps.tableOfContents
+    const toc = nextProps.tableOfContents;
     const currentPage = this.props.currentPage;
     if(!currentPage && toc && toc[0]){
       this.props.selectPage(`/${toc[0].id}`);
