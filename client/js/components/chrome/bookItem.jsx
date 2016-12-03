@@ -5,7 +5,7 @@ import React          from 'react';
 export default (props)=>{
 
   const openPage = ()=>{
-    props.selectPage(`/${props.content.id}`);
+    props.selectPage(`/${props.content.id}`, props.content.navLabel);
   };
 
   var bookItemClass = 'c-book-item';

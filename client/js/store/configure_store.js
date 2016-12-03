@@ -4,8 +4,9 @@ import rootReducer                               from '../reducers';
 import DevTools                                  from '../dev/dev_tools.jsx';
 import API                                       from '../middleware/api';
 import EPUB                                      from '../middleware/epub';
+import AnalyticsLogging                          from '../middleware/analytics_logging';
 
-let middleware = [ API, EPUB ];
+let middleware = [ API, EPUB, AnalyticsLogging ];
 
 let enhancers = [
   applyMiddleware(...middleware)
