@@ -28,7 +28,7 @@ const ANALYTICS_ACTION_MAP = {
 function logEvent(eventData, state) {
   api.execRequest(
     Network.POST,
-    state.settings.loggingPath,
+    state.settings.loggingApiPath,
     state.settings.loggingApiUrl,
     state.settings.jwt,
     state.settings.csrfToken,
