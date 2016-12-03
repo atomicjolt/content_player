@@ -26,7 +26,10 @@ http://www.epubmix.com.s3-website-us-east-1.amazonaws.com/?contentName=lesson1
     ##### General
     epubUrl                      - The url where the epub is served from. Ex. '?epubUrl=http://goodpubs/my-fav-pub'
     locale                       - Sets the language for the epub reader controls. Ex. '?locale=en'
-
+    loggingApiUrl                - Sets the api url for the analytics logging. Ex.
+    https://localhost:8888/api
+    loggingApiPath               - Sets the api path for the analytics logging. Ex.
+    appdata 
 
 ## React.js
 -----------
