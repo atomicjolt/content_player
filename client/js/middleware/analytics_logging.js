@@ -83,6 +83,7 @@ const AnalyticsLogging = store => next => action => {
       case AnalyticsActions.TRANSCRIPT_OPEN:
       case AnalyticsActions.TRANSCRIPT_CLOSE:
         data.elementText = action.elementText;
+        break;
     }
 
     logEvent(data, state);
