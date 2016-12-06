@@ -5,7 +5,7 @@ import React                      from "react";
 import { connect }                from "react-redux";
 
 import * as ContentActions        from "../../actions/content";
-import * as AnalyticsActions from "../../actions/analytics";
+import * as AnalyticsActions      from "../../actions/analytics";
 import assets                     from "../../libs/assets";
 
 const select = (state) => {

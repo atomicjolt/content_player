@@ -1,10 +1,10 @@
-import _              from 'lodash';
+import _                                    from 'lodash';
 
-import api         from "../libs/api";
-import Network     from '../constants/network';
-import { DONE }    from "../constants/wrapper";
-import {Constants as ApplicationConstants} from '../actions/application';
-import {Constants as AnalyticsActions} from '../actions/analytics';
+import api                                  from "../libs/api";
+import Network                              from '../constants/network';
+import { DONE }                             from "../constants/wrapper";
+import {Constants as ApplicationConstants}  from '../actions/application';
+import {Constants as AnalyticsActions}      from '../actions/analytics';
 
 //maps audio/video actions to the analytics logging action
 const ANALYTICS_ACTION_MAP = {
