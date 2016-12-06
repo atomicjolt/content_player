@@ -1,11 +1,12 @@
 "use strict";
 
-import _            from "lodash";
-import React        from "react";
-import { connect }  from "react-redux";
+import _                          from "lodash";
+import React                      from "react";
+import { connect }                from "react-redux";
 
-import * as ContentActions  from "../../actions/content";
-import assets               from "../../libs/assets";
+import * as ContentActions        from "../../actions/content";
+import * as AnalyticsActions from "../../actions/analytics";
+import assets                     from "../../libs/assets";
 
 const select = (state) => {
   let lang = state.content.tocMeta.language;
@@ -62,13 +63,102 @@ export class Page extends React.Component {
     window.addEventListener("message", (e) => this.onMessage(e), false);
   }
 
+  /* We need to listen to video/audio play and pause events and click events on
+   * images inside the iframe.
+   */
+  addIframeEventListeners() {
+    let iframeDocument = this.contentIframe.contentDocument ||
+        this.contentIframe.contentWindow.document;
+
+    let videoElements = iframeDocument.querySelectorAll('video');
+    _.each(videoElements, (element) => {
+      element.addEventListener('play', (e) => {
+        this.props.videoPlay(e.target.id, e.target.src, e.target.currentTime);
+      }, false);
+
+      element.addEventListener('pause', (e) => {
+        if(!e.target.ended) {
+          this.props.videoPause(e.target.id, e.target.src, e.target.currentTime);
+        }
+      }, false);
+
+      element.addEventListener('seeked', (e) => {
+        this.props.videoSeeked(e.target.id, e.target.src, e.target.currentTime);
+      }, false);
+
+      element.addEventListener('ended', (e) => {
+        this.props.videoEnded(e.target.id, e.target.src);
+      }, false);
+    });
+
+    let audioElements = iframeDocument.querySelectorAll('audio');
+    _.each(audioElements, (element) => {
+      element.addEventListener('play', (e) => {
+        this.props.audioPlay(e.target.id, e.target.src, e.target.currentTime);
+      }, false);
+
+      element.addEventListener('pause', (e) => {
+        if(!e.target.ended) {
+          this.props.audioPause(e.target.id, e.target.src, e.target.currentTime);
+        }
+      }, false);
+
+      element.addEventListener('seeked', (e) => {
+        this.props.audioSeeked(e.target.id, e.target.src, e.target.currentTime);
+      }, false);
+
+      element.addEventListener('ended', (e) => {
+        this.props.audioEnded(e.target.id, e.target.src);
+      }, false);
+    });
+
+    let imgElements = iframeDocument.querySelectorAll('img.zoom-but-sm, img.zoom-but-md');
+    _.each(imgElements, (element) => {
+      element.addEventListener('click', (e) => {
+        this.props.imageClick(e.target.id, e.target.src);
+      }, false);
+    });
+
+    let linkElements = iframeDocument.querySelectorAll('a');
+    _.each(linkElements, (element) => {
+      element.addEventListener('click', (e) => {
+        this.props.linkClick(e.target.id, e.target.src);
+      }, false);
+    });
+
+    let buttonElements = iframeDocument.querySelectorAll('figure button');
+    _.each(buttonElements, (element) => {
+      element.addEventListener('click', (e) => {
+        this.props.buttonClick(e.target.id);
+      }, false);
+    });
+
+    let transcriptButtons = iframeDocument.querySelectorAll('.trans-form input');
+    _.each(transcriptButtons, (element) => {
+      let label = element.parentElement.querySelector('label');
+      let labelName = label ? label.textContent : "";
+
+      element.addEventListener('change', (e) => {
+        if(e.target.checked) {
+          this.props.openTranscript(labelName);
+        } else {
+          this.props.closeTranscript(labelName);
+        }
+      }, false);
+    });
+  }
+
   iframe(props) {
     var current = _.find(
       props.tableOfContents,
       (item) => item.id == props.params.pageId
     );
     if(!current) { return; }
-    return <iframe src={`${props.contentPath}/${current.content}`} />;
+    return <iframe
+      onLoad={() => this.addIframeEventListeners()}
+      ref={(iframe) => this.contentIframe = iframe }
+      src={`${props.contentPath}/${current.content}`}
+      allowFullScreen="true" />;
   }
 
   render() {
@@ -85,4 +175,4 @@ export class Page extends React.Component {
   }
 }
 
-export default connect(select, ContentActions)(Page);
+export default connect(select, {...ContentActions, ...AnalyticsActions})(Page);

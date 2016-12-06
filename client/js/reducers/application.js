@@ -18,6 +18,7 @@ export default (state = initialState, action) => {
     case ApplicationConstants.SELECT_PAGE:
       var selectedPage = Object.assign({}, state);
       selectedPage.currentPage = action.pageId;
+      selectedPage.currentPageName = action.pageName;
       return selectedPage;
 
     default:

@@ -13,7 +13,8 @@ export const toggleSidebar = () => ({
   type: Constants.TOGGLE_SIDEBAR
 });
 
-export const selectPage = (pageId) => ({
+export const selectPage = (pageId, pageName) => ({
   type: Constants.SELECT_PAGE,
-  pageId
+  pageId,
+  pageName
 });
