@@ -76,7 +76,7 @@ export function videoPause(mediaId, mediaSrc, mediaTime) {
 
 export function videoSeeked(mediaId, mediaSrc, mediaTime) {
   return {
-    type: Constants.AUDIO_SEEKED,
+    type: Constants.VIDEO_SEEKED,
     mediaId,
     mediaSrc,
     mediaTime
