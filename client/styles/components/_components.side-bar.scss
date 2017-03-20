@@ -3,7 +3,7 @@
     width: 140px;
     // min-width: 140px;
     height: 100vh;
-    transition: all .6s ease;
+    transition: all 0.6s ease;
     align-items: stretch;
     background-color: #4a4a4a;
     overflow-x: hidden;
@@ -22,13 +22,13 @@
       right:0.5rem;
       top: 0.9rem;
       transform:rotate(0deg);
-      transition: all .6s ease;
+      transition: all 0.6s ease;
     }
 
    .openButton{
      padding: 12px 16px 9px;
      background-color: #333;
-     font-size: .75rem;
+     font-size: 0.75rem;
      border-bottom: 3px solid #333;
      text-transform: uppercase;
      cursor: pointer;
@@ -46,16 +46,16 @@
    }
 
    .unit{
-     padding: 28px 0px 0px 16px;
+     padding: 28px 0 0px 16px;
      text-transform: uppercase;
      opacity: 0;
     //  transition: opacity .2s ease;
-     font-size: .625rem;
+     font-size: 0.625rem;
    }
 
    .subject{
-     font-size: .875rem;
-     padding: 0px 0px 5px 16px;
+     font-size: 0.875rem;
+     padding: 0 0 5px 16px;
      text-transform: uppercase;
      opacity: 0;
     //  transition: opacity .2s ease;
@@ -79,7 +79,7 @@
   a{
     color: #fff;
     opacity: 1;
-    transition: opacity .6s ease;
+    transition: opacity 0.6s ease;
   }
   svg{
     transform:rotate(180deg);
@@ -87,11 +87,11 @@
 
   .unit{
     opacity: 1;
-    transition: opacity .6s ease;
+    transition: opacity 0.6s ease;
   }
 
   .subject{
     opacity: 1;
-    transition: opacity .6s ease;
+    transition: opacity 0.6s ease;
   }
 }

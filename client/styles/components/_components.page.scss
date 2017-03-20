@@ -4,23 +4,26 @@
   width: 100%;
 
   iframe{
-    margin: 0px;
-    padding: 0px;
-    border: none;
+    display: block;
+    margin: 0;
+    padding: 0;
+    position: relative;
     height: calc(100% - 1.5rem);
     width: 100%;
-    display: block;
-    position: relative;
-   }
-   .c-release{
-     min-height: 2rem;
-     text-align: center;
-     color: #777;
-     font-size: .6rem;
-     border-top: 1px solid #ccc;
-     width: 100%;
-     padding: 8px;
-     text-transform: uppercase;
-     margin:0 auto;
-   }
+    border: none;
+
+
+
+  }
+  .c-release{
+    margin:0 auto;
+    padding: 0.313rem;
+    height: 1.5rem;
+    width: 100%;
+    font-size: 0.6rem;
+    color: #777;
+    text-align: center;
+    text-transform: uppercase;
+    border-top: 1px solid #ccc;
+  }
 }
