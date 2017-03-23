@@ -12,8 +12,8 @@
         locale: "en",
         user_id: 0,
         apiUrl: "",
-        loggingApiUrl: "https://localhost:8888/api",
-        loggingApiPath: "appdata",
+        loggingApiUrl: "https://localhost:8888",
+        loggingApiPath: "api/appdata",
         sessionId: "external_identifier"
       };
       window.DEFAULT_JWT = {};
@@ -23,6 +23,5 @@
   <body>
     <%- include('./partials/_header.html') %>
     <%- content %>
-    <%- include('./partials/_google_analytics.html') %>
   </body>
 </html>
