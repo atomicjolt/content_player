@@ -198,10 +198,13 @@ export class Page extends React.Component {
       (item) => item.id == props.params.pageId
     );
     if(!current) { return; }
+
+    const iframeTitle = this.props.tocMeta.gradeUnit + ' ' + this.props.tocMeta.subjectLesson
     return <iframe
       onLoad={() => this.addIframeEventListeners()}
       ref={(iframe) => this.contentIframe = iframe }
       src={`${props.contentPath}/${current.content}`}
+      title={iframeTitle}
       allowFullScreen="true" />;
   }
 
