@@ -3,6 +3,7 @@
 import _                          from "lodash";
 import React                      from "react";
 import { connect }                from "react-redux";
+import { Helmet }                   from "react-helmet";
 
 import * as ContentActions        from "../../actions/content";
 import * as AnalyticsActions from "../../actions/analytics";
@@ -213,6 +214,9 @@ export class Page extends React.Component {
     var footerText = lastModified ? `CLIx release date: ${lastModified}` : undefined;
     return (
       <div className="c-page">
+        <Helmet>
+          <html lang={this.props.locale} />
+        </Helmet>
         {this.iframe(this.props)}
         <div className="c-release">
           {footerText}
