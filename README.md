@@ -1,9 +1,9 @@
-#Content Player
+# Content Player
 -----------------------
 Basic client only epub reader
 
 
-#Getting Started:
+# Getting Started:
 -----------------------
 
 Make sure to install git and npm before you start then:
@@ -66,21 +66,21 @@ The value can then be used when rendering:
 Files added to the static directory will be copied directly into the build. These files will not be renamed.
 
 
-#Tests
+# Tests
 -----------
 Karma and Jasmine are used for testing. To run tests run:
 
   `npm run test`
 
 
-#Check for updates
+# Check for updates
 -----------
 Inside the client directory run:
 
   `npm-check-updates`
 
 
-#Setup Deploy:
+# Setup Deploy:
 -----------------------
 
   1. Install the s3_website gem:
@@ -133,7 +133,7 @@ Inside the client directory run:
     `s3_website cfg apply`
 
 
-#Production
+# Production
 -----------------------
 If you want to see what your application will look like in production run
 
@@ -142,7 +142,7 @@ If you want to see what your application will look like in production run
 This will serve files from the build/prod directory.
 
 
-#Deploy:
+# Deploy:
 -----------------------
 
   Build a development release without deploying:
@@ -160,6 +160,90 @@ This will serve files from the build/prod directory.
   `npm run release`
 
 
-License and attribution
+# Logging Endpoint Configuration
+-----------------------
+As noted above in the settings, there exist two logging related configuration settings: `loggingApiUrl` and `loggingApiPath`. These two settings let you send content player log events to an OSID-compliant logging endpoint, via a POST event. The player logs events like:
+
+* Play / Pause / Stop / Seek on media objects
+* Click on image zoom
+* Click on `iframe`, `figure`, `a`, and `button` elements
+* Click on the left-hand navigation menu
+* Click on the toggle-transcript element
+
+Data is reported in the form of:
+
+```
+{
+  data: {
+    action: “<verb> <media type>”,
+    mediaTime: “00.00.10”,  (depends on action)
+    mediaId: “<DOM ID, if available>”, (depends on action)
+    source: “<src>”,
+    elementText: “<textContent of DOM element>”, (depends on action),
+    unit: “<something like Class 9 -- EB>”,
+    subject: “<something like English -- Lesson 1>”,
+    activity: “<div with class c-book-item--selected>”,
+    sessionId: “<configurable ID, like external_id>”
+  }
+}
+```
+
+Example data blobs:
+
+```
+{
+  data: {
+    action: “play video”,
+    mediaTime: “00.00.10”,
+    mediaId: “ee_u1l01a01v01”,
+    unit: “Class 9 -- EB”,
+    subject: “English -- Lesson 1”,
+    activity: “Introduction”,
+    sessionId: “f00123”
+  }
+}
+
+{
+  data: {
+    action: “click nav”,
+    unit: “Class 9 -- EB”,
+    subject: “English -- Lesson 1”,
+    activity: “Introduction”,  (depending on the event timing, can this be the “previous” nav element?)
+    elementText: “StoryTime”,
+    sessionId: “foo123”
+  }
+}
+```
+
+Specific actions that should trigger a logged event:
+
+* User played an audio clip (include audio source)
+* Audio clip ends (include audio source)
+* User “seeked” an audio clip
+* User paused an audio clip
+* User played a video clip (include video Id or source)
+* Video clip ends (include video Id or source)
+* User “seeked” a video clip
+* User paused a video clip
+* User clicked on video caption button
+* User clicked an image with a class of zoom-but-sm or zoom-but-md (include image source)
+* User clicked left-hand nav
+* User clicked a link to another tool / section (any link on the page, plus <a class=”art-select”> tags  in <figure> tags)
+
+
+# Non-English ePubs
+-----------------------
+To make sure that the correct language is applied to the content player UI and children assessment players, the ePub needs to be configured with the correct language setting. In the `OEBPS/content.opf` file, you need to set the `dc:language` value to the two-letter ISO code of the ePub. For example, Hindi would appear as:
+
+```
+<?xml version="1.0" encoding="utf-8"?>
+<package version="3.0" unique-identifier="BookId" xmlns="http://www.idpf.org/2007/opf">
+  <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <dc:language>hi</dc:language>
+```
+
+Supported language codes are `en`, `hi`, and `te`.
+
+# License and attribution
 -----------------------
 MIT
