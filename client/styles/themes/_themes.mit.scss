@@ -1,0 +1,143 @@
+/*-------------------------------------*\
+      #THEME FOR MIT
+\*-------------------------------------*/
+
+// Please use rems as units of measurement instead of pixels.
+// The conversion rate is 1em = 16px
+
+// Shades of gray
+$dark-gray: #333333;
+$gray: #565556;
+$light-gray: #9B9B9B;
+$lightest-gray: #777777;
+$white: #fffffff;
+
+// CLIx Brand color scheme
+$clix-purple: #A61680;
+$clix-blue: #5387C6;
+$clix-pink: #E5007E;
+$clix-blueberry: #573D8F;
+$clix-maroon: #A6005B;
+$clix-orange: #F58220;
+$clix-green: #2BB673;
+
+//Border-radius (set to 0 for no rounded corners)
+$radius: 0.3rem;
+
+
+// activity list button styling
+@mixin activity-button-toggle {
+  background-color: #333;
+  border-top: none;
+  border-right: none;
+  border-bottom: 3px solid #fff;
+  border-left: none;
+  outline: 0;
+  transition-property: left padding-left;
+  transition-delay: 0.1s;
+  transition-duration: 0.5s;
+  transition-timing-function: ease;
+}
+
+@mixin activity-button-toggle-hover {
+  background-color: #111;
+  background-image: linear-gradient(90deg, darken($clix-blueberry, 10%), $clix-blueberry 13.75em, darken($clix-blueberry, 10%));
+}
+
+@mixin activity-button-toggle-focus {
+  background-color: #111;
+  background-image: linear-gradient(90deg, darken($clix-blue, 10%), $clix-blue 13.75em, darken($clix-blue, 10%));
+}
+
+@mixin activity-button-toggle-active {
+  background-color: #111;
+  background-image: linear-gradient(90deg, #f54b32, #f37f2f 13.75em, #f65e27);
+}
+
+@mixin activity-button-toggle-pressed {
+  background-color: #111;
+  background-image: linear-gradient(90deg, darken($clix-blueberry, 10%), $clix-blueberry 13.75em, darken($clix-blueberry, 10%));
+}
+
+// activity nav link styling
+@mixin activity-link {
+  border-left-width: 0.375em;
+  border-left-style: solid;
+  border-left-color: hsla(0, 100%, 100%, 0);
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+@mixin activity-hover {
+  /* CLIx magenta */
+  border-left: 0.375em solid #fff;
+  background-image: linear-gradient(90deg, darken($clix-pink, 8%), $clix-pink 13.75em, darken($clix-pink, 5%));
+}
+
+@mixin activity-focus {
+  /* CLIx magenta */
+  border-left-color: #ff1b99;
+  background-image: linear-gradient(90deg, darken($clix-pink, 8%), $clix-pink 13.75em, darken($clix-pink, 5%));
+
+}
+
+@mixin activity-active {
+  /* CLIx orange */
+  border-left-color: #fff;
+  background-image: linear-gradient(90deg, #f54b32, #f37f2f 13.75em, #f65e27);
+}
+
+@mixin activity-selected {
+  border-left-width: 0.375em;
+  border-left-style: solid;
+  /* CLIx magenta */
+  border-left-color: #ff67d5;
+  background-image: linear-gradient(90deg, darken($clix-purple, 3%), lighten($clix-purple, 5%) 13.75em, darken($clix-purple, 5%));
+}
+
+
+
+
+// Includes for custom fonts
+@font-face {
+    font-family: 'open_sansbold';
+    src: url('fonts/opensans-bold-webfont.woff2') format('woff2'),
+         url('fonts/opensans-bold-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'open_sansregular';
+    src: url('fonts/opensans-regular-webfont.woff2') format('woff2'),
+         url('fonts/opensans-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'open_sanslight';
+    src: url('fonts/opensans-light-webfont.woff2') format('woff2'),
+         url('fonts/opensans-light-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'open_sanssemibold';
+    src: url('fonts/opensans-semibold-webfont.woff2') format('woff2'),
+         url('fonts/opensans-semibold-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+// Open Sans font sizes mixins
+@mixin light{
+  font-family: 'open_sanslight', sans-serif;
+}
+@mixin regular{
+  font-family: 'open_sansregular', sans-serif;
+}
+@mixin semi-bold{
+  font-family: 'open_sanssemibold', sans-serif;
+}
+@mixin bold{
+  font-family: 'open_sansbold', sans-serif;
+}

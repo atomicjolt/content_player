@@ -1,21 +1,38 @@
-'use strict';
+import React from 'react';
 
-import React          from 'react';
+export default function BookItem(props) {
 
-export default (props)=>{
-
-  const openPage = ()=>{
+  const openPage = (e) => {
+    e.preventDefault();
+    props.focusPage();
     props.selectPage(`/${props.content.id}`, props.content.navLabel);
   };
 
-  var bookItemClass = 'c-book-item';
-  if(props.sidebarOpen && props.selected){
+  let bookItemClass = 'c-book-item';
+  let ariaCurr;
+  if (props.sidebarOpen && props.selected) {
     bookItemClass = 'c-book-item c-book-item--selected';
+    ariaCurr = 'true';
   }
 
-  return <div className={bookItemClass} onClick={()=>openPage()}>
-    <a>
-      {props.content.navLabel}
-    </a>
-  </div>;
+  return (
+    <li className={bookItemClass} >
+      <a
+        href={`#${props.content.navLabel}}`}
+        aria-current={ariaCurr} // eslint-disable-line
+        onClick={e => openPage(e)}
+      >
+        {props.content.navLabel}
+      </a>
+    </li>
+  );
+}
+
+
+BookItem.propTypes = {
+  content: React.PropTypes.object,
+  sidebarOpen: React.PropTypes.bool,
+  selected: React.PropTypes.bool,
+  selectPage: React.PropTypes.func,
+  focusPage: React.PropTypes.func
 };

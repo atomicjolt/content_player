@@ -1,27 +1,35 @@
 
-.c-page{
+.c-page {
   height: 100%;
   width: 100%;
+  margin: 0.5em;
+  border-left-width: 6px;
+  border-left-style: solid;
+  border-left-color: hsla(316, 77%, 37%, 0);
 
-  iframe{
+  &:focus { // focusing on section
+    border-left-color: hsla(316, 77%, 77%, 1);
+  }
+
+  iframe {
     display: block;
     margin: 0;
     padding: 0;
     position: relative;
-    height: calc(100% - 1.5rem);
+    height: calc(100% - 2rem);
     width: 100%;
     border: none;
-
-
-
   }
-  .c-release{
-    margin:0 auto;
+
+  .c-release {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
     padding: 0.313rem;
-    height: 1.5rem;
-    width: 100%;
+    @include regular;
     font-size: 0.6rem;
-    color: #777;
+    color: $gray;
     text-align: center;
     text-transform: uppercase;
     border-top: 1px solid #ccc;
