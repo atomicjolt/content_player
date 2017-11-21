@@ -314,5 +314,7 @@ export class Page extends React.Component {
   }
 }
 
-export default connect(select,
-  { ...ContentActions, ...AnalyticsActions, ...ApplicationActions })(Page);
+export default connect(
+  select,
+  { ...ContentActions, ...AnalyticsActions, ...ApplicationActions }
+)(Page);
