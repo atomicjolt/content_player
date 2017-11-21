@@ -5,6 +5,7 @@ import { Helmet }            from 'react-helmet';
 
 import * as ContentActions   from '../../actions/content';
 import * as AnalyticsActions from '../../actions/analytics';
+import * as ApplicationActions from '../../actions/application';
 // import assets                from '../../libs/assets';
 import getAVSrc              from '../../utils/audio_video_src';
 
@@ -42,7 +43,12 @@ export class Page extends React.Component {
     linkClick: React.PropTypes.func,
     buttonClick: React.PropTypes.func,
     openTranscript: React.PropTypes.func,
-    closeTranscript: React.PropTypes.func
+    closeTranscript: React.PropTypes.func,
+    selectPage: React.PropTypes.func,
+    tableOfContents: React.PropTypes.array,
+    params: React.PropTypes.shape({
+      pageId: React.PropTypes.string
+    })
   };
 
   componentDidMount() {
@@ -257,6 +263,39 @@ export class Page extends React.Component {
   render() {
     const lastModified = this.props.tocMeta.lastModified;
     const footerText = lastModified ? `CLIx release date: ${lastModified}` : undefined;
+
+    let previousButton;
+    let nextButton;
+    const { tableOfContents, params } = this.props;
+    if (tableOfContents && params) {
+      const currentPageIndex = _.findIndex(
+        tableOfContents,
+        item => item.id === params.pageId
+      );
+
+      if (currentPageIndex > -1 && currentPageIndex !== 0) {
+        // show Previous button
+        previousButton = (
+          <button
+            className="page-nav-button"
+            onClick={() => this.props.selectPage(tableOfContents[currentPageIndex - 1].id)}>
+            Previous
+          </button>
+        );
+      }
+
+      if (currentPageIndex > -1 && currentPageIndex !== tableOfContents.length - 1) {
+        // show Next button
+        nextButton = (
+          <button
+            className="page-nav-button"
+            onClick={() => this.props.selectPage(tableOfContents[currentPageIndex + 1].id)}>
+            Next
+          </button>
+        );
+      }
+    }
+
     return (
       <section className="c-page" tabIndex="-1" ref={(section) => { this.section = section; }}>
         <Helmet>
@@ -264,11 +303,13 @@ export class Page extends React.Component {
         </Helmet>
         {this.iframe(this.props)}
         <div className="c-release">
+          {previousButton}
           <span>{footerText}</span>
+          {nextButton}
         </div>
       </section>
     );
   }
 }
 
-export default connect(select, { ...ContentActions, ...AnalyticsActions })(Page);
+export default connect(select, { ...ContentActions, ...AnalyticsActions, ...ApplicationActions })(Page);
