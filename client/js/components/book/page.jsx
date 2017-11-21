@@ -278,7 +278,8 @@ export class Page extends React.Component {
         previousButton = (
           <button
             className="page-nav-button"
-            onClick={() => this.props.selectPage(tableOfContents[currentPageIndex - 1].id)}>
+            onClick={() => this.props.selectPage(tableOfContents[currentPageIndex - 1].id)}
+          >
             Previous
           </button>
         );
@@ -289,7 +290,8 @@ export class Page extends React.Component {
         nextButton = (
           <button
             className="page-nav-button"
-            onClick={() => this.props.selectPage(tableOfContents[currentPageIndex + 1].id)}>
+            onClick={() => this.props.selectPage(tableOfContents[currentPageIndex + 1].id)}
+          >
             Next
           </button>
         );
@@ -312,4 +314,5 @@ export class Page extends React.Component {
   }
 }
 
-export default connect(select, { ...ContentActions, ...AnalyticsActions, ...ApplicationActions })(Page);
+export default connect(select,
+  { ...ContentActions, ...AnalyticsActions, ...ApplicationActions })(Page);
