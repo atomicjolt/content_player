@@ -1,7 +1,11 @@
 export default {
   en: {
     sidebar: {
-      activityList: "Activity List"
+      activityList: 'Activity List'
+    },
+    footer: {
+      next: 'Next',
+      previous: 'Previous'
     }
   }
 };
