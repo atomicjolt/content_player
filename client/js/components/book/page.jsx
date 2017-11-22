@@ -5,8 +5,10 @@ import { Helmet }            from 'react-helmet';
 
 import * as ContentActions   from '../../actions/content';
 import * as AnalyticsActions from '../../actions/analytics';
+import * as ApplicationActions from '../../actions/application';
 // import assets                from '../../libs/assets';
 import getAVSrc              from '../../utils/audio_video_src';
+import { localizeStrings }      from '../../selectors/locale';
 
 const select = (state) => {
   const lang = state.content.tocMeta.language;
@@ -16,7 +18,8 @@ const select = (state) => {
     tocMeta:          state.content.tocMeta,
     contentPath:      state.content.contentPath,
     pageFocus:        state.application.pageFocus,
-    locale:           lang
+    locale:           lang,
+    localizedStrings: localizeStrings(state)
 
   };
 };
@@ -24,6 +27,8 @@ const select = (state) => {
 export class Page extends React.Component {
 
   static propTypes = {
+    // User facing strings of the language specified by the 'locale' setting
+    localizedStrings: React.PropTypes.object,
     tocMeta: React.PropTypes.shape({
       gradeUnit: React.PropTypes.string,
       subjectLesson: React.PropTypes.string,
@@ -42,7 +47,12 @@ export class Page extends React.Component {
     linkClick: React.PropTypes.func,
     buttonClick: React.PropTypes.func,
     openTranscript: React.PropTypes.func,
-    closeTranscript: React.PropTypes.func
+    closeTranscript: React.PropTypes.func,
+    selectPage: React.PropTypes.func,
+    tableOfContents: React.PropTypes.array,
+    params: React.PropTypes.shape({
+      pageId: React.PropTypes.string
+    })
   };
 
   componentDidMount() {
@@ -257,6 +267,41 @@ export class Page extends React.Component {
   render() {
     const lastModified = this.props.tocMeta.lastModified;
     const footerText = lastModified ? `CLIx release date: ${lastModified}` : undefined;
+
+    let previousButton;
+    let nextButton;
+    const { tableOfContents, params } = this.props;
+    if (tableOfContents && params) {
+      const currentPageIndex = _.findIndex(
+        tableOfContents,
+        item => item.id === params.pageId
+      );
+
+      if (currentPageIndex > -1 && currentPageIndex !== 0) {
+        // show Previous button
+        previousButton = (
+          <button
+            className="page-nav-button"
+            onClick={() => this.props.selectPage(tableOfContents[currentPageIndex - 1].id)}
+          >
+            {this.props.localizedStrings.footer.previous}
+          </button>
+        );
+      }
+
+      if (currentPageIndex > -1 && currentPageIndex !== tableOfContents.length - 1) {
+        // show Next button
+        nextButton = (
+          <button
+            className="page-nav-button"
+            onClick={() => this.props.selectPage(tableOfContents[currentPageIndex + 1].id)}
+          >
+            {this.props.localizedStrings.footer.next}
+          </button>
+        );
+      }
+    }
+
     return (
       <section className="c-page" tabIndex="-1" ref={(section) => { this.section = section; }}>
         <Helmet>
@@ -264,11 +309,16 @@ export class Page extends React.Component {
         </Helmet>
         {this.iframe(this.props)}
         <div className="c-release">
+          {previousButton}
           <span>{footerText}</span>
+          {nextButton}
         </div>
       </section>
     );
   }
 }
 
-export default connect(select, { ...ContentActions, ...AnalyticsActions })(Page);
+export default connect(
+  select,
+  { ...ContentActions, ...AnalyticsActions, ...ApplicationActions }
+)(Page);
