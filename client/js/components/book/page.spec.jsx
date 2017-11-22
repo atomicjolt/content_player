@@ -35,6 +35,12 @@ describe('page', () => {
       tableOfContents: [{ id:'1' }, { id:'2' }, { id:'3' }],
       params: {
         pageId: '1'
+      },
+      localizedStrings: {
+        footer: {
+          next: 'Next',
+          previous: 'Previous'
+        }
       }
     };
 
