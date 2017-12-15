@@ -123,7 +123,10 @@ describe('epub middleware', () => {
     const manifest = {
       manifest:[{id:'not-toc'}, {id:'toc'}],
       spine:{toc:'toc'},
-      metadata: {meta:[]}
+      metadata: {meta:[{
+        property: 'dcterms:modified',
+        text: '2016-09-30T12:10:59Z'
+      }]}
     };
 
     it("should make request", () => {
@@ -133,7 +136,7 @@ describe('epub middleware', () => {
 
     it("should call next", (done) => {
       requestTableOfContents({ settings:{} }, manifest, 'fakeUrl', (item, url, meta) => {
-        expect(meta.bibliography).toEqual(null);
+        expect(meta.bibliography).toEqual(undefined);
         done();
       });
     });

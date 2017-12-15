@@ -68,10 +68,12 @@ export function requestTableOfContents(state, rootfile, epubUrl, next) {
   let lastModified;
   if (_.isArray(rootfile.metadata.meta)) {
     const lastModifiedString = (rootfile.metadata.meta.find(item => item.property === 'dcterms:modified') || {}).text;
+    console.log('lms', lastModifiedString)
     const lastModifiedDate = new Date(lastModifiedString);
     if (lastModifiedDate !== 'Invalid Date') {
       // Only take the date portion of the ISO string
-      lastModified = lastModifiedDate.toISOString().split('T')[0];
+      console.log('lmd', lastModifiedDate)
+      lastModified = _.first(lastModifiedDate.toISOString().split('T'));
     }
   }
 
@@ -87,15 +89,15 @@ export function requestTableOfContents(state, rootfile, epubUrl, next) {
 
   // if a bibliography is specified in the rootfile.guide, we need
   //   to pass it along to next() somehow...
-  const guide = _.has(rootfile, 'guide') ?
-    _.isArray(rootfile.guide) ? rootfile.guide : [rootfile.guide] :
-    null;
-  let bibliography = guide ?
-    guide.filter(reference => reference.type === 'bibliography') :
-    null;
+  let guide = _.has(rootfile, 'guide') ? rootfile.guide : null;
+  let bibliography;
 
-  if (bibliography && bibliography.length > 0) {
-    bibliography = bibliography[0].href;
+  if (guide) {
+    guide = _.isArray(guide) ? guide : [guide];
+    bibliography = guide.filter(reference => reference.type === 'bibliography');
+    if (bibliography && bibliography.length > 0) {
+      bibliography = bibliography[0].href;
+    }
   }
 
   const tocID = rootfile.spine.toc;
@@ -106,11 +108,15 @@ export function requestTableOfContents(state, rootfile, epubUrl, next) {
       response,
       next,
       [epubUrl,
-        { subjectLesson,
+        {
+          subjectLesson,
           gradeUnit,
           language,
           lastModified,
-          bibliography }]);
+          bibliography
+        }
+      ]
+    );
   });
 }
 
@@ -148,7 +154,8 @@ const EPUB = store => next => action => {
             requestTableOfContents(state, item2, epubUrl2, (item3, epubUrl3, tocMeta) => {
               // Here we need to filter out any bibliographies listed in
               //   the root file
-              separateOutBibliography(item3, epubUrl3, tocMeta,
+              separateOutBibliography(
+                item3, epubUrl3, tocMeta,
                 (tableOfContents, item4, epubUrl4, tocMeta2, bibliography) => {
                   store.dispatch({
                     type: action.type + DONE,

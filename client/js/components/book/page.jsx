@@ -53,7 +53,11 @@ export class Page extends React.Component {
     tableOfContents: React.PropTypes.array,
     params: React.PropTypes.shape({
       pageId: React.PropTypes.string
-    })
+    }),
+    bibliography: React.PropTypes.shape({
+      content: React.PropTypes.string
+    }),
+    contentPath: React.PropTypes.string
   };
 
   componentDidMount() {
@@ -313,7 +317,7 @@ export class Page extends React.Component {
         >
           {this.props.localizedStrings.footer.bibliography}
         </a>
-      )
+      );
     }
 
     return (
