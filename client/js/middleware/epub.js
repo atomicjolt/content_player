@@ -53,7 +53,7 @@ export function requestContainer(state, epubUrl, next) {
  */
 export function requestRootFile(state, container, epubUrl, epubPath, next) {
   let updatedUrl = epubUrl;
-  const rootfile = request(Network.GET, `${epubUrl}/${container.rootfiles["full-path"]}`, state.settings.apiUrl, state.jwt, state.settings.csrfToken);
+  const rootfile = request(Network.GET, `${epubUrl}/${container.rootfiles['full-path']}`, state.settings.apiUrl, state.jwt, state.settings.csrfToken);
   if (!_.isEmpty(epubPath)) { updatedUrl += `/${epubPath}`; }
   rootfile.then((response) => {
     handleResponse(response, next, [updatedUrl]);
@@ -68,11 +68,9 @@ export function requestTableOfContents(state, rootfile, epubUrl, next) {
   let lastModified;
   if (_.isArray(rootfile.metadata.meta)) {
     const lastModifiedString = (rootfile.metadata.meta.find(item => item.property === 'dcterms:modified') || {}).text;
-    console.log('lms', lastModifiedString)
     const lastModifiedDate = new Date(lastModifiedString);
     if (lastModifiedDate !== 'Invalid Date') {
       // Only take the date portion of the ISO string
-      console.log('lmd', lastModifiedDate)
       lastModified = _.first(lastModifiedDate.toISOString().split('T'));
     }
   }

@@ -121,12 +121,14 @@ describe('epub middleware', () => {
 
   describe('requestTableOfContents', () => {
     const manifest = {
-      manifest:[{id:'not-toc'}, {id:'toc'}],
-      spine:{toc:'toc'},
-      metadata: {meta:[{
-        property: 'dcterms:modified',
-        text: '2016-09-30T12:10:59Z'
-      }]}
+      manifest: [{ id:'not-toc' }, { id:'toc' }],
+      spine: { toc:'toc' },
+      metadata: {
+        meta:[{
+          property: 'dcterms:modified',
+          text: '2016-09-30T12:10:59Z'
+        }]
+      }
     };
 
     it("should make request", () => {
