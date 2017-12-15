@@ -79,13 +79,45 @@ export function requestTableOfContents(state, rootfile, epubUrl, next){
   }
 
   var language = rootfile.metadata['dc:language'];
+
+  // if a bibliography is specified in the rootfile.guide, we need
+  //   to pass it along to next() somehow...
+  const guide = _.has(rootfile, 'guide') ?
+    _.isArray(rootfile.guide) ? rootfile.guide : [rootfile.guide] :
+    null;
+  let bibliography = guide ?
+    guide.filter(reference => reference.type === 'bibliography') :
+    null;
+
+  if (bibliography && bibliography.length > 0) {
+    bibliography = bibliography[0].href;
+  }
+
   var tocID = rootfile.spine.toc;
   var toc = rootfile.manifest.filter((item) => {if(item.id == tocID) return true;})[0];
   var tocPromise = request(Network.GET, `${epubUrl}/${toc.href}`, state.settings.apiUrl, state.jwt, state.settings.csrfToken);
   tocPromise.then((response) => {
-    handleResponse(response, next, [epubUrl, {subjectLesson, gradeUnit, language, lastModified}]);
+    handleResponse(response, next, [epubUrl, {subjectLesson, gradeUnit, language, lastModified, bibliography}]);
   });
 }
+
+
+/**
+ * Modifies the side-nav to strip out any bibliography, if
+ * specified in the content.opf file.
+ * Bibliography is then added as a separate parameter to send
+ * to the reducer.
+ */
+export const separateOutBibliography = (item, epubUrl, tocMeta, next) => {
+  let tableOfContents = _.isArray(item.navMap) ? item.navMap : [item.navMap];
+  let bibliography;
+  if (tocMeta.bibliography) {
+    bibliography = _.find(tableOfContents, navPage => navPage.content === tocMeta.bibliography);
+    tableOfContents = _.filter(tableOfContents,
+      navPage => navPage.content !== tocMeta.bibliography);
+  }
+  next(tableOfContents, item, epubUrl, _.omit(tocMeta, 'bibliography'), bibliography);
+};
 
 
 const EPUB = store => next => action => {
@@ -98,19 +130,20 @@ const EPUB = store => next => action => {
         const state = store.getState();
         requestContainer(state, action.epubUrl, (item, epubUrl) => {
           requestRootFile(state, item, epubUrl, getRelativePath(item), (item, epubUrl) => {
-            requestTableOfContents(
-              state,
-              item,
-              epubUrl,
-              (item, epubUrl, tocMeta) => {
-                let tableOfContents = _.isArray(item.navMap) ? item.navMap : [item.navMap];
-                store.dispatch({
-                  type:     action.type + DONE,
-                  tableOfContents,
-                  original: action,
-                  tocDoc: item,
-                  contentPath: epubUrl,
-                  tocMeta
+            requestTableOfContents(state, item, epubUrl, (item, epubUrl, tocMeta) => {
+              // Here we need to filter out any bibliographies listed in
+              //   the root file
+              separateOutBibliography(item, epubUrl, tocMeta,
+                (tableOfContents, item, epubUrl, tocMeta, bibliography) => {
+                  store.dispatch({
+                    type: action.type + DONE,
+                    tableOfContents,
+                    original: action,
+                    tocDoc: item,
+                    contentPath: epubUrl,
+                    tocMeta,
+                    bibliography
+                  });
                 });
               });
           });

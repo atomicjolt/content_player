@@ -55,4 +55,30 @@ describe('page', () => {
     page = TestUtils.renderIntoDocument(<Page {...pageProps} />);
     expect(TestUtils.scryRenderedDOMComponentsWithClass(page, 'page-nav-button').length).toEqual(1);
   });
+
+  it('renders bibliography link when appropriate', () => {
+    const pageProps = {
+      tocMeta: {},
+      tableOfContents: [{ id:'1' }, { id:'2' }, { id:'3' }],
+      params: {
+        pageId: '1'
+      },
+      localizedStrings: {
+        footer: {
+          next: 'Next',
+          previous: 'Previous',
+          bibliography: 'bib'
+        }
+      }
+    };
+
+    page = TestUtils.renderIntoDocument(<Page {...pageProps} />);
+    expect(TestUtils.scryRenderedDOMComponentsWithClass(page, 'bibliography-link').length).toEqual(0);
+
+    pageProps.bibliography = {
+      content: 'fakeUrl'
+    };
+    page = TestUtils.renderIntoDocument(<Page {...pageProps} />);
+    expect(TestUtils.scryRenderedDOMComponentsWithClass(page, 'bibliography-link').length).toEqual(1);
+  });
 });

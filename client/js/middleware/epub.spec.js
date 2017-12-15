@@ -1,9 +1,11 @@
+import _ from 'lodash';
 import {
   handleResponse,
   getRelativePath,
   requestContainer,
   requestRootFile,
   requestTableOfContents,
+  separateOutBibliography,
   __RewireAPI__ as EpubRewire } from './epub';
 
 var requestCalled = false;
@@ -131,9 +133,77 @@ describe('epub middleware', () => {
     });
 
     it("should call next", (done) => {
-      requestTableOfContents({settings:{}}, manifest,'fakeUrl', () => {
+      requestTableOfContents({settings:{}}, manifest,'fakeUrl', (item, url, meta) => {
+        expect(meta.bibliography).toEqual(null);
         done();
       });
     });
+
+    it('should send bibliography to next', (done) => {
+      manifest.guide = [{
+        type: 'bibliography',
+        href: 'Text/credits.html'
+      }];
+      requestTableOfContents({settings:{}}, manifest,'fakeUrl', (item, url, meta) => {
+        expect(meta.bibliography).toEqual('Text/credits.html');
+        done();
+      });
+    });
+
+    it('should work when guide is only one element', (done) => {
+      manifest.guide = {
+        type: 'bibliography',
+        href: 'Text/credits.html'
+      };
+      requestTableOfContents({settings:{}}, manifest,'fakeUrl', (item, url, meta) => {
+        expect(meta.bibliography).toEqual('Text/credits.html');
+        done();
+      });
+    });
+  });
+
+  describe('separateOutBibliography', () => {
+    let item;
+
+    beforeEach(() => {
+      item = {
+        navMap: [{
+          navLabel: 'foo',
+          content: 'Text/bar.html',
+          id: 'navPoint1'
+        }]
+      };
+    });
+
+    it('should return params unchanged if no bibliography', (done) => {
+      separateOutBibliography(item, 'fakeUrl', { foo: 'bar' },
+        (tableOfContents, item2, epubUrl, tocMeta, bibliography) => {
+          expect(tableOfContents).toEqual(item.navMap);
+          expect(bibliography).toEqual(undefined);
+          expect(tocMeta).toEqual({ foo: 'bar' });
+          done();
+        });
+    });
+
+    it('should return params unchanged if no bibliography match', (done) => {
+      separateOutBibliography(item, 'fakeUrl', { foo: 'bar', bibliography: 'Text/baz.html' },
+        (tableOfContents, item2, epubUrl, tocMeta, bibliography) => {
+          expect(tableOfContents).toEqual(item.navMap);
+          expect(bibliography).toEqual(undefined);
+          expect(tocMeta).toEqual({ foo: 'bar' });
+          done();
+        });
+    });
+
+    it('should separate out bibliography if match', (done) => {
+      separateOutBibliography(item, 'fakeUrl', { foo: 'bar', bibliography: 'Text/bar.html' },
+        (tableOfContents, item2, epubUrl, tocMeta, bibliography) => {
+          expect(tableOfContents).toEqual([]);
+          expect(bibliography).toEqual(item.navMap[0]);
+          expect(tocMeta).toEqual({ foo: 'bar' });
+          done();
+        });
+    });
+
   });
 });

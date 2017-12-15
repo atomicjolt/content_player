@@ -17,6 +17,7 @@ const select = (state) => {
     contentName:      state.settings.contentName,
     tocMeta:          state.content.tocMeta,
     contentPath:      state.content.contentPath,
+    bibliography:     state.content.bibliography,
     pageFocus:        state.application.pageFocus,
     locale:           lang,
     localizedStrings: localizeStrings(state)
@@ -302,6 +303,19 @@ export class Page extends React.Component {
       }
     }
 
+    let bibliography;
+
+    if (this.props.bibliography) {
+      bibliography = (
+        <a
+          href={`${this.props.contentPath}/${this.props.bibliography.content}`}
+          className="bibliography-link"
+        >
+          {this.props.localizedStrings.footer.bibliography}
+        </a>
+      )
+    }
+
     return (
       <section className="c-page" tabIndex="-1" ref={(section) => { this.section = section; }}>
         <Helmet>
@@ -311,6 +325,7 @@ export class Page extends React.Component {
         <div className="c-release">
           {previousButton}
           <span>{footerText}</span>
+          {bibliography}
           {nextButton}
         </div>
       </section>
