@@ -5,6 +5,7 @@ import es6Promise               from 'es6-promise';
 import React                    from 'react';
 import ReactDOM                 from 'react-dom';
 import { Provider }             from 'react-redux';
+import MuiThemeProvider         from 'material-ui/styles/MuiThemeProvider';
 import routes                   from './routes';
 import DevTools                 from './dev/dev_tools';
 import configureStore           from './store/configure_store';
@@ -29,10 +30,12 @@ class Root extends React.Component {
     const { store } = this.props;
     return (
       <Provider store={store}>
-        <div>
-          {routes}
-          {devTools}
-        </div>
+        <MuiThemeProvider>
+          <div>
+            {routes}
+            {devTools}
+          </div>
+        </MuiThemeProvider>
       </Provider>
     );
   }

@@ -3,6 +3,8 @@ import React                 from 'react';
 import { connect }           from 'react-redux';
 import { Helmet }            from 'react-helmet';
 
+import Drawer                from 'material-ui/Drawer';
+
 import * as ContentActions   from '../../actions/content';
 import * as AnalyticsActions from '../../actions/analytics';
 import * as ApplicationActions from '../../actions/application';
@@ -59,6 +61,13 @@ export class Page extends React.Component {
     }),
     contentPath: React.PropTypes.string
   };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      drawerOpen: false
+    };
+  }
 
   componentDidMount() {
     window.addEventListener('message', e => this.onMessage(e), false);
@@ -311,13 +320,34 @@ export class Page extends React.Component {
 
     if (this.props.bibliography) {
       bibliography = (
-        <a
-          href={`${this.props.contentPath}/${this.props.bibliography.content}`}
-          className="bibliography-link"
+        <button
+          onClick={() => this.setState({ drawerOpen: !this.state.drawerOpen })}
+          className="bibliography-btn"
         >
           {this.props.localizedStrings.footer.bibliography}
-        </a>
+        </button>
       );
+    }
+
+    let drawer;
+
+    if (this.props.bibliography) {
+      drawer = (
+        <Drawer
+          docked={false}
+          width="75%"
+          openSecondary
+          open={this.state.drawerOpen}
+        >
+          <button
+            onClick={() => this.setState({ drawerOpen: !this.state.drawerOpen })}
+            className="close-bibliography-btn"
+          >
+            X
+          </button>
+          <iframe src={`${this.props.contentPath}/${this.props.bibliography.content}`} />
+        </Drawer>
+      )
     }
 
     return (
@@ -332,6 +362,7 @@ export class Page extends React.Component {
           {bibliography}
           {nextButton}
         </div>
+        {drawer}
       </section>
     );
   }
