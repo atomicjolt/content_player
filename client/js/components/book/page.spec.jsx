@@ -1,6 +1,8 @@
 import React        from 'react';
 import TestUtils    from 'react-dom/test-utils';
-import { Page }  from './page';
+import Drawer       from 'material-ui/Drawer';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { Page }     from './page';
 
 describe('page', () => {
   let page;
@@ -54,5 +56,56 @@ describe('page', () => {
     pageProps.params.pageId = '3';
     page = TestUtils.renderIntoDocument(<Page {...pageProps} />);
     expect(TestUtils.scryRenderedDOMComponentsWithClass(page, 'page-nav-button').length).toEqual(1);
+  });
+
+  it('renders bibliography button when appropriate', () => {
+    const pageProps = {
+      tocMeta: {},
+      tableOfContents: [{ id:'1' }, { id:'2' }, { id:'3' }],
+      params: {
+        pageId: '1'
+      },
+      localizedStrings: {
+        footer: {
+          next: 'Next',
+          previous: 'Previous',
+          bibliography: 'bib'
+        }
+      },
+      styles: {}
+    };
+
+    let wrappedPage = (
+      <MuiThemeProvider>
+        <Page {...pageProps} />
+      </MuiThemeProvider>
+    );
+
+    page = TestUtils.renderIntoDocument(wrappedPage);
+    expect(TestUtils.scryRenderedDOMComponentsWithClass(page, 'bibliography-btn').length).toEqual(0);
+    expect(TestUtils.scryRenderedComponentsWithType(page, Drawer).length).toEqual(0);
+
+    pageProps.bibliography = {
+      content: 'fakeUrl'
+    };
+
+    wrappedPage = (
+      <MuiThemeProvider>
+        <Page {...pageProps} />
+      </MuiThemeProvider>
+    );
+
+    page = TestUtils.renderIntoDocument(wrappedPage);
+    expect(TestUtils.scryRenderedDOMComponentsWithClass(page, 'bibliography-btn').length).toEqual(1);
+    const drawerBtn = TestUtils.findRenderedDOMComponentWithClass(page, 'bibliography-btn');
+
+    expect(TestUtils.scryRenderedComponentsWithType(page, Drawer).length).toEqual(1);
+    let drawer = TestUtils.findRenderedComponentWithType(page, Drawer);
+    expect(drawer.props.open).toEqual(false);
+
+    TestUtils.Simulate.click(drawerBtn);
+
+    drawer = TestUtils.findRenderedComponentWithType(page, Drawer);
+    expect(drawer.props.open).toEqual(true);
   });
 });

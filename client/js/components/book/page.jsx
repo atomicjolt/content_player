@@ -3,6 +3,9 @@ import React                 from 'react';
 import { connect }           from 'react-redux';
 import { Helmet }            from 'react-helmet';
 
+import Drawer                from 'material-ui/Drawer';
+import FocusTrap             from 'focus-trap-react';
+
 import * as ContentActions   from '../../actions/content';
 import * as AnalyticsActions from '../../actions/analytics';
 import * as ApplicationActions from '../../actions/application';
@@ -17,6 +20,7 @@ const select = (state) => {
     contentName:      state.settings.contentName,
     tocMeta:          state.content.tocMeta,
     contentPath:      state.content.contentPath,
+    bibliography:     state.content.bibliography,
     pageFocus:        state.application.pageFocus,
     locale:           lang,
     localizedStrings: localizeStrings(state)
@@ -52,8 +56,20 @@ export class Page extends React.Component {
     tableOfContents: React.PropTypes.array,
     params: React.PropTypes.shape({
       pageId: React.PropTypes.string
-    })
+    }),
+    bibliography: React.PropTypes.shape({
+      content: React.PropTypes.string
+    }),
+    contentPath: React.PropTypes.string
   };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      drawerOpen: false,
+      activeTrap: false
+    };
+  }
 
   componentDidMount() {
     window.addEventListener('message', e => this.onMessage(e), false);
@@ -264,6 +280,13 @@ export class Page extends React.Component {
     );
   }
 
+  toggleDrawer = () => {
+    this.setState({
+      drawerOpen: !this.state.drawerOpen,
+      activeTrap: !this.state.activeTrap
+    });
+  }
+
   render() {
     const lastModified = this.props.tocMeta.lastModified;
     const footerText = lastModified ? `CLIx release date: ${lastModified}` : undefined;
@@ -302,6 +325,47 @@ export class Page extends React.Component {
       }
     }
 
+    let bibliography;
+
+    if (this.props.bibliography) {
+      bibliography = (
+        <button
+          onClick={this.toggleDrawer}
+          className="bibliography-btn"
+        >
+          {this.props.localizedStrings.footer.bibliography}
+        </button>
+      );
+    }
+
+    let drawer;
+
+    if (this.props.bibliography) {
+      drawer = (
+        <FocusTrap
+          active={this.state.activeTrap}
+        >
+          <Drawer
+            docked={false}
+            width="75%"
+            openSecondary
+            open={this.state.drawerOpen}
+          >
+            <button
+              onClick={this.toggleDrawer}
+              className="close-bibliography-btn"
+            >
+              X
+            </button>
+            <iframe
+              title="Citations"
+              src={`${this.props.contentPath}/${this.props.bibliography.content}`}
+            />
+          </Drawer>
+        </FocusTrap>
+      );
+    }
+
     return (
       <section className="c-page" tabIndex="-1" ref={(section) => { this.section = section; }}>
         <Helmet>
@@ -311,8 +375,10 @@ export class Page extends React.Component {
         <div className="c-release">
           {previousButton}
           <span>{footerText}</span>
+          {bibliography}
           {nextButton}
         </div>
+        {drawer}
       </section>
     );
   }
