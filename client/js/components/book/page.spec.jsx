@@ -88,6 +88,13 @@ describe('page', () => {
     pageProps.bibliography = {
       content: 'fakeUrl'
     };
+
+    wrappedPage = (
+      <MuiThemeProvider>
+        <Page {...pageProps} />
+      </MuiThemeProvider>
+    );
+
     page = TestUtils.renderIntoDocument(wrappedPage);
     expect(TestUtils.scryRenderedDOMComponentsWithClass(page, 'bibliography-btn').length).toEqual(1);
     const drawerBtn = TestUtils.findRenderedDOMComponentWithClass(page, 'bibliography-btn');
