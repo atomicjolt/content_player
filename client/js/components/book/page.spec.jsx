@@ -75,22 +75,20 @@ describe('page', () => {
       styles: {}
     };
 
-    page = TestUtils.renderIntoDocument(
+    let wrappedPage = (
       <MuiThemeProvider>
         <Page {...pageProps} />
       </MuiThemeProvider>
     );
+
+    page = TestUtils.renderIntoDocument(wrappedPage);
     expect(TestUtils.scryRenderedDOMComponentsWithClass(page, 'bibliography-btn').length).toEqual(0);
     expect(TestUtils.scryRenderedComponentsWithType(page, Drawer).length).toEqual(0);
 
     pageProps.bibliography = {
       content: 'fakeUrl'
     };
-    page = TestUtils.renderIntoDocument(
-      <MuiThemeProvider>
-        <Page {...pageProps} />
-      </MuiThemeProvider>
-    );
+    page = TestUtils.renderIntoDocument(wrappedPage);
     expect(TestUtils.scryRenderedDOMComponentsWithClass(page, 'bibliography-btn').length).toEqual(1);
     const drawerBtn = TestUtils.findRenderedDOMComponentWithClass(page, 'bibliography-btn');
 
