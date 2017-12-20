@@ -345,9 +345,11 @@ export class Page extends React.Component {
           >
             X
           </button>
-          <iframe src={`${this.props.contentPath}/${this.props.bibliography.content}`} />
+          <iframe
+            title="Citations"
+            src={`${this.props.contentPath}/${this.props.bibliography.content}`} />
         </Drawer>
-      )
+      );
     }
 
     return (
