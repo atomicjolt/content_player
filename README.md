@@ -244,6 +244,39 @@ To make sure that the correct language is applied to the content player UI and c
 
 Supported language codes are `en`, `hi`, and `te`.
 
+# Citation Pages
+-----------------------
+For any ePub with a "Citation" page (i.e. `Text/Citation.html`), you can optionally flag it as a `bibliography`, which means the content player will show that page in a separate drawer, and leave it out of the side-nav on the left. A new button will appear in the footer to show the drawer.
+
+To flag it as a `bibliography`, there are two changes you need to make.
+
+1. In the `Citation.html` page, change the `epub:type` from `chapter` to `bibliography`. So the `section` tag would look like: `<section epub:type="bibliography">`.
+2. In `content.opf`, in the `guide` section, add an entry for the `bibliography`, so it looks like the following. The `href` of the `reference` **MUST** match the `src` of the `content` tag, in the `toc.ncx` file's `navPoint` tag that corresponds to the citation page:
+
+`content.opf`
+
+```
+<guide>
+  <reference type="toc" title="Table of Content" href="Text/nav.html"/>
+  <reference type="bibliography" title="Citations" href="Text/Citation.html"/>
+</guide>
+```
+
+`toc.ncx`
+
+```
+<navPoint id="navPoint9">
+  <navLabel>
+    <text>Citation</text>
+  </navLabel>
+  <content src="Text/Citation.html"/>
+</navPoint>
+```
+
+
+**NOTE:** you should leave the `Citation.html` page in the `content.opf`'s `spine` section, so that other ePub readers still display the citations properly.
+
+
 # License and attribution
 -----------------------
 MIT
