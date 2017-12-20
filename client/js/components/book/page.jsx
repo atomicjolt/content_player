@@ -4,6 +4,7 @@ import { connect }           from 'react-redux';
 import { Helmet }            from 'react-helmet';
 
 import Drawer                from 'material-ui/Drawer';
+import FocusTrap             from 'focus-trap-react';
 
 import * as ContentActions   from '../../actions/content';
 import * as AnalyticsActions from '../../actions/analytics';
@@ -65,7 +66,8 @@ export class Page extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      drawerOpen: false
+      drawerOpen: false,
+      activeTrap: false
     };
   }
 
@@ -278,6 +280,13 @@ export class Page extends React.Component {
     );
   }
 
+  toggleDrawer = () => {
+    this.setState({
+      drawerOpen: !this.state.drawerOpen,
+      activeTrap: !this.state.activeTrap
+    });
+  }
+
   render() {
     const lastModified = this.props.tocMeta.lastModified;
     const footerText = lastModified ? `CLIx release date: ${lastModified}` : undefined;
@@ -321,7 +330,7 @@ export class Page extends React.Component {
     if (this.props.bibliography) {
       bibliography = (
         <button
-          onClick={() => this.setState({ drawerOpen: !this.state.drawerOpen })}
+          onClick={this.toggleDrawer}
           className="bibliography-btn"
         >
           {this.props.localizedStrings.footer.bibliography}
@@ -333,23 +342,27 @@ export class Page extends React.Component {
 
     if (this.props.bibliography) {
       drawer = (
-        <Drawer
-          docked={false}
-          width="75%"
-          openSecondary
-          open={this.state.drawerOpen}
+        <FocusTrap
+          active={this.state.activeTrap}
         >
-          <button
-            onClick={() => this.setState({ drawerOpen: !this.state.drawerOpen })}
-            className="close-bibliography-btn"
+          <Drawer
+            docked={false}
+            width="75%"
+            openSecondary
+            open={this.state.drawerOpen}
           >
-            X
-          </button>
-          <iframe
-            title="Citations"
-            src={`${this.props.contentPath}/${this.props.bibliography.content}`}
-          />
-        </Drawer>
+            <button
+              onClick={this.toggleDrawer}
+              className="close-bibliography-btn"
+            >
+              X
+            </button>
+            <iframe
+              title="Citations"
+              src={`${this.props.contentPath}/${this.props.bibliography.content}`}
+            />
+          </Drawer>
+        </FocusTrap>
       );
     }
 
