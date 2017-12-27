@@ -304,7 +304,7 @@ export class Page extends React.Component {
         // show Previous button
         previousButton = (
           <button
-            className="page-nav-button"
+            className="c-btn--prev-page"
             onClick={() => this.props.selectPage(tableOfContents[currentPageIndex - 1].id)}
           >
             {this.props.localizedStrings.footer.previous}
@@ -316,7 +316,7 @@ export class Page extends React.Component {
         // show Next button
         nextButton = (
           <button
-            className="page-nav-button"
+            className="c-btn--next-page"
             onClick={() => this.props.selectPage(tableOfContents[currentPageIndex + 1].id)}
           >
             {this.props.localizedStrings.footer.next}
@@ -353,7 +353,7 @@ export class Page extends React.Component {
           >
             <button
               onClick={this.toggleDrawer}
-              className="close-bibliography-btn"
+              className="c-drawer-btn-close"
             >
               X
             </button>
@@ -372,12 +372,12 @@ export class Page extends React.Component {
           <html lang={this.props.locale} />
         </Helmet>
         {this.iframe(this.props)}
-        <div className="c-release">
+        <nav className="c-page-nav">
           {previousButton}
           <span>{footerText}</span>
           {bibliography}
           {nextButton}
-        </div>
+        </nav>
         {drawer}
       </section>
     );

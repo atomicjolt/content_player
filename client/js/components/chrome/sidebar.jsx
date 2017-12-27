@@ -23,6 +23,7 @@ export class Sidebar extends React.Component {
     tocMeta: React.PropTypes.shape({
       gradeUnit: React.PropTypes.string,
       subjectLesson: React.PropTypes.string,
+      lastModified: React.PropTypes.string,
     }),
     selectPage: React.PropTypes.func,
     focusPage: React.PropTypes.func,
@@ -55,6 +56,8 @@ export class Sidebar extends React.Component {
     let unit = '';
     let subject = '';
     let tableOfContents = '';
+    const lastModified = this.props.tocMeta.lastModified;
+    const footerText = lastModified ? `CLIx release date: ${lastModified}` : undefined;
 
     if (this.props.sidebarOpen) {
       btnToggleClass = 'c-sidebar__toggle-button c-sidebar__toggle-button--open';
@@ -104,6 +107,9 @@ export class Sidebar extends React.Component {
             {tableOfContents}
           </ul>
         </div>
+        <footer>
+          <p className="c-release">{footerText}</p>
+        </footer>
       </nav>
     );
   }

@@ -12,6 +12,11 @@ $light-gray: #9B9B9B;
 $lightest-gray: #777777;
 $white: #fffffff;
 
+//Brand color scheme
+$primary: #4F7DB2;
+$secondary: #4C4086;
+$accent: #922A7D;
+
 // CLIx Brand color scheme
 $clix-purple: #A61680;
 $clix-blue: #5387C6;
@@ -23,6 +28,26 @@ $clix-green: #2BB673;
 
 //Border-radius (set to 0 for no rounded corners)
 $radius: 0.3rem;
+
+//Secondary button colors
+$btn-secondary-background: $white;
+$btn-secondary-background-hover: $secondary;
+
+$btn-secondary-border: $secondary;
+$btn-secondary-border-hover: $secondary;
+
+$btn-secondary-text: $secondary;
+$btn-secondary-text-hover: $white;
+
+//Primary button colors
+$btn-primary-background: $accent;
+$btn-primary-background-hover: $white;
+
+$btn-primary-border: $accent;
+$btn-primary-border-hover: $accent;
+
+$btn-primary-text: $white;
+$btn-primary-text-hover: $accent;
 
 
 // activity list button styling
