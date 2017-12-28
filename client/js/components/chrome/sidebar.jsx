@@ -57,7 +57,7 @@ export class Sidebar extends React.Component {
     let subject = '';
     let tableOfContents = '';
     const lastModified = this.props.tocMeta.lastModified;
-    const footerText = lastModified ? `CLIx release date: ${lastModified}` : undefined;
+    const footerText = lastModified ? `CLIx Release Date: ${lastModified}` : undefined;
 
     if (this.props.sidebarOpen) {
       btnToggleClass = 'c-sidebar__toggle-button c-sidebar__toggle-button--open';
@@ -107,9 +107,7 @@ export class Sidebar extends React.Component {
             {tableOfContents}
           </ul>
         </div>
-        <footer>
-          <p className="c-release">{footerText}</p>
-        </footer>
+        <footer className="clix-release">{footerText}</footer>
       </nav>
     );
   }

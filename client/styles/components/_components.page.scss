@@ -1,7 +1,7 @@
 
 .c-page {
   height: 100%;
-  width: 100%;
+  width: calc(100% - 1em);
   margin: 0.5em;
   border-left-width: 6px;
   border-left-style: solid;
@@ -16,33 +16,34 @@
     margin: 0;
     padding: 0;
     position: relative;
-    height: calc(100% - 2rem);
+    height: calc(100% - 3em);
     width: 100%;
     border: none;
   }
 
-  .c-release {
+  .c-page-nav {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     margin: 0;
-    padding: 0.313rem;
+    padding: 0.5rem;
+    height: 2.75em;
     @include regular;
-    font-size: 0.6rem;
-    color: $gray;
+    // font-size: 0.6rem;
+    color: $white;
     text-align: center;
     text-transform: uppercase;
     border-top: 1px solid #ccc;
+    background-color: $white;
 
-    .c-btn {
+    .c-btn-footer {
       padding: 0 1.5rem;
-      height: 3.5rem;
+      height: 2rem;
       border-radius: $radius;
-      border-width: 0.2rem;
+      border-width: 0.1em;
       border-style: solid;
-      text-transform: uppercase;
-      @include bold;
-      font-size: 1.4rem;
+      @include regular;
+      font-size: 0.875em;
       position: relative;
       white-space: nowrap;
 
@@ -62,10 +63,10 @@
       }
 
       svg {
-        width: 2.4rem;
-        height: 2.4rem;
+        width: 1.5rem;
+        height: 1.5rem;
         position: absolute;
-        top: .3rem;
+        top: 0.21rem;
 
         path {
           @include transition(all 0.2s ease);
@@ -73,60 +74,58 @@
       }
     }
 
-    .c-btn--prev-page {
-      background: $btn-secondary-background;
-      color: $btn-secondary-text;
-      border-color: $btn-secondary-border;
+    .c-btn-footer--prev-page {
+      background: $btn-primary-background;
+      color: $btn-primary-text;
+      border-color: $btn-primary-border;
       outline: 0;
+      padding-left: 2rem;
       // @include transition(all 0.1s ease);
 
       &:hover {
-        border-color: $btn-secondary-border-hover;
-        background: $btn-secondary-background-hover;
-        color: $btn-secondary-text-hover;
+        border-color: $btn-primary-border;
+        background: $btn-primary-border-hover;
+        color: $btn-primary-text-hover;
 
         svg path{
-          fill: $btn-secondary-text-hover;
+          fill: $btn-primary-text-hover;
         }
       }
 
       &:focus {
-        border-color: $btn-secondary-border-hover;
-        background: $btn-secondary-background-hover;
-        color: $btn-secondary-text-hover;
-
-        &:before {
-          @include boxShadow(-4px 0 $btn-secondary-background);
-        }
+        border-color: $btn-primary-border;
+        background: $btn-primary-border-hover;
+        color: $btn-primary-text-hover;
 
         &:after {
-          @include boxShadow(4px 0 $btn-secondary-background);
+          @include boxShadow(4px 0 $btn-primary-text-hover);
         }
 
         svg path{
-          fill: $btn-secondary-text-hover;
+          fill: $btn-primary-text-hover;
         }
       }
 
       &:active {
-        border-color: darken($btn-secondary-border-hover, 10%);
-        background: darken($btn-secondary-border-hover, 10%);
-        color: $btn-secondary-text-hover;
-
+        border-color: darken($btn-primary-border, 10%);
+        background: darken($btn-primary-border, 10%);
+        color: $btn-primary-text-hover;
 
         svg path {
-          fill: $btn-secondary-text-hover;
+          fill: $btn-primary-text-hover;
         }
       }
 
       svg {
+        left: .3rem;
+        @include transform(rotate(90deg));
         path {
-          fill: $btn-secondary-text;
+          fill: $btn-primary-text;
         }
       }
     }
 
-    .c-btn--prev-page:before {
+    .c-btn-footer--prev-page:before {
       content: '';
       position: absolute;
       width: 0.5em;
@@ -137,7 +136,7 @@
       @include transition(all 0.1s ease);
     }
 
-    .c-btn--prev-page:after {
+    .c-btn-footer--prev-page:after {
       content: '';
       position: absolute;
       width: 0.5em;
@@ -148,89 +147,57 @@
       @include transition(all 0.1s ease);
     }
 
-    .c-btn--next-page {
+    .c-btn-footer--next-page {
+      background: $btn-primary-background;
+      color: $btn-primary-text;
+      border-color: $btn-primary-border;
+      outline: 0;
+      padding-right: 2rem;
+      // @include transition(all 0.1s ease);
+
       &:hover {
+        border-color: $btn-primary-border;
+        background: $btn-primary-border-hover;
+        color: $btn-primary-text-hover;
+        svg path {
+          fill: $btn-primary-text-hover;
+        }
+      }
+
+      &:focus {
+        border-color: $btn-primary-border;
+        background: $btn-primary-border-hover;
+        color: $btn-primary-text-hover;
+
+        &:before {
+          @include boxShadow(-4px 0 $btn-primary-text-hover);
+        }
+
+        svg path{
+          fill: $btn-primary-text-hover;
+        }
+      }
+
+      &:active {
+        border-color: darken($btn-primary-border, 10%);
+        background: darken($btn-primary-border, 10%);
+        color: $btn-primary-text-hover;
+
         svg path {
           fill: $btn-primary-text-hover;
         }
       }
 
       svg {
+        right: .3rem;
+        @include transform(rotate(-90deg));
         path {
           fill: $btn-primary-text;
         }
       }
     }
 
-    [dir="ltr"] .c-btn--prev-page {
-      padding-left: 3rem;
-      svg {
-        left: .3rem;
-        @include transform(rotate(90deg));
-      }
-    }
-
-    [dir="ltr"] .c-btn--next-page {
-      padding-right: 3rem;
-      svg {
-        right: .3rem;
-        @include transform(rotate(-90deg));
-      }
-    }
-
-    [dir="rtl"] .c-btn--prev-page {
-      padding-right: 3rem;
-      svg {
-        right: .3rem;
-        @include transform(rotate(-90deg));
-      }
-    }
-
-    [dir="rtl"] .c-btn--next-page {
-      padding-left: 3rem;
-
-      svg {
-        left: .3rem;
-        @include transform(rotate(90deg));
-      }
-    }
-
-
-    .c-btn--next-page {
-      background: $btn-primary-background;
-      color: $btn-primary-text;
-      border-color: $btn-primary-border;
-      outline: 0;
-      // @include transition(all 0.1s ease);
-
-      &:hover {
-        border-color: $btn-primary-border-hover;
-        background: $btn-primary-background-hover;
-        color: $btn-primary-text-hover;
-      }
-
-      &:focus {
-        &:before {
-          @include boxShadow(-4px 0 $btn-primary-text);
-        }
-
-        &:after {
-          @include boxShadow(4px 0 $btn-primary-text);
-        }
-      }
-
-      &:active {
-        background: darken($btn-primary-background, 10%);
-        color: $btn-primary-text;
-        border-color: darken($btn-primary-border, 10%);
-
-        svg path {
-          fill: $btn-primary-text;
-        }
-      }
-    }
-
-    .c-btn--next-page:before {
+    .c-btn-footer--next-page:before {
       content: '';
       position: absolute;
       width: 0.5em;
@@ -241,7 +208,7 @@
       @include transition(all 0.1s ease);
     }
 
-    .c-btn--next-page:after {
+    .c-btn-footer--next-page:after {
       content: '';
       position: absolute;
       width: 0.5em;

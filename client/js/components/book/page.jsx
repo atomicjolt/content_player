@@ -28,6 +28,13 @@ const select = (state) => {
   };
 };
 
+const svg = (
+  <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+    <path d="M14.83 16.42l9.17 9.17 9.17-9.17 2.83 2.83-12 12-12-12z" />
+  </svg>
+);
+
+
 export class Page extends React.Component {
 
   static propTypes = {
@@ -36,7 +43,6 @@ export class Page extends React.Component {
     tocMeta: React.PropTypes.shape({
       gradeUnit: React.PropTypes.string,
       subjectLesson: React.PropTypes.string,
-      lastModified: React.PropTypes.string,
     }),
     locale: React.PropTypes.string,
     videoPlay: React.PropTypes.func,
@@ -288,9 +294,6 @@ export class Page extends React.Component {
   }
 
   render() {
-    const lastModified = this.props.tocMeta.lastModified;
-    const footerText = lastModified ? `CLIx release date: ${lastModified}` : undefined;
-
     let previousButton;
     let nextButton;
     const { tableOfContents, params } = this.props;
@@ -300,26 +303,46 @@ export class Page extends React.Component {
         item => item.id === params.pageId
       );
 
-      if (currentPageIndex > -1 && currentPageIndex !== 0) {
+      if (currentPageIndex > -1) {
         // show Previous button
-        previousButton = (
+        previousButton = (currentPageIndex === 0)
+        ? (
           <button
-            className="c-btn--prev-page"
+            className="c-btn-footer c-btn-footer--prev-page"
+            disabled
+          >
+            { svg }
+            {this.props.localizedStrings.footer.previous}
+          </button>
+        ) :
+        (
+          <button
+            className="c-btn-footer c-btn-footer--prev-page"
             onClick={() => this.props.selectPage(tableOfContents[currentPageIndex - 1].id)}
           >
+            { svg }
             {this.props.localizedStrings.footer.previous}
           </button>
         );
-      }
 
-      if (currentPageIndex > -1 && currentPageIndex !== tableOfContents.length - 1) {
         // show Next button
-        nextButton = (
+        nextButton = (currentPageIndex === tableOfContents.length - 1)
+        ? (
           <button
-            className="c-btn--next-page"
+            className="c-btn-footer c-btn-footer--next-page"
+            disabled
+          >
+            {this.props.localizedStrings.footer.next}
+            { svg }
+          </button>
+        ) :
+        (
+          <button
+            className="c-btn-footer c-btn-footer--next-page"
             onClick={() => this.props.selectPage(tableOfContents[currentPageIndex + 1].id)}
           >
             {this.props.localizedStrings.footer.next}
+            { svg }
           </button>
         );
       }
@@ -374,7 +397,6 @@ export class Page extends React.Component {
         {this.iframe(this.props)}
         <nav className="c-page-nav">
           {previousButton}
-          <span>{footerText}</span>
           {bibliography}
           {nextButton}
         </nav>

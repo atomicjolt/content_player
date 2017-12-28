@@ -4,9 +4,9 @@ export default {
       activityList: 'Activity List'
     },
     footer: {
-      next: 'Next', // Next page button in the footer
-      previous: 'Previous', // Previous page button in the footer
-      bibliography: 'Click to see the citations' // Text for bibliography link
+      next: 'Next activity', // Next page button in the footer
+      previous: 'Previous activity', // Previous page button in the footer
+      bibliography: 'Citations' // Text for bibliography link
     }
   }
 };

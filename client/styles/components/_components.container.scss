@@ -4,7 +4,8 @@
   left: 0;
   top: 0;
   height: 100%;
-  width: calc(100% + 1.063rem); // hide vertical iframe scrollbars offscreen
+  // width: calc(100% + 1.063rem); // hide vertical iframe scrollbars offscreen
+  width: 100%; // show vertical iframe scrollbars for accessibility
   font-weight: 300;
 }
 

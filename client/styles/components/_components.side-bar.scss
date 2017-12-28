@@ -88,17 +88,6 @@
     font-size: 0.875em;
     opacity: 0;
   }
-
-  .clix-v {
-    position: absolute;
-    bottom: 1em;
-    left: 1em;
-    font-weight: 300;
-    font-size: 0.62543em;
-    color: #fff;
-    letter-spacing: 1.15px;
-    text-transform: uppercase;
-  }
 }
 
 .c-sidebar--open {
@@ -122,5 +111,17 @@
     opacity: 1;
     transition: opacity 0.6s ease;
   }
+}
+
+.clix-release {
+  position: absolute;
+  bottom: 1em;
+  left: 1.9em;
+  @include regular;
+  font-weight: 300;
+  font-size: 0.725em;
+  color: #adadad;
+  letter-spacing: 0.95px;
+  text-transform: uppercase;
 }
 

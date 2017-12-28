@@ -1,12 +1,12 @@
 export default {
   hi: {
     sidebar:{
-      activityList: "गतिविधीयों की सूची" // Sidebar title
+      activityList: 'गतिविधीयों की सूची' // Sidebar title
     },
     footer: {
-      next: 'आगामी', // Next page button in the footer
-      previous: 'पिछला', // Previous page button in the footer
-      bibliography: 'प्रशंसा पत्र देखने के लिए क्लिक करें' // Text for bibliography link
+      next: 'अगली गतिविधि', // Next page button in the footer
+      previous: 'पिछली गतिविधि', // Previous page button in the footer
+      bibliography: 'उद्धरण' // Text for bibliography link
     }
   }
 };

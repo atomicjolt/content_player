@@ -10,7 +10,7 @@ $dark-gray: #333333;
 $gray: #565556;
 $light-gray: #9B9B9B;
 $lightest-gray: #777777;
-$white: #fffffff;
+$white: #ffffff;
 
 //Brand color scheme
 $primary: #4F7DB2;
@@ -40,14 +40,14 @@ $btn-secondary-text: $secondary;
 $btn-secondary-text-hover: $white;
 
 //Primary button colors
-$btn-primary-background: $accent;
-$btn-primary-background-hover: $white;
+$btn-primary-background: $white;
+$btn-primary-background-hover: $lightest-gray;
 
-$btn-primary-border: $accent;
-$btn-primary-border-hover: $accent;
+$btn-primary-border: $lightest-gray;
+$btn-primary-border-hover: $lightest-gray;
 
-$btn-primary-text: $white;
-$btn-primary-text-hover: $accent;
+$btn-primary-text: $lightest-gray;
+$btn-primary-text-hover: $white;
 
 
 // activity list button styling
