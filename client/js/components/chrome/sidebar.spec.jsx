@@ -1,26 +1,25 @@
-"use strict";
-
 import React        from 'react';
 import ReactDOM     from 'react-dom';
-import TestUtils    from 'react/lib/ReactTestUtils';
+import TestUtils    from 'react-dom/test-utils';
 import { Sidebar }  from './sidebar';
 
-describe('sidebar', function() {
-  var result, subject;
-  var props;
+describe('sidebar', () => {
+  let result;
+  let subject;
+  let props;
 
   const renderResult = () => {
     result = TestUtils.renderIntoDocument(<Sidebar {...props} />);
     subject = ReactDOM.findDOMNode(result);
   };
 
-  beforeEach(()=>{
+  beforeEach(() => {
     props = {
-      tableOfContents: [{id:1, navLabel:"tocA"}, {id:2, navLabel:"tocB"}],
-      title: "title",
+      tableOfContents: [{ id:1, navLabel:'tocA' }, { id:2, navLabel:'tocB' }],
+      title: 'title',
       sidebarOpen: true,
       tocMeta: { },
-      localizedStrings: {sidebar: {activityList: 'Activity List'}}
+      localizedStrings: { sidebar: { activityList: 'Activity List' } }
     };
     renderResult();
   });

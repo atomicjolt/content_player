@@ -1,97 +1,127 @@
-.c-sidebar{
-    position: relative;
-    width: 140px;
-    // min-width: 140px;
-    height: 100vh;
-    transition: all .6s ease;
-    align-items: stretch;
-    background-color: #4a4a4a;
-    overflow-x: hidden;
-    color: #fff;
-    font-weight: 300;
+.c-sidebar__toggle-button {
+  width: 20.88em; // width: 292px;
+  position: absolute;
+  top: 0;
+  left: -10em;
+  display: flex;
+  align-items: center;
+  z-index: 2;
+  margin: 0;
+  padding-top: 0.75em;
+  padding-right: 1em;
+  padding-bottom: 0.563em;
+  padding-left: 11.65em;
+  @include bold;
+  font-size: 0.875em;
+  color: #fff;
+  text-align: left;
+  text-shadow: 0 0.125em 0.125em rgba(0,0,0, 0.3);
+  text-transform: uppercase;
+  line-height: 1.15;
+  @include activity-button-toggle;
+  cursor: pointer;
 
-    a{
-      opacity:0;
-      // transition: opacity .2s ease;
-    }
-
-    svg{
-      height: 12px;
-      width: 8px;
-      position: absolute;
-      right:0.5rem;
-      top: 0.9rem;
-      transform:rotate(0deg);
-      transition: all .6s ease;
-    }
-
-   .openButton{
-     padding: 12px 16px 9px;
-     background-color: #333;
-     font-size: .75rem;
-     border-bottom: 3px solid #333;
-     text-transform: uppercase;
-     cursor: pointer;
-   }
-
-   .openButton:hover{
-      background-color: #111;
-      border-bottom: 3px solid #666;
-   }
-
-   .openButton:active{
-     background-color: #111;
-     background-image: linear-gradient(90deg, #f54b32, #f37f2f 13.75em, #f65e27);
-     border-bottom: 3px solid #fff;
-   }
-
-   .unit{
-     padding: 28px 0px 0px 16px;
-     text-transform: uppercase;
-     opacity: 0;
-    //  transition: opacity .2s ease;
-     font-size: .625rem;
-   }
-
-   .subject{
-     font-size: .875rem;
-     padding: 0px 0px 5px 16px;
-     text-transform: uppercase;
-     opacity: 0;
-    //  transition: opacity .2s ease;
-   }
-
-   .clix-v{
-      position: absolute;
-      left: 1rem;
-      bottom: 1rem;
-      color: #fff;
-      font-weight: 300;
-      font-size: 10px;
-      letter-spacing: 1.15px;
-      text-transform: uppercase;
-   }
-}
-
-.c-sidebar--open{
-  width: 292px;
-
-  a{
-    color: #fff;
-    opacity: 1;
-    transition: opacity .6s ease;
-  }
-  svg{
-    transform:rotate(180deg);
+  &[aria-pressed='true'] {
+    @include activity-button-toggle-pressed;
   }
 
-  .unit{
-    opacity: 1;
-    transition: opacity .6s ease;
+  &:hover {
+    @include activity-button-toggle-hover;
   }
 
-  .subject{
-    opacity: 1;
-    transition: opacity .6s ease;
+  &:focus {
+    @include activity-button-toggle-focus;
+  }
+
+  &:active {
+    @include activity-button-toggle-active;
   }
 }
+
+.c-sidebar__toggle-button--open {
+  left: 0;
+  padding-left: 1.65em;
+}
+
+.c-sidebar__svg {
+  position: absolute;
+  top: 0.9em;
+  right: 0.75em;
+  transform:rotate(0deg);
+  transition: all 0.6s ease;
+}
+
+.c-sidebar__svg--spin {
+  right: 1.25em;
+  transform:rotate(90deg);
+}
+
+.c-sidebar__button-list {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.c-sidebar {
+  position: relative;
+  width: 0;
+  height: 100vh;
+  padding-top: 2em;
+  @include regular;
+  color: #fff;
+  background-color: #4a4a4a;
+  overflow-x: hidden;
+  transition: all 0.6s ease;
+
+  a {
+    opacity:0;
+  }
+
+  .unit {
+    padding: 1.875em 0 0 1.95em;
+    font-size: 0.725em;
+    opacity: 0;
+  }
+
+  .subject {
+    padding: 0 0 0.313em 1.55em;
+    font-size: 0.875em;
+    opacity: 0;
+  }
+}
+
+.c-sidebar--open {
+  width: 18.250em;
+  display: flex;
+  flex-direction: column;
+
+  a {
+    color: #fff;
+    opacity: 1;
+    transition-delay: 1.5s;
+    transition: opacity 0.6s ease;
+  }
+
+  .unit {
+    opacity: 1;
+    transition: opacity 0.6s ease;
+  }
+
+  .subject {
+    opacity: 1;
+    transition: opacity 0.6s ease;
+  }
+}
+
+.clix-release {
+  position: absolute;
+  bottom: 1em;
+  left: 1.9em;
+  @include regular;
+  font-weight: 300;
+  font-size: 0.725em;
+  color: #adadad;
+  letter-spacing: 0.95px;
+  text-transform: uppercase;
+}
+

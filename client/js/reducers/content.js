@@ -16,6 +16,7 @@ export default (state = initialState, action) => {
       nextState.title = action.tocDoc.docTitle;
       nextState.contentPath = action.contentPath;
       nextState.tocMeta = action.tocMeta;
+      nextState.bibliography = action.bibliography;
       return nextState;
 
     default:

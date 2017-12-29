@@ -1,39 +1,103 @@
-"use strict";
+import _                     from 'lodash';
+import React                 from 'react';
+import { connect }           from 'react-redux';
+import { Helmet }            from 'react-helmet';
 
-import _                          from "lodash";
-import React                      from "react";
-import { connect }                from "react-redux";
+import Drawer                from 'material-ui/Drawer';
+import FocusTrap             from 'focus-trap-react';
 
-import * as ContentActions        from "../../actions/content";
-import * as AnalyticsActions from "../../actions/analytics";
-import assets                     from "../../libs/assets";
-import getAVSrc                   from "../../utils/audio_video_src";
+import * as ContentActions   from '../../actions/content';
+import * as AnalyticsActions from '../../actions/analytics';
+import * as ApplicationActions from '../../actions/application';
+// import assets                from '../../libs/assets';
+import getAVSrc              from '../../utils/audio_video_src';
+import { localizeStrings }      from '../../selectors/locale';
 
 const select = (state) => {
-  let lang = state.content.tocMeta.language;
+  const lang = state.content.tocMeta.language;
   return {
     tableOfContents:  state.content.tableOfContents,
     contentName:      state.settings.contentName,
     tocMeta:          state.content.tocMeta,
     contentPath:      state.content.contentPath,
-    locale:           lang
+    bibliography:     state.content.bibliography,
+    pageFocus:        state.application.pageFocus,
+    locale:           lang,
+    localizedStrings: localizeStrings(state)
+
   };
 };
 
+const svg = (
+  <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+    <path d="M14.83 16.42l9.17 9.17 9.17-9.17 2.83 2.83-12 12-12-12z" />
+  </svg>
+);
+
+
 export class Page extends React.Component {
 
-  scrollToAssessment(){
-    var pubFrame = document.getElementsByTagName('iframe')[0];
-    var epubBody = pubFrame.contentDocument.body;
-    if(!epubBody){ return; }
+  static propTypes = {
+    // User facing strings of the language specified by the 'locale' setting
+    localizedStrings: React.PropTypes.object,
+    tocMeta: React.PropTypes.shape({
+      gradeUnit: React.PropTypes.string,
+      subjectLesson: React.PropTypes.string,
+    }),
+    locale: React.PropTypes.string,
+    videoPlay: React.PropTypes.func,
+    videoPause: React.PropTypes.func,
+    videoSeeked: React.PropTypes.func,
+    videoEnded: React.PropTypes.func,
+    audioPlay: React.PropTypes.func,
+    audioPause: React.PropTypes.func,
+    audioSeeked: React.PropTypes.func,
+    audioEnded: React.PropTypes.func,
+    imageClick: React.PropTypes.func,
+    linkClick: React.PropTypes.func,
+    buttonClick: React.PropTypes.func,
+    openTranscript: React.PropTypes.func,
+    closeTranscript: React.PropTypes.func,
+    selectPage: React.PropTypes.func,
+    tableOfContents: React.PropTypes.array,
+    params: React.PropTypes.shape({
+      pageId: React.PropTypes.string
+    }),
+    bibliography: React.PropTypes.shape({
+      content: React.PropTypes.string
+    }),
+    contentPath: React.PropTypes.string
+  };
 
-    var quizIframe = pubFrame.contentDocument.getElementById('openassessments_container');
-    if(!quizIframe){ return; }
-
-    var quizTop = quizIframe.getBoundingClientRect().top;
-    epubBody.scrollTop += quizTop;
+  constructor(props) {
+    super(props);
+    this.state = {
+      drawerOpen: false,
+      activeTrap: false
+    };
   }
 
+  componentDidMount() {
+    window.addEventListener('message', e => this.onMessage(e), false);
+  }
+
+  componentWillUpdate(props) {
+    // Prepare the component to set focus to wrapper
+    // if pageFocus is true.
+
+    // This works better than using componentDidUpdate
+    // in this case, because this method grabs the state
+    // more quickly, rather than showing the state
+    // after clicking a BookItem twice to achieve
+    // the same effect
+    if (props.pageFocus) {
+      // Add a slight delay to make sure the element
+      // is in the DOM first before focusing
+      setTimeout(() => {
+        this.section.focus();
+      }, 250);
+    }
+  }
 
   onMessage(message) {
     // Inconveniently, we don't seem to be able to locate the
@@ -41,31 +105,42 @@ export class Page extends React.Component {
     // the assessment-player sends a message up to us to indicate its available
     // locales.  Although we ignore the available locales, we use that message's
     // source to target a message back down to the assessment-player.
-    var data = message.data;
-    if(_.isString(message.data)){
+    let data = message.data;
+    if (_.isString(message.data)) {
       data = JSON.parse(message.data);
     }
     const type = data.open_assessments_msg;
 
-    switch(type) {
-      case "open_assessments_available_locales":
+    switch (type) {
+      case 'open_assessments_available_locales':
         message.source.postMessage({
-          open_assessments_msg: "open_assessments_set_locale",
+          open_assessments_msg: 'open_assessments_set_locale',
           locale: this.props.locale
-        }, "*");
+        }, '*');
         break;
-      case "scrollToTop":
+      case 'scrollToTop':
         this.scrollToAssessment();
+        break;
+      default:
         break;
     }
   }
 
-  componentDidMount() {
-    window.addEventListener("message", (e) => this.onMessage(e), false);
+  scrollToAssessment() { // eslint-disable-line class-methods-use-this
+    const pubFrame = document.getElementsByTagName('iframe')[0];
+    const epubBody = pubFrame.contentDocument.body;
+    if (!epubBody) { return; }
+
+    const quizIframe = pubFrame.contentDocument.getElementById('openassessments_container');
+    if (!quizIframe) { return; }
+
+    const quizTop = quizIframe.getBoundingClientRect().top;
+    epubBody.scrollTop += quizTop;
   }
 
+
   addVideoEventListeners(iframeDocument) {
-    let videoElements = iframeDocument.querySelectorAll('video');
+    const videoElements = iframeDocument.querySelectorAll('video');
     _.each(videoElements, (element) => {
       element.addEventListener('play', (e) => {
         this.props.videoPlay(
@@ -76,7 +151,7 @@ export class Page extends React.Component {
       }, false);
 
       element.addEventListener('pause', (e) => {
-        if(!e.target.ended) {
+        if (!e.target.ended) {
           this.props.videoPause(
             e.target.id,
             getAVSrc(e.target),
@@ -100,7 +175,7 @@ export class Page extends React.Component {
   }
 
   addAudioEventListeners(iframeDocument) {
-    let audioElements = iframeDocument.querySelectorAll('audio');
+    const audioElements = iframeDocument.querySelectorAll('audio');
     _.each(audioElements, (element) => {
       element.addEventListener('play', (e) => {
         this.props.audioPlay(
@@ -111,7 +186,7 @@ export class Page extends React.Component {
       }, false);
 
       element.addEventListener('pause', (e) => {
-        if(!e.target.ended) {
+        if (!e.target.ended) {
           this.props.audioPause(
             e.target.id,
             getAVSrc(e.target),
@@ -135,7 +210,7 @@ export class Page extends React.Component {
   }
 
   addImageEventListeners(iframeDocument) {
-    let imgElements = iframeDocument.querySelectorAll('img.zoom-but-sm, img.zoom-but-md');
+    const imgElements = iframeDocument.querySelectorAll('img.zoom-but-sm, img.zoom-but-md');
     _.each(imgElements, (element) => {
       element.addEventListener('click', (e) => {
         this.props.imageClick(e.target.id, e.target.src);
@@ -144,7 +219,7 @@ export class Page extends React.Component {
   }
 
   addLinkEventListeners(iframeDocument) {
-    let linkElements = iframeDocument.querySelectorAll('a');
+    const linkElements = iframeDocument.querySelectorAll('a');
     _.each(linkElements, (element) => {
       element.addEventListener('click', (e) => {
         this.props.linkClick(e.target.id, e.target.src);
@@ -153,7 +228,7 @@ export class Page extends React.Component {
   }
 
   addButtonEventListeners(iframeDocument) {
-    let buttonElements = iframeDocument.querySelectorAll('figure button');
+    const buttonElements = iframeDocument.querySelectorAll('figure button');
     _.each(buttonElements, (element) => {
       element.addEventListener('click', (e) => {
         this.props.buttonClick(e.target.id);
@@ -162,13 +237,13 @@ export class Page extends React.Component {
   }
 
   addTranscriptButtonEventListeners(iframeDocument) {
-    let transcriptButtons = iframeDocument.querySelectorAll('.trans-form input');
+    const transcriptButtons = iframeDocument.querySelectorAll('.trans-form input');
     _.each(transcriptButtons, (element) => {
-      let label = element.parentElement.querySelector('label');
-      let labelName = label ? label.textContent : "";
+      const label = element.parentElement.querySelector('label');
+      const labelName = label ? label.textContent : '';
 
       element.addEventListener('change', (e) => {
-        if(e.target.checked) {
+        if (e.target.checked) {
           this.props.openTranscript(labelName);
         } else {
           this.props.closeTranscript(labelName);
@@ -181,7 +256,7 @@ export class Page extends React.Component {
    * images inside the iframe.
    */
   addIframeEventListeners() {
-    let iframeDocument = this.contentIframe.contentDocument ||
+    const iframeDocument = this.contentIframe.contentDocument ||
         this.contentIframe.contentWindow.document;
 
     this.addVideoEventListeners(iframeDocument);
@@ -193,30 +268,145 @@ export class Page extends React.Component {
   }
 
   iframe(props) {
-    var current = _.find(
+    const current = _.find(
       props.tableOfContents,
-      (item) => item.id == props.params.pageId
+      item => item.id === props.params.pageId
     );
-    if(!current) { return; }
-    return <iframe
-      onLoad={() => this.addIframeEventListeners()}
-      ref={(iframe) => this.contentIframe = iframe }
-      src={`${props.contentPath}/${current.content}`}
-      allowFullScreen="true" />;
+    if (!current) { return <div />; }
+
+    const iframeTitle = `${this.props.tocMeta.gradeUnit} ${this.props.tocMeta.subjectLesson}`;
+    return (
+      <iframe
+        onLoad={() => this.addIframeEventListeners()}
+        ref={(iframe) => { this.contentIframe = iframe; }}
+        src={`${props.contentPath}/${current.content}`}
+        title={iframeTitle}
+        allowFullScreen="true"
+      />
+    );
+  }
+
+  toggleDrawer = () => {
+    this.setState({
+      drawerOpen: !this.state.drawerOpen,
+      activeTrap: !this.state.activeTrap
+    });
   }
 
   render() {
-    var lastModified = this.props.tocMeta.lastModified;
-    var footerText = lastModified ? `CLIx release date: ${lastModified}` : undefined;
+    let previousButton;
+    let nextButton;
+    const { tableOfContents, params } = this.props;
+    if (tableOfContents && params) {
+      const currentPageIndex = _.findIndex(
+        tableOfContents,
+        item => item.id === params.pageId
+      );
+
+      if (currentPageIndex > -1) {
+        // show Previous button
+        previousButton = (currentPageIndex === 0)
+        ? (
+          <button
+            className="c-btn-footer c-btn-footer--prev-page"
+            disabled
+          >
+            { svg }
+            {this.props.localizedStrings.footer.previous}
+          </button>
+        ) :
+        (
+          <button
+            className="c-btn-footer c-btn-footer--prev-page"
+            onClick={() => this.props.selectPage(tableOfContents[currentPageIndex - 1].id)}
+          >
+            { svg }
+            {this.props.localizedStrings.footer.previous}
+          </button>
+        );
+
+        // show Next button
+        nextButton = (currentPageIndex === tableOfContents.length - 1)
+        ? (
+          <button
+            className="c-btn-footer c-btn-footer--next-page"
+            disabled
+          >
+            {this.props.localizedStrings.footer.next}
+            { svg }
+          </button>
+        ) :
+        (
+          <button
+            className="c-btn-footer c-btn-footer--next-page"
+            onClick={() => this.props.selectPage(tableOfContents[currentPageIndex + 1].id)}
+          >
+            {this.props.localizedStrings.footer.next}
+            { svg }
+          </button>
+        );
+      }
+    }
+
+    let bibliography;
+
+    if (this.props.bibliography) {
+      bibliography = (
+        <button
+          onClick={this.toggleDrawer}
+          className="c-btn-footer c-btn-footer--bibliography"
+        >
+          {this.props.localizedStrings.footer.bibliography}
+        </button>
+      );
+    }
+
+    let drawer;
+
+    if (this.props.bibliography) {
+      drawer = (
+        <FocusTrap
+          active={this.state.activeTrap}
+        >
+          <Drawer
+            docked={false}
+            width="75%"
+            openSecondary
+            open={this.state.drawerOpen}
+          >
+            <button
+              onClick={this.toggleDrawer}
+              className="c-drawer-btn-close"
+            >
+              X
+            </button>
+            <iframe
+              title="Citations"
+              src={`${this.props.contentPath}/${this.props.bibliography.content}`}
+            />
+          </Drawer>
+        </FocusTrap>
+      );
+    }
+
     return (
-      <div className="c-page">
+      <section className="c-page" tabIndex="-1" ref={(section) => { this.section = section; }}>
+        <Helmet>
+          <html lang={this.props.locale} />
+        </Helmet>
         {this.iframe(this.props)}
-        <div className="c-release">
-          {footerText}
-        </div>
-      </div>
+        <nav className="c-page-nav">
+          {previousButton}
+          {bibliography}
+          {nextButton}
+        </nav>
+        {drawer}
+      </section>
     );
   }
 }
 
-export default connect(select, {...ContentActions, ...AnalyticsActions})(Page);
+export default connect(
+  select,
+  { ...ContentActions, ...AnalyticsActions, ...ApplicationActions }
+)(Page);

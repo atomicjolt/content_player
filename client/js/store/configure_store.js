@@ -5,8 +5,9 @@ import DevTools                                  from '../dev/dev_tools.jsx';
 import API                                       from '../middleware/api';
 import EPUB                                      from '../middleware/epub';
 import AnalyticsLogging                          from '../middleware/analytics_logging';
+import SessionExpiration                         from '../middleware/unplatform_session_management';
 
-let middleware = [ API, EPUB, AnalyticsLogging ];
+let middleware = [ API, EPUB, AnalyticsLogging, SessionExpiration ];
 
 let enhancers = [
   applyMiddleware(...middleware)

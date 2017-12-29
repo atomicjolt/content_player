@@ -93,4 +93,5 @@ const AnalyticsLogging = store => next => action => {
   next(action);
 };
 
-export { AnalyticsLogging as default };
+export { AnalyticsLogging as default,
+  ANALYTICS_ACTION_MAP };

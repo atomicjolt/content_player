@@ -1,8 +1,58 @@
-body{
+
+/*-------------------------------------*\
+      #BASE
+\*-------------------------------------*/
+
+*, *:after, *:before {
+  @include boxSizing(border-box);
+}
+
+html, html a {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
+  font-size: 16px;
+}
+
+body {
   margin: 0;
-  font-family: 'open_sans_regular', Arial, sans-serif;
-  font-weight: normal;
-  font-size: 1em;
   line-height: normal;
-  letter-spacing: 1px;
+  // letter-spacing: .04em;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+a, a:link, a:visited {
+    text-decoration: none;
+}
+
+p {
+  margin: 0;
+}
+
+.u-hide {
+  opacity: 0 !important;
+  pointer-events: none;
+}
+
+/*ACCESSIBILITY*/
+
+.visuallyhidden {
+  border: 0;
+  -webkit-clip-path: inset(50%);
+  clip-path: inset(50%);
+  display: inline-block;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  width: 1px;
+  white-space: nowrap;
+}
+
+.domhidden {
+  display: none;
 }
