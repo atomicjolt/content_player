@@ -16,7 +16,7 @@
     margin: 0;
     padding: 0;
     position: relative;
-    height: calc(100% - 3em);
+    height: calc(100% - 4.75em);
     width: 100%;
     border: none;
   }
@@ -29,7 +29,6 @@
     padding: 0.5rem;
     height: 2.75em;
     @include regular;
-    // font-size: 0.6rem;
     color: $white;
     text-align: center;
     text-transform: uppercase;
@@ -218,33 +217,115 @@
       right: 0.35em;
       @include transition(all 0.1s ease);
     }
+
+    .c-btn-footer--bibliography {
+      background: $btn-secondary-background;
+      color: $btn-secondary-text;
+      border-color: $btn-secondary-border;
+      outline: 0;
+
+      &:hover {
+        border-color: $btn-secondary-border;
+        background: $btn-secondary-border-hover;
+        color: $btn-secondary-text-hover;
+        svg path {
+          fill: $btn-secondary-text-hover;
+        }
+      }
+
+      &:focus {
+        border-color: $btn-secondary-border;
+        background: $btn-secondary-border-hover;
+        color: $btn-secondary-text-hover;
+
+        &:before {
+          @include boxShadow(-4px 0 $btn-secondary-text-hover);
+        }
+
+        &:after {
+          @include boxShadow(4px 0 $btn-secondary-text-hover);
+        }
+
+        svg path{
+          fill: $btn-secondary-text-hover;
+        }
+      }
+
+      &:active {
+        border-color: darken($btn-secondary-border, 10%);
+        background: darken($btn-secondary-border, 10%);
+        color: $btn-secondary-text-hover;
+
+        svg path {
+          fill: $btn-secondary-text-hover;
+        }
+      }
+
+      svg {
+        right: .3rem;
+        @include transform(rotate(-90deg));
+        path {
+          fill: $btn-secondary-text;
+        }
+      }
+    }
+
+    .c-btn-footer--bibliography:before {
+      content: '';
+      position: absolute;
+      width: 0.5em;
+      height: 1.95em;
+      @include boxShadow(0 0 transparent);
+      top: 0.125em;
+      left: 0.35em;
+      @include transition(all 0.1s ease);
+    }
+
+    .c-btn-footer--bibliography:after {
+      content: '';
+      position: absolute;
+      width: 0.5em;
+      height: 1.95em;
+      @include boxShadow(0 0 transparent);
+      top: 0.125em;
+      right: 0.35em;
+      @include transition(all 0.1s ease);
+    }
   }
 
   .c-drawer-btn-close {
-    margin: .625em .125rem;
-    padding: .625rem 2.5rem;
+    margin: 0.75rem;
+    padding: 1.5rem;
+    height: 1rem;
+    width: 1rem;
+    display: flex;
+    justify-content: center;
     border: 2px solid #fff;
-    border-radius: .313rem;
-    @include regular;
-    font-size: 1em;
+    border-radius: 0.313rem;
+    @include semi-bold;
+    font-size: 1.5rem;
+    line-height: 0.15rem;
     color: #fff;
     text-shadow: 0 0.125rem 0.125rem rgba(0, 0, 0, 0.3);
     text-transform: uppercase;
-    background: radial-gradient(hsla(259, 40%, 40%, 1), hsla(259, 40%,30%, 1));
-  }
+    background: radial-gradient(hsla(259, 40%, 40%, 1), hsla(259, 40%, 30%, 1));
+    outline: 0;
 
-  .c-drawer-btn-close:hover {
-    /*  clix-magenta*/
-    background: radial-gradient(circle at 50% 50%, hsla(327, 100%, 35%, 1), hsla(327, 100%, 25%, 1));
-  }
+    &:hover {
+      /*  clix-magenta*/
+      background: radial-gradient(circle at 50% 50%, hsla(327, 100%, 35%, 1), hsla(327, 100%, 25%, 1));
+    }
 
-  .c-drawer-btn-close:focus {
-    /*  clix-orange*/
-    background: radial-gradient(#f37f2f, #f54b32);
-  }
+    &:focus {
+      /*  clix-magenta*/
+      background: radial-gradient(circle at 50% 50%, hsla(327, 100%, 35%, 1), hsla(327, 100%, 25%, 1));
+      outline: dotted $clix-purple 0.15rem;
+      outline-offset: .125rem;
+    }
 
-  .c-drawer-btn-close:active {
-    /*  clix-orange*/
-    background: radial-gradient(#f37f2f, #f54b32);
+    &:active {
+      /*  clix-orange*/
+      background: radial-gradient(#f37f2f, #f54b32);
+    }
   }
 }

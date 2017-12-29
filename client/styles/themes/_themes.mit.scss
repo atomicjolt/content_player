@@ -31,22 +31,22 @@ $radius: 0.3rem;
 
 //Secondary button colors
 $btn-secondary-background: $white;
-$btn-secondary-background-hover: $secondary;
+$btn-secondary-background-hover: $lightest-gray;
 
-$btn-secondary-border: $secondary;
-$btn-secondary-border-hover: $secondary;
+$btn-secondary-border: $lightest-gray;
+$btn-secondary-border-hover: $lightest-gray;
 
-$btn-secondary-text: $secondary;
+$btn-secondary-text: $lightest-gray;
 $btn-secondary-text-hover: $white;
 
 //Primary button colors
 $btn-primary-background: $white;
-$btn-primary-background-hover: $lightest-gray;
+$btn-primary-background-hover: darken($clix-blue, 10%);
 
-$btn-primary-border: $lightest-gray;
-$btn-primary-border-hover: $lightest-gray;
+$btn-primary-border: darken($clix-blue, 10%);
+$btn-primary-border-hover: darken($clix-blue, 10%);
 
-$btn-primary-text: $lightest-gray;
+$btn-primary-text: darken($clix-blue, 10%);
 $btn-primary-text-hover: $white;
 
 

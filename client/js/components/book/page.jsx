@@ -354,7 +354,7 @@ export class Page extends React.Component {
       bibliography = (
         <button
           onClick={this.toggleDrawer}
-          className="bibliography-btn"
+          className="c-btn-footer c-btn-footer--bibliography"
         >
           {this.props.localizedStrings.footer.bibliography}
         </button>
